@@ -1,0 +1,174 @@
+# -- i3 basic configurations --
+set $mod Mod4
+font pango:Hack Nerd Font 9
+for_window [class="^.*"] border pixel 2
+gaps inner 13
+gaps outer 8
+set $refresh_i3status killall -SIGUSR1 i3status
+floating_modifier $mod
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #d0d0d0 #d0d0d0 #d0d0d0 #d0d0d0   #d0d0d0
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
+# -- startup programs --
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -c 000000 --nofork
+exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id dunst
+exec --no-startup-id sleep 2 && volumeicon
+exec --no-startup-id picom -b
+exec --no-startup-id blueman-applet &
+exec --no-startup-id alacritty --class pulsemixer --command pulsemixer
+exec --no-startup-id ~/.config/polybar/launch.sh
+exec --no-startup-id caffeine
+
+for_window [instance="blueman-manager"] floating enable
+for_window [instance="blueman-manager"] move position center
+
+# -- personal scripts --
+exec --no-startup-id python ~/Codes/dots/scripts/alternating_layouts
+exec --no-startup-id ~/Codes/dots/scripts/battery
+exec --no-startup-id python ~/Codes/dots/scripts/i3_scr_auto_switch
+
+# -- scratchpad -- terminal --
+for_window [instance="terminal"] floating enable
+for_window [instance="terminal"] resize set 800 600
+for_window [instance="terminal"] move scratchpad
+for_window [instance="terminal"] border pixel 2
+bindsym $mod+t [instance="terminal"] scratchpad show; [instance="terminal"] move position center
+bindsym $mod+Shift+t exec --no-startup-id alacritty --class terminal
+
+# -- scratchpad -- pulsemixer --
+for_window [instance="pulsemixer"] floating enable
+for_window [instance="pulsemixer"] resize set 800 300
+for_window [instance="pulsemixer"] move scratchpad
+for_window [instance="pulsemixer"] border pixel 2
+bindsym $mod+a [instance="pulsemixer"] scratchpad show; [instance="pulsemixer"] move position center
+bindsym $mod+Shift+a exec --no-startup-id alacritty --class pulsemixer --command pulsemixer
+
+# -- scratchpad -- gpt --
+for_window [instance="gpt"] floating enable
+for_window [instance="gpt"] resize set 800 600
+for_window [instance="gpt"] move scratchpad
+for_window [instance="gpt"] border pixel 2
+bindsym $mod+g [instance="gpt"] scratchpad show; [instance="gpt"] move position center
+bindsym $mod+Shift+g exec --no-startup-id alacritty --class gpt --command tgpt -i
+
+# -- scratchpad -- musikcube --
+for_window [instance="musikcube"] floating enable
+for_window [instance="musikcube"] resize set 800 600
+for_window [instance="musikcube"] move scratchpad
+for_window [instance="musikcube"] border pixel 2
+bindsym $mod+m [instance="musikcube"] scratchpad show; [instance="musikcube"] move position center
+bindsym $mod+Shift+m exec --no-startup-id alacritty --class musikcube --command musikcube
+
+# -- bindsym -- i3 --
+bindsym $mod+Escape exec i3lock -c 000000
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+f fullscreen toggle
+bindsym $mod+q kill
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m '' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# -- bindsym -- brightness --
+bindsym XF86MonBrightnessUp exec brightnessctl set +100
+bindsym XF86MonBrightnessDown exec brightnessctl set 100-
+
+# -- bindsym -- programs --
+bindsym $mod+d exec rofi -no-config -no-lazy-grab -show drun -modi drun -theme ~/.config/rofi/launcher.rasi
+bindsym $mod+b exec --no-startup-id firefox
+bindsym $mod+Return exec --no-startup-id alacritty
+bindsym $mod+n exec --no-startup-id alacritty --command nvim
+
+# -- bindsym -- screenshots
+bindsym $mod+p exec --no-startup-id maim --select "/home/$USER/Pictures/$(date).jpg"
+
+# -- bindsym -- audio --
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# -- focus window --
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# -- move window --
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# -- move window to workspace --
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# -- tiling mode
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+# bindsym $mod+s layout stacking
+# bindsym $mod+w layout tabbed
+# bindsym $mod+e layout toggle split
+
+# -- focus window --
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# -- resize window
+bindsym $mod+r mode "resize"
+mode "resize" {
+        bindsym $left       resize shrink width 10 px or 10 ppt
+        bindsym $down       resize grow height 10 px or 10 ppt
+        bindsym $up         resize shrink height 10 px or 10 ppt
+        bindsym $right      resize grow width 10 px or 10 ppt
+
+        bindsym Left        resize shrink width 10 px or 10 ppt
+        bindsym Down        resize grow height 10 px or 10 ppt
+        bindsym Up          resize shrink height 10 px or 10 ppt
+        bindsym Right       resize grow width 10 px or 10 ppt
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym Mod1+r mode "default"
+}
+
+# -- workspaces names --
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"

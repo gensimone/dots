@@ -1,0 +1,63 @@
+# If not running interactively, don't do anything.
+[[ $- != *i* ]] && return
+
+# history
+shopt -s histappend
+HISTCONTROL=ignoreboth
+HISTSIZE=1000
+HISTFILESIZE=200
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# aliases.
+alias glog="git log\
+  --graph\
+  --abbrev-commit\
+  --decorate\
+  --format=format:'\
+ %C(bold blue)%h%C(reset) -\
+ %C(bold green)(%ar)%C(reset)\
+ %C(white)%s%C(reset)\
+ %C(dim white)-\
+ %an%C(reset)%C(auto)%d%C(reset)'\
+ --all"
+alias ls='ls --color=auto'
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -i'
+alias grep='grep --color=auto'
+alias gpt='tgpt --interactive'
+alias pacman='pacman --color=auto'
+alias paclean='pacman -Qtdq | sudo pacman -Rns -'
+alias wlan0-on='iwctl device wlan0 set-property Powered on'
+alias wlan0-off='iwctl device wlan0 set-property Powered off'
+alias fastfetch='fastfetch --logo archlinux_small'
+alias ftp='sftp'
+alias df='df -h'
+alias du='du -h'
+alias nvim-remove='rm -rv\
+  ~/.local/share/nvim\
+  ~/.local/state/nvim\
+  ~/.cache/nvim'
+alias poetry-register='poetry config pypi-token.pypi'
+alias fx='felix'
+
+# enable programmable completion features.
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+export PATH=~/.local/bin:~/Codes/dots/scripts:$PATH
+export TERM=xterm-256color
+export EDITOR=vim
+export VISUAL=vim
+
+eval "$(starship init bash)"
+
+set -o vi

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+  echo "Please provide the token" >&2
+  exit 1
+fi
+
+USER=g3nsy
+SERVER=github.com
+CODE=~/Codes
+REPOS=$(ls $CODE)
+DEFAULT_SEVER_NAME="origin"
+
+for repo_name in $REPOS; do
+  repo_path=$CODE/$repo_name
+  server_name=$(git -C $repo_path remote)
+  if ! [ $server_name ]; then
+    command="git -C $repo_path remote add $DEFAULT_SEVER_NAME"
+  else
+    command="git -C $repo_path remote set-url $server_name"
+  fi
+  $command https://$USER:$1@$SERVER/$USER/$repo_name
+done

@@ -1,0 +1,7 @@
+[greeter]
+theme-name = macterial
+icon-theme-name = Arc
+hide-user-image = true
+font-name = Hack Nerd Font Propo 10
+background = /usr/share/backgrounds/wallpaper.png
+

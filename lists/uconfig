@@ -1,0 +1,17 @@
+alacritty:.config/alacritty/alacritty.toml
+apvlv:.apvlvrc
+bash:.bashrc
+cursor:.icons/default/index.theme
+fastfetch:.config/fastfetch/config.jsonc
+git:.gitconfig
+gtk-2:.gtkrc-2.0
+gtk-3:.config/gtk-3.0/settings.ini
+i3:.config/i3/config
+musikcube:.config/musikcube/hotkeys.json
+nvim:.config/nvim
+picom:.config/picom/picom.conf
+pip:.config/pip/pip.conf
+polybar:.config/polybar
+rofi:.config/rofi
+tmux:.tmux.conf
+vim:.vimrc

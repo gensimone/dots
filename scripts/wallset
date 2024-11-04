@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# It's horrible, I know.
+
+LIGHTDM_GTK_CONF=/etc/lightdm/lightdm-gtk-greeter.conf
+
+if [ "$#" -ne 1 ]; then
+  echo "Invalid usage"
+  exit 1
+fi
+
+if ! [[ -f "$1" ]]; then
+  echo "File $1 not exists"
+  exit 1
+fi
+
+ext="${1##*.}"
+
+if [[ "$ext" != "jpg" && "$ext" != "jpeg" && "$ext" != "png" ]]; then
+  echo "Invalid file"
+  exit 1
+fi
+
+BACKGROUND_DIR=/usr/share/backgrounds/
+if ! [ -d $BACKGROUND_DIR ]; then
+  sudo mkdir -p $BACKGROUND_DIR
+fi
+
+BACKGROUND="$BACKGROUND_DIR$(basename $1)"
+
+if ! diff -q $BACKGROUND $1 2>/dev/null; then
+  sudo mv $1 $BACKGROUND_DIR
+fi
+
+head --lines=4 $LIGHTDM_GTK_CONF >tmp
+echo "background = $BACKGROUND" >>tmp
+
+sudo mv tmp $LIGHTDM_GTK_CONF
+
+feh --bg-fill $BACKGROUND

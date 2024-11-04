@@ -1,0 +1,5 @@
+grub:/etc/default/grub
+keyboard:/etc/X11/xorg.conf.d/00-keyboard.conf
+lightdm:/etc/lightdm/lightdm-gtk-greeter.conf
+touchpad:/etc/X11/xorg.conf.d/40-libinput.conf
+wallpaper.png:/usr/share/backgrounds/wallpaper.png
