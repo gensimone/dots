@@ -70,6 +70,8 @@ bindsym $mod+Shift+m exec --no-startup-id alacritty --class musikcube --command 
 bindsym $mod+Escape exec i3lock -c 000000
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
+bindsym $mod+Control+d exec --no-startup-id ~/Codes/dots/scripts/switch-theme dark
+bindsym $mod+Control+l exec --no-startup-id ~/Codes/dots/scripts/switch-theme light
 bindsym $mod+f fullscreen toggle
 bindsym $mod+q kill
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m '' -b 'Yes, exit i3' 'i3-msg exit'"
