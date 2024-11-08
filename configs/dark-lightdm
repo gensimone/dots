@@ -1,0 +1,7 @@
+[greeter]
+theme-name = Orchis-Dark
+icon-theme-name = kora
+hide-user-image = true
+font-name = Hack Nerd Font Propo 10
+background = /usr/share/backgrounds/dark-wallpaper.png
+

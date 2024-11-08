@@ -43,6 +43,12 @@ if ! type yay 2>/dev/null; then
     yay -S --needed --noconfirm - <$AUR
 fi
 
+# Required for wallset [Pre user configuration files]
+sudo mkdir /usr/share/backgrounds/
+sudo chmod 777 /usr/share/backgrounds
+sudo chmod 777 /etc/lightdm
+sudo rm /etc/lightdm/lightdm-gtk-greeter.conf # just in case
+
 # User configuration files
 while IFS=: read -r filename destination; do
   SRC=$CONFIGS/$filename
@@ -65,3 +71,6 @@ pip install -qr $PYTHON
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm &&
   ~/.tmux/plugins/tpm/scripts/install_plugins.sh
 sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+source ~/.bashrc
+switch-theme dark

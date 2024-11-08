@@ -22,10 +22,6 @@ if [[ "$ext" != "jpg" && "$ext" != "jpeg" && "$ext" != "png" ]]; then
 fi
 
 BACKGROUND_DIR=/usr/share/backgrounds/
-if ! [ -d $BACKGROUND_DIR ]; then
-  sudo mkdir -p $BACKGROUND_DIR
-fi
-
 BACKGROUND="$BACKGROUND_DIR$(basename $1)"
 
 if ! diff -q $BACKGROUND $1 2>/dev/null; then
@@ -35,6 +31,6 @@ fi
 head --lines=4 $LIGHTDM_GTK_CONF >tmp
 echo "background = $BACKGROUND" >>tmp
 
-sudo mv tmp $LIGHTDM_GTK_CONF
+mv tmp $LIGHTDM_GTK_CONF
 
 feh --bg-fill $BACKGROUND

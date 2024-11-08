@@ -1,0 +1,24 @@
+#!/bin/bash
+
+case "$1" in
+"dark")
+  echo ":: dark theme selected"
+  cp -fv ~/.config/.dark-xsettingsd ~/.xsettingsd
+  cp -fv ~/.config/rofi/dark-colors.rasi ~/.config/rofi/colors.rasi
+  cp -fv ~/.config/polybar/dark-colors.ini ~/.config/polybar/colors.ini
+  cp -fv ~/Codes/dots/configs/dark-lightdm /etc/lightdm/lightdm-gtk-greeter.conf
+  sed -i 's/light/dark/g' ~/.config/alacritty/alacritty.toml
+  feh --bg-fill /usr/share/backgrounds/dark-wallpaper.png
+  ;;
+"light")
+  echo ":: light theme selected"
+  cp -fv ~/.config/.light-xsettingsd ~/.xsettingsd
+  cp -fv ~/.config/rofi/light-colors.rasi ~/.config/rofi/colors.rasi
+  cp -fv ~/.config/polybar/light-colors.ini ~/.config/polybar/colors.ini
+  cp -fv ~/Codes/dots/configs/light-lightdm /etc/lightdm/lightdm-gtk-greeter.conf
+  sed -i 's/dark/light/g' ~/.config/alacritty/alacritty.toml
+  feh --bg-fill /usr/share/backgrounds/light-wallpaper.png
+  ;;
+esac
+
+killall -HUP xsettingsd # reload configuration

@@ -1,6 +1,6 @@
 # -- i3 basic configurations --
 set $mod Mod4
-font pango:Hack Nerd Font 9
+font pango:Caskaydia Cove Nerd Font 9
 for_window [class="^.*"] border pixel 2
 gaps inner 13
 gaps outer 8
@@ -20,6 +20,7 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id dunst
 exec --no-startup-id sleep 2 && volumeicon
 exec --no-startup-id picom -b
+exec --no-startup-id xsettingsd &
 exec --no-startup-id blueman-applet &
 exec --no-startup-id alacritty --class pulsemixer --command pulsemixer
 exec --no-startup-id ~/.config/polybar/launch.sh
