@@ -55,8 +55,8 @@ decorations = "Full"
 opacity = 1.0
 
 [window.padding]
-x = 3
-y = 3
+x = 10
+y = 10
 
 [env]
 WINIT_X11_SCALE_FACTOR = "1.0"
