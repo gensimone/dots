@@ -1,5 +1,5 @@
 configuration {
-	font:							"Hack Nerd Font 10";
+	font:							"Caskaydia Cove Nerd Font 10";
     show-icons:                     true;
 	icon-theme: 					"Papirus";
     display-drun: 					"";
@@ -30,7 +30,7 @@ prompt {
 	padding: 						10px;
 	background-color: 				@al;
 	text-color: 					@ac;
-	font:							"Hack Nerd Font 10";
+	font:							"Caskaydia Cove Nerd Font 10";
 }
 
 entry {
