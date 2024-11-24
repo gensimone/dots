@@ -1,0 +1,9 @@
+[user]
+	email = gensimone.git@gmail.com
+	name = gensimone
+[init]
+	defaultBranch = main
+[pull]
+	rebase = false
+[http]
+	postBuffer = 157286400

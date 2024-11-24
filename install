@@ -1,0 +1,98 @@
+#!/bin/bash
+
+# Arch Linux installation script
+# GitHub: https://github.com/gensimone
+# Author: Simone Gentili (gensimone)
+
+if [ "$#" -gt 1 ]; then
+  echo "Too many arguments" >&2
+  exit 1
+fi
+if [ "$#" -eq 1 ] && ! [ "$1" = "--symbolic-link" ] && ! [ "$1" = "-s" ]; then
+  echo "Invalid parameter: $1" >&2
+  exit 1
+fi
+
+SCRIPT_DIR=$(realpath $(dirname $0))
+CONFIGS=$SCRIPT_DIR/configs
+FONTS=$SCRIPT_DIR/fonts
+WALLPAPERS=$SCRIPT_DIR/wallpapers
+LISTS_DIR=$SCRIPT_DIR/lists
+AUR=$LISTS_DIR/aur
+PYTHON=$LISTS_DIR/python
+PACMAN=$LISTS_DIR/pacman
+UCONFIG=$LISTS_DIR/uconfig
+SCONFIG=$LISTS_DIR/sconfig
+
+# -- Checks required files
+for file in $AUR $PACMAN $PYTHON $UCONFIG $SCONFIG $CONFIGS $FONTS $WALLPAPERS; do
+  if [ ! -e $file ]; then
+    echo "Missing required file: $file" >&2
+    exit 1
+  fi
+done
+
+sudo pacman -S --needed --noconfirm --overwrite "*" - <$PACMAN
+[ $? -ne 0 ] && exit 1
+
+# -- yay installation --
+if ! type yay 2>/dev/null; then
+  YAY_CLONE_PATH=$SCRIPT_DIR/yay
+  YAY_REPO_URL=https://aur.archlinux.org/yay-bin.git
+  [ -e $YAY_CLONE_PATH ] && rm -rfv $YAY_CLONE_PATH
+  git clone $YAY_REPO_URL $YAY_CLONE_PATH &&
+    cd $YAY_CLONE_PATH &&
+    makepkg -si --clean --noconfirm &&
+    cd .. &&
+    rm -rfv $YAY_CLONE_PATH
+fi
+
+# -- AUR packages installation --
+yay -S --needed --noconfirm - <$AUR
+
+# -- Required for wallset [Pre user configuration files] --
+sudo mkdir /usr/share/backgrounds/
+sudo chmod 777 /usr/share/backgrounds
+sudo chmod 777 /etc/lightdm
+sudo rm /etc/lightdm/lightdm-gtk-greeter.conf # just in case
+
+# -- User configuration files --
+while IFS=: read -r filename destination; do
+  SRC=$CONFIGS/$filename
+  DST=~/$destination
+  DST_PARENT_NODE=$(dirname $DST)
+  mkdir -pv $DST_PARENT_NODE
+  [ -e $DST ] && rm -rfv $DST
+  cp -rv $1 $SRC $DST # $1: --symbolic-link or -s or empty string
+done <"$UCONFIG"
+
+# -- System-wide configuration files --
+while IFS=: read -r filename destination; do
+  SRC=$CONFIGS/$filename
+  DST_PARENT_NODE=$(dirname $destination)
+  sudo mkdir -pv $DST_PARENT_NODE
+  sudo cp -rv --remove-destination $SRC $destination
+done <"$SCONFIG"
+
+# -- Fonts installation --
+mkdir -p ~/.local/share/fonts
+cp -v $FONTS/* ~/.local/share/fonts
+
+pip install -qr $PYTHON
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm &&
+  ~/.tmux/plugins/tpm/scripts/install_plugins.sh
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+# -- vim -> nvim --
+sudo pacman -R vim --noconfirm
+sudo ln -sfv /usr/bin/nvim /usr/bin/vim
+
+# -- spicetify
+# Spotify installed from AUR
+# Before applying Spicetify, you need to gain write permission on Spotify files.
+sudo chmod a+wr /opt/spotify
+sudo chmod a+wr /opt/spotify/Apps -R
+
+source ~/.bashrc
+
+set-theme ~/Codes/dots/wallpapers/abstract-dark.png
