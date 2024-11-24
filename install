@@ -50,11 +50,10 @@ fi
 # -- AUR packages installation --
 yay -S --needed --noconfirm - <$AUR
 
-# -- Required for wallset [Pre user configuration files] --
-sudo mkdir /usr/share/backgrounds/
-sudo chmod 777 /usr/share/backgrounds
-sudo chmod 777 /etc/lightdm
-sudo rm /etc/lightdm/lightdm-gtk-greeter.conf # just in case
+# -- wallpapers [lightdm]
+sudo mkdir /usr/share/wallpapers/
+sudo chmod 777 /usr/share/wallpapers
+cp -rfv ~/Codes/dots/wallpapers/* /usr/share/wallpapers/
 
 # -- User configuration files --
 while IFS=: read -r filename destination; do
