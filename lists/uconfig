@@ -1,0 +1,13 @@
+alacritty:.config/alacritty/alacritty.toml
+apvlv:.apvlvrc
+bash:.bashrc
+fastfetch:.config/fastfetch/config.jsonc
+git:.gitconfig
+i3:.config/i3/config
+musikcube:.config/musikcube/hotkeys.json
+nvim:.config/nvim
+pip:.config/pip/pip.conf
+polybar:.config/polybar
+rofi:.config/rofi
+tmux:.tmux.conf
+cursor:.icons/default/index.theme

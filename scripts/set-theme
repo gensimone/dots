@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+echo $1
+
+wal -i $1 && walogram && chromium-wal

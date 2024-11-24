@@ -1,0 +1,80 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+import subprocess as sp
+import time
+from dataclasses import dataclass
+from i3ipc.connection import Connection
+from i3ipc.replies import WorkspaceReply
+
+
+@dataclass
+class Screen:
+    name: str
+    opts: str
+
+
+SECONDARY = Screen(name="HDMI-1", opts="--mode 1920x1080")
+PRIMARY = Screen(name="eDP-1", opts="--auto")
+
+
+def is_hdmi_connected() -> bool:
+    comm = sp.run(f"xrandr | grep {SECONDARY.name} | cut -d ' ' -f 2", shell=True, stdout=-1)
+    return comm.stdout.decode().strip() == "connected"
+
+
+def get_workspaces_by(i3_con: Connection, screen_name: str) -> list:
+    return [x for x in i3_con.get_workspaces() if x.ipc_data["output"] == screen_name]
+
+
+def move_workspaces_to(i3_con: Connection, workspaces: list, direction: str) -> None:
+    for w in workspaces:
+        i3_con.command(f"workspace {w.num}")
+        i3_con.command(f"move workspace to output {direction}")
+
+
+def is_workspace_empty(i3_con: Connection, wkrepy: WorkspaceReply) -> bool:
+    wktarget = i3_con.get_tree().find_by_id(wkrepy.ipc_data["id"])
+    return not wktarget or not wktarget.workspace().leaves()  # type: ignore
+
+
+def show_secondary(i3_con: Connection) -> None:
+    sp.run(
+        f"xrandr --output {SECONDARY.name} --primary {SECONDARY.opts} "
+        + f"--right-of {PRIMARY.name} --output {PRIMARY.name} --off",
+        shell=True,
+    )
+    workspaces = get_workspaces_by(i3_con, PRIMARY.name)
+    if workspaces:
+        move_workspaces_to(
+            i3_con,
+            [x for x in workspaces if not is_workspace_empty(i3_con, x)],
+            "right",
+        )
+
+
+def show_primary(i3_con: Connection) -> None:
+    sp.run(f"xrandr {PRIMARY.opts}", shell=True)
+    workspaces = get_workspaces_by(i3_con, SECONDARY.name)
+    if workspaces:
+        move_workspaces_to(i3_con, workspaces, "left")
+
+
+def main() -> None:
+    i3_con = Connection()
+    var = True
+    while True:
+        try:
+            hdmi_connected = is_hdmi_connected()
+            if hdmi_connected and var:
+                show_secondary(i3_con)
+                var = False
+            elif not hdmi_connected and not var:
+                show_primary(i3_con)
+                var = True
+            time.sleep(5)
+        except BrokenPipeError:
+            i3_con = Connection()
+
+if __name__ == "__main__":
+    main()
