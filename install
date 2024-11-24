@@ -8,7 +8,7 @@ if [ "$#" -gt 1 ]; then
   echo "Too many arguments" >&2
   exit 1
 fi
-if [ "$#" -eq 1 ] && ! [ "$1" = "--symbolic-link" ] && ! [ "$1" = "-s" ]; then
+if [ "$#" -eq 1 ] && ! [ "$1" = "--no-symbolic-link" ] && ! [ "$1" = "-ns" ]; then
   echo "Invalid parameter: $1" >&2
   exit 1
 fi
@@ -62,7 +62,7 @@ while IFS=: read -r filename destination; do
   DST_PARENT_NODE=$(dirname $DST)
   mkdir -pv $DST_PARENT_NODE
   [ -e $DST ] && rm -rfv $DST
-  cp -rv $1 $SRC $DST # $1: --symbolic-link or -s or empty string
+  [ "$#" -eq 1 ] && cp -rv $SRC $DST || cp -srv $1 $SRC $DST
 done <"$UCONFIG"
 
 # -- System-wide configuration files --
