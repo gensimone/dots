@@ -2,11 +2,14 @@ acpi
 alacritty
 base-devel
 bash-completion
+batsignal
+bc
 brightnessctl
 capitaine-cursors
 chromium
 clang
 cmake
+discord
 dmenu
 dosfstools
 dunst
@@ -52,6 +55,7 @@ thunar
 thunar-volman
 tmux
 torbrowser-launcher
+ttf-cascadia-code-nerd
 udisks2
 unrar
 unzip

@@ -29,7 +29,7 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
 alias grep='grep --color=auto'
-alias gpt='tgpt --interactive'
+alias gpt='tgpt --multiline'
 alias pacman='pacman --color=auto'
 alias paclean='pacman -Qtdq | sudo pacman -Rns -'
 alias wlan0-on='iwctl device wlan0 set-property Powered on'
@@ -54,7 +54,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PATH=~/.local/bin:~/Codes/dots/scripts:$PATH
+export PATH=~/.local/bin:~/Codes/dots/scripts:~/.spicetify:$PATH
 export TERM=xterm-256color
 export EDITOR=vim
 export VISUAL=vim
@@ -62,8 +62,6 @@ export VISUAL=vim
 eval "$(starship init bash)"
 
 set -o vi
-
-export PATH=$PATH:/home/simone/.spicetify
 
 # Import colorscheme from 'wal' asynchronously
 # &   # Run the process in the background.
@@ -76,5 +74,3 @@ source ~/.cache/wal/colors-tty.sh
 
 # Import the colors.
 . "${HOME}/.cache/wal/colors.sh"
-
-alias dmen='dmenu_run -nb "$color0" -nf "$color15" -sb "$color1" -sf "$color15"'

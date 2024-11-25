@@ -16,8 +16,8 @@ set_from_resource $bg i3wm.color2 #f0f0f0
 
 # class                 border  backgr. text indicator child_border
 client.focused          $bg     $bg     $fg  $bg       $bg
-client.focused_inactive $bg     $bg     $fg  $bg       $bg
-client.unfocused        $bg     $bg     $fg  $bg       $bg
+client.focused_inactive $fg     $bg     $fg  $bg       $fg
+client.unfocused        $fg     $bg     $fg  $bg       $fg
 client.urgent           $bg     $bg     $fg  $bg       $bg
 client.placeholder      $bg     $bg     $fg  $bg       $bg
 client.background       $bg
@@ -26,23 +26,19 @@ client.background       $bg
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -c 000000 --nofork
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id dunst &
-exec --no-startup-id sleep 2 && volumeicon
 exec --no-startup-id xsettingsd &
-exec --no-startup-id ~/.config/polybar/launch.sh
-exec --no-startup-id batsignal -b
+exec --no-startup-id batsignal -bp -n BAT0
 exec --no-startup-id caffeine &
 exec --no-startup-id python ~/Codes/dots/scripts/alternating_layouts
 exec --no-startup-id keepassxc
 exec --no-startup-id wal -R
+exec --no-startup-id sleep 1 && ~/.config/polybar/launch.sh
 
 # -- startup programs -- scratchpads --
 exec --no-startup-id alacritty --class pulsemixer --command pulsemixer
 exec --no-startup-id alacritty --class terminal
-exec --no-startup-id alacritty --class tgpt --command tgpt -m
 
 # -- windows rules --
-for_window [instance="blueman-manager"] floating enable
-for_window [instance="blueman-manager"] move position center
 for_window [instance="terminal"] floating enable
 for_window [instance="terminal"] resize set 800 600
 for_window [instance="terminal"] move scratchpad
@@ -55,14 +51,6 @@ for_window [instance="pulsemixer"] floating enable
 for_window [instance="pulsemixer"] resize set 800 300
 for_window [instance="pulsemixer"] move scratchpad
 for_window [instance="pulsemixer"] border pixel 2
-for_window [instance="tgpt"] floating enable
-for_window [instance="tgpt"] resize set 800 600
-for_window [instance="tgpt"] move scratchpad
-for_window [instance="tgpt"] border pixel 2
-for_window [instance="musikcube"] floating enable
-for_window [instance="musikcube"] resize set 800 600
-for_window [instance="musikcube"] move scratchpad
-for_window [instance="musikcube"] border pixel 2
 
 # -- bindsym -- scratchpads
 bindsym $mod+t [instance="terminal"] scratchpad show; [instance="terminal"] move position center
@@ -70,10 +58,6 @@ bindsym $mod+Shift+t exec --no-startup-id alacritty --class terminal
 bindsym $mod+p [instance="keepassxc"] scratchpad show; [instance="keepassxc"] move position center
 bindsym $mod+a [instance="pulsemixer"] scratchpad show; [instance="pulsemixer"] move position center
 bindsym $mod+Shift+a exec --no-startup-id alacritty --class pulsemixer --command pulsemixer
-bindsym $mod+g [instance="tgpt"] scratchpad show; [instance="tgpt"] move position center
-bindsym $mod+Shift+g exec --no-startup-id alacritty --class tgpt --command tgpt -m
-bindsym $mod+m [instance="musikcube"] scratchpad show; [instance="musikcube"] move position center
-bindsym $mod+Shift+m exec --no-startup-id alacritty --class musikcube --command musikcube
 
 # -- bindsym -- general
 bindsym $mod+Escape exec i3lock -c 000000

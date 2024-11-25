@@ -8,7 +8,7 @@ if [ "$#" -gt 1 ]; then
   echo "Too many arguments" >&2
   exit 1
 fi
-if [ "$#" -eq 1 ] && ! [ "$1" = "--symbolic-link" ] && ! [ "$1" = "-s" ]; then
+if [ "$#" -eq 1 ] && ! [ "$1" = "--no-symbolic-link" ] && ! [ "$1" = "-ns" ]; then
   echo "Invalid parameter: $1" >&2
   exit 1
 fi
@@ -50,11 +50,10 @@ fi
 # -- AUR packages installation --
 yay -S --needed --noconfirm - <$AUR
 
-# -- Required for wallset [Pre user configuration files] --
-sudo mkdir /usr/share/backgrounds/
-sudo chmod 777 /usr/share/backgrounds
-sudo chmod 777 /etc/lightdm
-sudo rm /etc/lightdm/lightdm-gtk-greeter.conf # just in case
+# -- wallpapers [lightdm]
+sudo mkdir /usr/share/wallpapers/
+sudo chmod 777 /usr/share/wallpapers
+cp -rfv ~/Codes/dots/wallpapers/* /usr/share/wallpapers/
 
 # -- User configuration files --
 while IFS=: read -r filename destination; do
@@ -63,7 +62,7 @@ while IFS=: read -r filename destination; do
   DST_PARENT_NODE=$(dirname $DST)
   mkdir -pv $DST_PARENT_NODE
   [ -e $DST ] && rm -rfv $DST
-  cp -rv $1 $SRC $DST # $1: --symbolic-link or -s or empty string
+  [ "$#" -eq 1 ] && cp -rv $SRC $DST || cp -srv $1 $SRC $DST
 done <"$UCONFIG"
 
 # -- System-wide configuration files --
