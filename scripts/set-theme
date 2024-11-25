@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-wal -i $1
+wal -a 92 -i $1
 
 if [[ $? -ne 0 ]]; then
   exit 1
