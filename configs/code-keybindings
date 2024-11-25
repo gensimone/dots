@@ -1,0 +1,8 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "alt+f5",
+        "command": "-chatEditor.action.navigateNext",
+        "when": "chat.hasEditorModifications && editorFocus"
+    }
+]
