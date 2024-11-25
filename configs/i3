@@ -45,7 +45,7 @@ exec --no-startup-id alacritty --class terminal
 for_window [instance="blueman-manager"] floating enable
 for_window [instance="blueman-manager"] move position center
 for_window [instance="terminal"] floating enable
-for_window [instance="terminal"] resize set 800 600
+for_window [instance="terminal"] resize set 940 820
 for_window [instance="terminal"] move scratchpad
 for_window [instance="terminal"] border pixel 2
 for_window [instance="keepassxc"] floating enable
