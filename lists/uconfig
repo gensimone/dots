@@ -1,8 +1,8 @@
 alacritty:.config/alacritty/alacritty.toml
 apvlv:.apvlvrc
-dunst:.config/dunst/dunstrc
 bash:.bashrc
 cursor:.icons/default/index.theme
+dunst:.config/dunst/dunstrc
 fastfetch:.config/fastfetch/config.jsonc
 git:.gitconfig
 i3:.config/i3/config
@@ -11,5 +11,4 @@ nvim:.config/nvim
 picom:.config/picom/picom.conf
 pip:.config/pip/pip.conf
 polybar:.config/polybar
-rofi:.config/rofi
 tmux:.tmux.conf

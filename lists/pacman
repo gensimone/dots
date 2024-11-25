@@ -4,14 +4,12 @@ base-devel
 bash-completion
 batsignal
 bc
-blueman
-bluez
 brightnessctl
 capitaine-cursors
 chromium
 clang
 cmake
-code
+discord
 dmenu
 dosfstools
 dunst
@@ -34,9 +32,7 @@ mpv
 neovim
 noto-fonts-emoji
 npm
-obs-studio
 perl
-picom
 pipewire
 pipewire-pulse
 polybar
