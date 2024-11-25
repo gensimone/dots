@@ -43,17 +43,18 @@ echo "[urgency_low]
     #default_icon = /path/to/Icon
 " >>~/.config/dunst/tmp
 mv ~/.config/dunst/tmp ~/Codes/dots/configs/dunst
-
 pidof dunst && killall dunst && dunst &
 sleep 2
-notify-send "Theme changed"
 
 # --discord
 pywal-discord -t default
 
 # -- tmux
 tmux_config=$(cat ~/.tmux.conf)
-tmux_config=$(echo "$tmux_config" | sed -e "s/@minimal-tmux-bg \"#[^']*\"/@minimal-tmux-bg \"$color0\"/")
+tmux_config=$(echo "$tmux_config" | sed -e "s/@minimal-tmux-bg \"#[^']*\"/@minimal-tmux-bg \"$color7\"/")
 tmux_config=$(echo "$tmux_config" | sed -e "s/@minimal-tmux-fg \"#[^']*\"/@minimal-tmux-fg \"$color2\"/")
 echo "$tmux_config" >~/.tmux.conf
 tmux source-file ~/.tmux.conf
+
+# -- notify
+notify-send "Theme changed"
