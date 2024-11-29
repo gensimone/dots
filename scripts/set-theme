@@ -59,5 +59,8 @@ tmux source-file ~/.tmux.conf
 # -- spotify
 pywal-spicetify marketplace
 
+# -- lightdm
+cp -fv $1 /usr/share/wallpapers/lightdm-wallpaper
+
 # -- notify
 notify-send "Theme changed"

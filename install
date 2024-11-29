@@ -50,10 +50,9 @@ fi
 # -- AUR packages installation --
 yay -S --needed --noconfirm - <$AUR
 
-# -- wallpapers [lightdm]
+# -- lightdm wallpaper
 sudo mkdir /usr/share/wallpapers/
 sudo chmod 777 /usr/share/wallpapers
-cp -rfv ~/Codes/dots/wallpapers/* /usr/share/wallpapers/
 
 # -- User configuration files --
 while IFS=: read -r filename destination; do
