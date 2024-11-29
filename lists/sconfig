@@ -1,3 +1,4 @@
 grub:/etc/default/grub
 keyboard:/etc/X11/xorg.conf.d/00-keyboard.conf
 touchpad:/etc/X11/xorg.conf.d/40-libinput.conf
+lightdm:/etc/lightdm/lightdm-gtk-greeter.conf

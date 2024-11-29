@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-wal -i $1
+wal -a 92 -i $1
 
 if [[ $? -ne 0 ]]; then
   exit 1
@@ -55,6 +55,9 @@ tmux_config=$(echo "$tmux_config" | sed -e "s/@minimal-tmux-bg \"#[^']*\"/@minim
 tmux_config=$(echo "$tmux_config" | sed -e "s/@minimal-tmux-fg \"#[^']*\"/@minimal-tmux-fg \"$color2\"/")
 echo "$tmux_config" >~/.tmux.conf
 tmux source-file ~/.tmux.conf
+
+# -- lightdm
+cp -fv $1 /usr/share/wallpapers/lightdm-wallpaper
 
 # -- notify
 notify-send "Theme changed"

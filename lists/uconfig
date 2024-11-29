@@ -11,3 +11,5 @@ nvim:.config/nvim
 pip:.config/pip/pip.conf
 polybar:.config/polybar
 tmux:.tmux.conf
+code-keybindings:.config/Code - OSS/User/keybindings.json
+code-settings:.config/Code - OSS/User/settings.json

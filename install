@@ -50,27 +50,26 @@ fi
 # -- AUR packages installation --
 yay -S --needed --noconfirm - <$AUR
 
-# -- wallpapers [lightdm]
+# -- lightdm wallpaper
 sudo mkdir /usr/share/wallpapers/
 sudo chmod 777 /usr/share/wallpapers
-cp -rfv ~/Codes/dots/wallpapers/* /usr/share/wallpapers/
 
 # -- User configuration files --
 while IFS=: read -r filename destination; do
   SRC=$CONFIGS/$filename
   DST=~/$destination
-  DST_PARENT_NODE=$(dirname $DST)
-  mkdir -pv $DST_PARENT_NODE
-  [ -e $DST ] && rm -rfv $DST
-  [ "$#" -eq 1 ] && cp -rv $SRC $DST || cp -srv $1 $SRC $DST
+  DST_PARENT_NODE="$(dirname "$DST")"
+  mkdir -pv "$DST_PARENT_NODE"
+  [ -e "$DST" ] && rm -rfv "$DST"
+  [ "$#" -eq 1 ] && cp -rv "$SRC" "$DST" || cp -srv $1 "$SRC" "$DST"
 done <"$UCONFIG"
 
 # -- System-wide configuration files --
 while IFS=: read -r filename destination; do
-  SRC=$CONFIGS/$filename
-  DST_PARENT_NODE=$(dirname $destination)
-  sudo mkdir -pv $DST_PARENT_NODE
-  sudo cp -rv --remove-destination $SRC $destination
+  SRC="$CONFIGS/$filename"
+  DST_PARENT_NODE="$(dirname "$destination")"
+  sudo mkdir -pv "$DST_PARENT_NODE"
+  sudo cp -rv --remove-destination "$SRC" "$destination"
 done <"$SCONFIG"
 
 # -- Fonts installation --

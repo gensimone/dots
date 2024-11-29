@@ -1,6 +1,7 @@
 acpi
 alacritty
 base-devel
+bash
 bash-completion
 batsignal
 bc
@@ -18,12 +19,18 @@ feh
 felix-rs
 ffmpeg
 flake8
+gdk-pixbuf2
 git
+glib2
+grep
+gtk-engine-murrine
+gtk-engines
 gvfs
 i3
 jdk-openjdk
 keepassxc
 less
+librsvg
 lightdm
 lightdm-gtk-greeter
 maim
@@ -45,6 +52,8 @@ ripgrep
 ruby
 ruff
 rust
+sassc
+sed
 sox
 starship
 syncthing
