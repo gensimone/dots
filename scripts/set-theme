@@ -59,7 +59,7 @@ echo "$tmux_config" >~/.tmux.conf
 tmux source-file ~/.tmux.conf
 
 # -- gtk
-"$(dirname $SCRIPT_PATH)"/change-color-gtk/change-color.sh -t /usr/share/themes -o change-color-gtk-theme <(echo -e "BG=$color0\nBTN_BG=$color0\nBTN_FG=$color7\nFG=$color7\nGRADIENT=0.0\nHDR_BTN_BG=$color0\nHDR_BTN_FG=$color4\nHDR_BG=$color0\nHDR_FG=$color7\nROUNDNESS=0\nSEL_BG=$color1\nSEL_FG=$color7\nSPACING=3\nTXT_BG=$color0\nTXT_FG=$color7\nWM_BORDER_FOCUS=$color2\nWM_BORDER_UNFOCUS=$color1\n")
+oomox-cli ~/.cache/wal/colors-oomox -t /usr/share/themes
 killall -HUP xsettingsd
 
 # -- lightdm
