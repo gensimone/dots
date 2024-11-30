@@ -60,7 +60,10 @@ tmux source-file ~/.tmux.conf
 
 # -- gtk
 oomox-cli ~/.cache/wal/colors-oomox -t /usr/share/themes
-killall -HUP xsettingsd
+# cp -fv ~/Codes/dots/configs/xsettingsd ~/.xsettingsd
+# killall -HUP xsettingsd
+killall xsettingsd
+xsettingsd &
 
 # -- lightdm
 cp -fv $1 /usr/share/wallpapers/lightdm-wallpaper
