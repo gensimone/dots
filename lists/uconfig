@@ -1,6 +1,8 @@
 alacritty:.config/alacritty/alacritty.toml
 apvlv:.apvlvrc
 bash:.bashrc
+code-keybindings:.config/Code - OSS/User/keybindings.json
+code-settings:.config/Code - OSS/User/settings.json
 cursor:.icons/default/index.theme
 dunst:.config/dunst/dunstrc
 fastfetch:.config/fastfetch/config.jsonc
@@ -12,5 +14,4 @@ picom:.config/picom/picom.conf
 pip:.config/pip/pip.conf
 polybar:.config/polybar
 tmux:.tmux.conf
-code-keybindings:.config/Code - OSS/User/keybindings.json
-code-settings:.config/Code - OSS/User/settings.json
+xsettingsd:.xsettingsd

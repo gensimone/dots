@@ -37,7 +37,6 @@ def is_workspace_empty(i3_con: Connection, wkrepy: WorkspaceReply) -> bool:
     wktarget = i3_con.get_tree().find_by_id(wkrepy.ipc_data["id"])
     return not wktarget or not wktarget.workspace().leaves()  # type: ignore
 
-
 def show_secondary(i3_con: Connection, disable_primary: bool = False) -> None:
     sp.run(
         f"xrandr --output {SECONDARY.name} --primary {SECONDARY.opts} "

@@ -1,3 +1,5 @@
+general.import=["~/.cache/wal/colors-alacritty.toml"]
+
 [cursor]
 blink_interval = 500
 unfocused_hollow = true

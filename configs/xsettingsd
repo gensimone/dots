@@ -1,0 +1,10 @@
+Xft/Antialias   1
+Xft/DPI         98304
+Xft/Hinting     1
+Xft/HintStyle   "hintfull"
+Xft/lcdfilter   "lcddefault"
+Xft/RGBA        "rgb"
+
+Gtk/CursorThemeName "capitaine-cursors-light"
+Net/ThemeName "oomox-colors-oomox"
+Net/IconThemeName "kora-pgrey"

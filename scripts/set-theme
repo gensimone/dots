@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-wal -a 92 -i $1
+SCRIPT_PATH=$(readlink -f "$0")
+
+wal -a 92 -i $1 # -a 92: tmux transparency
 
 if [[ $? -ne 0 ]]; then
   exit 1
@@ -58,6 +60,10 @@ tmux source-file ~/.tmux.conf
 
 # -- spotify
 pywal-spicetify marketplace
+
+# -- gtk
+oomox-cli ~/.cache/wal/colors-oomox -t /usr/share/themes
+killall -HUP xsettingsd
 
 # -- lightdm
 cp -fv $1 /usr/share/wallpapers/lightdm-wallpaper
