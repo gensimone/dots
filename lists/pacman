@@ -10,6 +10,7 @@ capitaine-cursors
 chromium
 clang
 cmake
+deluge-gtk
 discord
 dmenu
 dosfstools
@@ -46,7 +47,6 @@ polybar
 pulsemixer
 pyright
 python-pip
-qbittorrent
 ripgrep
 ruby
 ruff
