@@ -53,6 +53,7 @@ yay -S --needed --noconfirm - <$AUR
 # -- lightdm wallpaper
 sudo mkdir /usr/share/wallpapers/
 sudo chmod 777 /usr/share/wallpapers
+sudo chmod 777 /usr/share/themes
 
 # -- User configuration files --
 while IFS=: read -r filename destination; do
