@@ -1,0 +1,16 @@
+#!/bin/python
+
+import sys
+import os
+
+
+DEST = os.path.join(os.path.expanduser("~"), "Codes")
+USERNAME = 'gensimone'
+TOKEN = sys.argv[1]
+REPOSITORIES = sys.argv[2:]
+
+if not os.path.exists(DEST):
+    os.mkdir(DEST)
+
+for repo in REPOSITORIES:
+    os.system(f'git clone https://{USERNAME}:{TOKEN}@github.com/{USERNAME}/{repo} {DEST}/{repo}')
