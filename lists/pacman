@@ -5,6 +5,7 @@ bash
 bash-completion
 batsignal
 bc
+blueberry
 brightnessctl
 calibre
 capitaine-cursors
@@ -39,6 +40,8 @@ maim
 man-db
 mpv
 neovim
+network-manager-applet
+networkmanager
 noto-fonts-emoji
 npm
 perl
