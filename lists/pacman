@@ -9,6 +9,7 @@ blueberry
 brightnessctl
 calibre
 capitaine-cursors
+catfish
 chromium
 clang
 cmake
@@ -64,10 +65,13 @@ tcl
 telegram-desktop
 tgpt
 thunar
+thunar-archive-plugin
+thunar-media-tags-plugin
 thunar-volman
 tmux
 torbrowser-launcher
 ttf-cascadia-code-nerd
+tumbler
 udisks2
 unrar
 unzip
