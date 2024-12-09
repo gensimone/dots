@@ -1,0 +1,13 @@
+[General]
+
+Hostname = apidata.googleusercontent.com
+Path = /caldav/v2/gentilismn@gmail.com/events/
+AuthMethod = oauth2
+SyncFilter = cal
+DryRun = No
+
+[OAuth2]
+ClientID =
+ClientSecret =
+Scope = https://www.googleapis.com/auth/calendar
+RedirectURI = http://127.0.0.1
