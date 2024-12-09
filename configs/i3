@@ -35,6 +35,7 @@ exec --no-startup-id python ~/Codes/dots/scripts/i3_scr_auto_switch
 exec --no-startup-id keepassxc
 exec --no-startup-id wal -R
 exec --no-startup-id picom -b
+exec --no-startup-id nm-applet
 exec --no-startup-id sleep 1 && ~/.config/polybar/launch.sh
 
 # -- startup programs -- scratchpads --
@@ -75,6 +76,7 @@ bindsym XF86MonBrightnessUp exec --no-startup-id ~/Codes/dots/scripts/brightness
 bindsym XF86MonBrightnessDown exec --no-startup-id ~/Codes/dots/scripts/brightnesscontrol d
 bindsym $mod+d exec --no-startup-id ~/Codes/dots/scripts/dmenu_launcher
 bindsym $mod+b exec --no-startup-id chromium
+bindsym $mod+Shift+b exec --no-startup-id blueman-manager
 bindsym $mod+Return exec --no-startup-id alacritty
 bindsym $mod+n exec --no-startup-id alacritty --command nvim
 
