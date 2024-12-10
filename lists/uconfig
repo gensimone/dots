@@ -4,7 +4,7 @@ bash:.bashrc
 code-keybindings:.config/Code - OSS/User/keybindings.json
 code-settings:.config/Code - OSS/User/settings.json
 cursor:.icons/default/index.theme
-dunst:.config/dunst/dunstrc
+dunst:.config/dunst
 fastfetch:.config/fastfetch/config.jsonc
 git:.gitconfig
 i3:.config/i3/config
