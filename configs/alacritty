@@ -9,7 +9,7 @@ blinking = "On"
 shape = "Block"
 
 [font]
-size = 9.5
+size = 8.5
 
 [font.normal]
 family = "Caskaydia Cove Nerd Font"
