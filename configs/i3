@@ -80,7 +80,6 @@ bindsym $mod+Shift+p exec --no-startup-id maim --select "/home/$USER/Pictures/$(
 bindsym XF86AudioRaiseVolume exec --no-startup-id ~/Codes/dots/scripts/volumecontrol -o i
 bindsym XF86AudioLowerVolume exec --no-startup-id ~/Codes/dots/scripts/volumecontrol -o d
 bindsym XF86AudioMute exec --no-startup-id ~/Codes/dots/scripts/volumecontrol -o m
-bindsym XF86AudioMicMute exec --no-startup-id ~/Codes/dots/scripts/volumecontrol -i m
 
 # -- focus window --
 bindsym $mod+h focus left
