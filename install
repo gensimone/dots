@@ -88,4 +88,4 @@ sudo ln -sfv /usr/bin/nvim /usr/bin/vim
 
 source ~/.bashrc
 
-set-theme ~/Codes/dots/wallpapers/abstract-dark.png
+~/Codes/dots/scripts/set-theme ~/Codes/dots/wallpapers/abstract-dark.png
