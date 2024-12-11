@@ -4,5 +4,5 @@
         "asvetliakov.vscode-neovim": 1
     },
     "editor.fontFamily": "CaskaydiaCove Nerd Font",
-    "editor.fontSize": 15
+    "editor.fontSize": 12
 }
