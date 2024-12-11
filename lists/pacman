@@ -45,6 +45,7 @@ network-manager-applet
 networkmanager
 noto-fonts-emoji
 npm
+pamixer
 perl
 pipewire
 pipewire-pulse
