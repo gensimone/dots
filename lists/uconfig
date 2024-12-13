@@ -1,13 +1,13 @@
-alacritty:.config/alacritty/alacritty.toml
 apvlv:.apvlvrc
 bash:.bashrc
 code-keybindings:.config/Code - OSS/User/keybindings.json
 code-settings:.config/Code - OSS/User/settings.json
 cursor:.icons/default/index.theme
 dunst:.config/dunst/dunstrc
-fastfetch:.config/fastfetch/config.jsonc
+fastfetch:.config/fastfetch
 git:.gitconfig
 i3:.config/i3/config
+kitty:.config/kitty/kitty.conf
 musikcube:.config/musikcube/hotkeys.json
 nvim:.config/nvim
 picom:.config/picom/picom.conf

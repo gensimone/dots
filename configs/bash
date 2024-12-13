@@ -35,7 +35,6 @@ alias pacman='pacman --color=auto'
 alias paclean='pacman -Qtdq | sudo pacman -Rns -'
 alias wlan0-on='iwctl device wlan0 set-property Powered on'
 alias wlan0-off='iwctl device wlan0 set-property Powered off'
-alias fastfetch='fastfetch --logo archlinux_small'
 alias ftp='sftp'
 alias df='df -h'
 alias du='du -h'
@@ -75,3 +74,5 @@ source ~/.cache/wal/colors-tty.sh
 
 # Import the colors.
 . "${HOME}/.cache/wal/colors.sh"
+
+fastfetch

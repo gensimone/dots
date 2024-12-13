@@ -39,14 +39,14 @@ exec --no-startup-id nm-applet
 exec --no-startup-id sleep 1 && ~/.config/polybar/launch.sh
 
 # -- startup programs -- scratchpads --
-exec --no-startup-id alacritty --class pulsemixer --command pulsemixer
-exec --no-startup-id alacritty --class terminal
+exec --no-startup-id kitty --class pulsemixer pulsemixer
+exec --no-startup-id kitty --class terminal
 
 # -- windows rules --
 for_window [instance="blueman-manager"] floating enable
 for_window [instance="blueman-manager"] move position center
 for_window [instance="terminal"] floating enable
-for_window [instance="terminal"] resize set 940 820
+for_window [instance="terminal"] resize set 1150 835
 for_window [instance="terminal"] move scratchpad
 for_window [instance="terminal"] border pixel 2
 for_window [instance="keepassxc"] floating enable
@@ -60,10 +60,10 @@ for_window [instance="pulsemixer"] border pixel 2
 
 # -- bindsym -- scratchpads
 bindsym $mod+t [instance="terminal"] scratchpad show; [instance="terminal"] move position center
-bindsym $mod+Shift+t exec --no-startup-id alacritty --class terminal
+bindsym $mod+Shift+t exec --no-startup-id kitty --class terminal
 bindsym $mod+p [instance="keepassxc"] scratchpad show; [instance="keepassxc"] move position center
 bindsym $mod+a [instance="pulsemixer"] scratchpad show; [instance="pulsemixer"] move position center
-bindsym $mod+Shift+a exec --no-startup-id alacritty --class pulsemixer --command pulsemixer
+bindsym $mod+Shift+a exec --no-startup-id kitty --class pulsemixer --command pulsemixer
 
 # -- bindsym -- general
 bindsym $mod+Escape exec i3lock -c 000000
@@ -77,17 +77,17 @@ bindsym XF86MonBrightnessDown exec --no-startup-id ~/Codes/dots/scripts/brightne
 bindsym $mod+d exec --no-startup-id ~/Codes/dots/scripts/dmenu_launcher
 bindsym $mod+b exec --no-startup-id chromium
 bindsym $mod+Shift+b exec --no-startup-id blueman-manager
-bindsym $mod+Return exec --no-startup-id alacritty
-bindsym $mod+n exec --no-startup-id alacritty --command nvim
+bindsym $mod+Return exec --no-startup-id kitty
 
 # -- bindsym -- screenshots
 bindsym $mod+Shift+p exec --no-startup-id maim --select "/home/$USER/Pictures/$(date).jpg"
+bindsym $mod+Ctrl+p exec --no-startup-id maim "/home/$USER/Pictures/$(date).jpg"
 
 # -- bindsym -- audio --
 bindsym XF86AudioRaiseVolume exec --no-startup-id ~/Codes/dots/scripts/volumecontrol -o i
 bindsym XF86AudioLowerVolume exec --no-startup-id ~/Codes/dots/scripts/volumecontrol -o d
 bindsym XF86AudioMute exec --no-startup-id ~/Codes/dots/scripts/volumecontrol -o m
-bindsym XF86AudioMicMute exec --no-startup-id ~/Codes/dots/scripts/volumecontrol -i m
+bindsym $mod+m exec --no-startup-id ~/Codes/dots/scripts/volumecontrol -i m
 
 # -- focus window --
 bindsym $mod+h focus left

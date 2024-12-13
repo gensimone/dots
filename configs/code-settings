@@ -3,6 +3,5 @@
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1
     },
-    "editor.fontFamily": "CaskaydiaCove Nerd Font",
-    "editor.fontSize": 12
+    "editor.fontFamily": "CaskaydiaCove Nerd Font"
 }

@@ -94,4 +94,4 @@ sudo chmod a+wr /opt/spotify/Apps -R
 
 source ~/.bashrc
 
-set-theme ~/Codes/dots/wallpapers/abstract-dark.png
+set-theme ~/Codes/dots/wallpapers/space_dark_blue.png
