@@ -1,7 +1,7 @@
 set $mod Mod4
 font pango:Iosevka Nerd Font 9
 for_window [class="^.*"] border pixel 2
-gaps inner 13
+gaps inner 25
 gaps outer 8
 set $refresh_i3status killall -SIGUSR1 i3status
 floating_modifier $mod

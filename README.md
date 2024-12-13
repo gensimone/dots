@@ -2,3 +2,4 @@
 ![](.github/terminals.jpg)
 ![](.github/stuff.jpg)
 ![](.github/media.jpg)
+![](.github/death_note.jpg)
