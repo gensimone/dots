@@ -1,0 +1,12 @@
+#!/bin/sh -e
+
+# Clean up previous screenshot
+[ -f "/tmp/screen_locked.png" ] && rm -fv /tmp/screen_locked.png
+
+# Take a screenshot
+maim /tmp/screen_locked.png
+
+magick convert -scale 20% -blur 0x2.5 -resize 500% /tmp/screen_locked.png /tmp/screen_locked.png
+
+# Lock screen displaying this image.
+i3lock -i /tmp/screen_locked.png --no-unlock-indicator --ignore-empty-password

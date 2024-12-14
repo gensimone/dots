@@ -23,7 +23,7 @@ client.placeholder        $bg     $bg     $fg  $bg       $bg
 client.background         $bg
 
 # -- startup programs --
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -c 000000 --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/Codes/dots/scripts/lock
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id dunst &
 exec --no-startup-id xsettingsd &
@@ -66,7 +66,7 @@ bindsym $mod+a [instance="pulsemixer"] scratchpad show; [instance="pulsemixer"] 
 bindsym $mod+Shift+a exec --no-startup-id kitty --class pulsemixer --command pulsemixer
 
 # -- bindsym -- general
-bindsym $mod+Escape exec i3lock -c 000000
+bindsym $mod+Escape exec ~/Codes/dots/scripts/lock
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 bindsym $mod+f fullscreen toggle

@@ -12,8 +12,8 @@ cursor_beam_thickness 1.5
 cursor_underline_thickness 2.0
 cursor_blink_interval -1
 cursor_stop_blinking_after 15.0
-cursor_trail 5
-cursor_trail_decay 0.1 0.4
+cursor_trail 2
+cursor_trail_decay 0.1 0.2
 
 # -- Scrollback
 # Number of lines of history to keep in memory for scrolling back.
