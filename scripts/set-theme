@@ -2,7 +2,9 @@
 
 SCRIPT_PATH=$(readlink -f "$0")
 
-wal -a 92 -i $1 # -a 92: tmux transparency
+eval "$(awk 'NR==1{print "wallpaper=\"" $0 "\""} NR==2{print "fastfetch_image=\"" $0 "\""} NR==3{print "color_name=\"" $0 "\""}' "$1")"
+
+wal -a 92 -i ~/Codes/dots/themes/wallpapers/$wallpaper # -a 92: tmux transparency
 
 if [[ $? -ne 0 ]]; then
   exit 1
@@ -61,6 +63,9 @@ tmux source-file ~/.tmux.conf
 # -- spotify
 pywal-spicetify marketplace
 
+# icons (always before updating xsettingsd)
+papirus-folders --color $color_name
+
 # -- gtk
 oomox-cli ~/.cache/wal/colors-oomox -t /usr/share/themes
 # killall -HUP xsettingsd
@@ -68,7 +73,11 @@ killall xsettingsd
 xsettingsd &
 
 # -- lightdm
-cp -fv $1 /usr/share/wallpapers/lightdm-wallpaper
+cp -fv $wallpaper /usr/share/wallpapers/lightdm-wallpaper
+
+# -- fastfetch
+[ -f "$HOME/.config/fastfetch/pngs" ] && rm -rfv ~/.config/fastfetch/pngs || mkdir -v ~/.config/fastfetch/pngs
+cp -fv "$HOME/Codes/dots/themes/pngs/$fastfetch_image" ~/.config/fastfetch/pngs/
 
 # -- notify
 notify-send "Theme changed"

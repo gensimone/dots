@@ -1,6 +1,6 @@
 [greeter]
 theme-name = oomox-colors-oomox
-icon-theme-name = kora
+icon-theme-name = Papirus
 font-name = CaskaydiaCove Nerd Font Semi-Light 10
 background = /usr/share/wallpapers/lightdm-wallpaper
 hide-user-image = true
