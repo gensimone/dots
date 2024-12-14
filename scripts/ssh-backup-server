@@ -7,7 +7,7 @@ import getpass
 from argparse import ArgumentParser, REMAINDER, Action
 from paramiko import Transport
 from paramiko.sftp_client import SFTPClient
-from paramiko.ssh_exception import AuthenticationException
+from paramiko.ssh_exception import AuthenticationException, SSHException
 
 
 class PartitionedValues(Action):
@@ -179,11 +179,15 @@ if __name__ == '__main__':
         print('Provide at least one file to transfer')
         sys.exit(1)
 
-    sftp_client = get_sftp_client(
-        hostname=hostname,
-        port=port,
-        username=username
-    )
+    try:
+        sftp_client = get_sftp_client(
+            hostname=hostname,
+            port=port,
+            username=username
+        )
+    except SSHException as e:
+        print(e)
+        sys.exit(1)
 
     if not sftp_client:
         raise RuntimeError('No SFTPClient object obtained')
