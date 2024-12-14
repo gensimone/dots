@@ -76,7 +76,8 @@ xsettingsd &
 cp -fv $wallpaper /usr/share/wallpapers/lightdm-wallpaper
 
 # -- fastfetch
-[ -f "$HOME/.config/fastfetch/pngs" ] && rm -rfv ~/.config/fastfetch/pngs || mkdir -v ~/.config/fastfetch/pngs
+[ -d "$HOME/.config/fastfetch/pngs" ] && rm -rfv ~/.config/fastfetch/pngs
+mkdir ~/.config/fastfetch/pngs
 cp -fv "$HOME/Codes/dots/themes/pngs/$fastfetch_image" ~/.config/fastfetch/pngs/
 
 # -- notify
