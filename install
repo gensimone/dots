@@ -50,6 +50,9 @@ fi
 # -- AUR packages installation --
 yay -S --needed --noconfirm - <$AUR
 
+# -- i3lock-color (workaround: i3lock dependency of i3)
+sudo pacman --noconfirm -R i3lock && yay -S --needed --noconfirm i3lock-color
+
 # -- lightdm wallpaper
 sudo mkdir /usr/share/wallpapers/
 sudo chmod 777 /usr/share/wallpapers
@@ -94,4 +97,4 @@ sudo chmod a+wr /opt/spotify/Apps -R
 
 source ~/.bashrc
 
-set-theme ~/Codes/dots/themes/purple_anime_girl
+set-theme ~/Codes/dots/themes/themes/space_dark_blue
