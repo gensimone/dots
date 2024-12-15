@@ -4,32 +4,12 @@ import shutil
 import sys
 import os
 import getpass
-from argparse import ArgumentParser, REMAINDER, Action
-from paramiko import Transport
+from signal import signal, SIGINT
+from argparse import ArgumentParser, REMAINDER
+from typing import Callable, List, Optional, Tuple
+from paramiko import SFTP, Transport, SSHClient, AutoAddPolicy
 from paramiko.sftp_client import SFTPClient
 from paramiko.ssh_exception import AuthenticationException, SSHException
-
-
-class PartitionedValues(Action):
-    def __init__(self, *args, delim="+++", **kwargs):
-        super().__init__(*args, **kwargs)
-        self.delim = delim
-
-    def __call__(
-            self, 
-            parser,
-            namespace,
-            values,
-            option_string = ''
-    ):
-        files = namespace.localpaths = []
-        namespace.remotepaths = []
-        if values:
-            for f in values:
-                if f == self.delim:
-                    files = namespace.remotepaths
-                else:
-                    files.append(f)
 
 
 def get_parser() -> ArgumentParser:
@@ -61,35 +41,44 @@ def get_parser() -> ArgumentParser:
     )
     parser.add_argument(
         'paths',
-        action=PartitionedValues,
         nargs=REMAINDER,
         type=str
     )
     return parser
 
 
-def get_sftp_client(hostname: str, port: int, username: str) -> SFTPClient | None:
+def _handle_authentication_error(func: Callable) -> Callable:
+    def _inner(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except AuthenticationException:
+            print(f'Invalid password')
+            return _inner(*args, **kwargs)
+    return _inner
+
+
+@_handle_authentication_error
+def get_ssh_client(hostname: str, port: int, username: str, password: str) -> SSHClient:
+    ssh_client = SSHClient()
+    ssh_client.set_missing_host_key_policy(AutoAddPolicy())
+    ssh_client.connect(hostname=hostname, username=username, port=port, password=password)
+    return ssh_client
+
+
+@_handle_authentication_error
+def get_sftp_client(hostname: str, port: int, username: str, password: str) -> Tuple[Optional[SFTPClient], Transport]:
     transport = Transport((hostname, port))
-    try:
-        transport.connect(username=username, password=getpass.getpass())
-    except AuthenticationException:
-        print(f'Invalid password')
-        return get_sftp_client(
-            hostname=hostname,
-            port=port,
-            username=username
-        )
-    return SFTPClient.from_transport(transport)
+    transport.connect(username=username, password=password)
+    return SFTPClient.from_transport(transport), transport
 
 
 def display_progress_bar(
         bytes_received: int,
         filesize: int,
         localpath: str,
-        remotepath: str,
         ch1: str = "#",
         ch2: str = "-",
-        scale: float = 0.55
+        scale: float = 0.3
 ) -> None:
     columns = shutil.get_terminal_size().columns
     max_width = int(columns * scale)
@@ -112,12 +101,21 @@ def display_progress_bar(
     sys.stdout.flush()
 
 
-
 def expand_filename(filename: str) -> str:
     return f'{os.path.expanduser('~')}{filename[1:]}' if filename.startswith('~') else filename
 
+
+def print_error(msg: str, end: str = '\n') -> None:
+    print(f'\033[91m{msg}\033[0m', end=end)
+
+
+def print_warning(msg: str, end: str = '\n') -> None:
+    print(f'\033[93m{msg}\033[0m', end=end)
+
+
 def put(
         sftp: SFTPClient,
+        ssh: SSHClient,
         localpath: str,
         remotepath: str,
 ) -> None:
@@ -148,17 +146,40 @@ def put(
 
         # file case
         else:
-            sftp.put(
-                localpath=localpath,
-                remotepath=remotepath,
-                callback=lambda bytes_received, filesize: display_progress_bar(
-                    bytes_received=bytes_received,
-                    filesize=filesize,
+            try:
+                sftp.put(
                     localpath=localpath,
-                    remotepath=remotepath
+                    remotepath=remotepath,
+                    callback=lambda bytes_received, filesize: display_progress_bar(
+                        bytes_received=bytes_received,
+                        filesize=filesize,
+                        localpath=localpath
+                    )
                 )
-            )
-            print()
+            except OSError as e:
+                print_error(f'OSError: {e} while transferring {localpath} to {remotepath}')
+                print_warning(f'Removing remote path: {remotepath}')
+
+                _, stdout, stderr = ssh.exec_command(f'rm -rfv {remotepath}')
+                if stderr:
+                    print_error(stderr.read().decode(), end='')
+                print(stdout.read().decode(), end='')
+                print(f'=> Retrying')
+                try:
+                    sftp.put(
+                        localpath=localpath,
+                        remotepath=remotepath,
+                        callback=lambda bytes_received, filesize: display_progress_bar(
+                            bytes_received=bytes_received,
+                            filesize=filesize,
+                            localpath=localpath
+                        )
+                    )
+                except OSError as e:
+                    print_error(f'OSError: {e} while transferring {localpath} to {remotepath}')
+                    print_warning(f'Skipping {e}')
+            else:
+                print()
 
     _recursive_put(
         localpath=localpath,
@@ -166,40 +187,96 @@ def put(
     )
 
 
-if __name__ == '__main__':
+def print_paths(paths: List[str]) -> None:
+    for path in paths:
+        print(f'=> {path}')
+
+
+def sigint_handler(sig: int, sftp: SFTPClient, transport: Transport, ssh: SSHClient) -> None:
+    print(f'Received signal {sig}')
+    print('Closing sftp and ssh connection')
+    transport.close()
+    sftp.close()
+    ssh.close()
+    print('Exiting..')
+    sys.exit(1)
+
+
+def main() -> None:
+
+    # Arguments
     parser = get_parser()
     args = parser.parse_args()
     hostname = args.hostname
     port = args.port
     username = args.username
-    remotepaths = args.remotepaths
-    localpaths = args.localpaths
 
-    if not localpaths:
-        print('Provide at least one file to transfer')
+    localpaths, remotepaths = [], []
+    if args.paths:
+        add_remote = False
+        for path in args.paths:
+            if path == '--':
+                add_remote = True
+            elif add_remote:
+                remotepaths.append(path)
+            else:
+                localpaths.append(path)
+
+    print(':: Local paths')
+    print_paths(localpaths)
+    print()
+    print(':: Remote paths')
+    print_paths(remotepaths)
+    print()
+
+    if not localpaths or not remotepaths:
+        print('Provide at least one file to transfer and one remote destination')
         sys.exit(1)
 
     try:
-        sftp_client = get_sftp_client(
+        password = getpass.getpass()
+        sftp, transport = get_sftp_client(
             hostname=hostname,
             port=port,
-            username=username
+            username=username,
+            password=password
+        )
+        ssh = get_ssh_client(
+            hostname=hostname,
+            port=port,
+            username=username,
+            password=password
         )
     except SSHException as e:
         print(e)
         sys.exit(1)
 
-    if not sftp_client:
+    if not sftp:
         raise RuntimeError('No SFTPClient object obtained')
+
+    signal(SIGINT, handler=lambda sig, _: sigint_handler(
+        sig=sig,
+        sftp=sftp,
+        transport=transport,
+        ssh=ssh
+    ))
 
     # Transfer ops
     for localpath in localpaths:
-        for remotepath in args.remotepaths:
+        for remotepath in remotepaths:
             print(f':: Root path: {remotepath}')
             put(
-                sftp=sftp_client,
+                sftp=sftp,
+                ssh=ssh,
                 localpath=localpath,
                 remotepath=remotepath
             )
             print()
-    sftp_client.close()
+
+    transport.close()
+    sftp.close()
+    ssh.close()
+
+
+if __name__ == '__main__':
+    main()

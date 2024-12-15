@@ -44,7 +44,7 @@ alias nvim-remove='rm -rv\
   ~/.cache/nvim'
 alias poetry-register='poetry config pypi-token.pypi'
 alias fx='felix'
-alias backup='ssh-backup-server -H 192.168.1.28 -p 52301 -u simone ~/Codes ~/Music ~/.vault +++ /home/simone /mnt/WD'
+alias backup='ssh-backup-server -H 192.168.1.28 -p 52301 -u simone ~/Codes ~/.vault -- /home/simone /mnt/WD'
 
 # enable programmable completion features.
 if ! shopt -oq posix; then
