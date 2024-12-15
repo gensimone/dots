@@ -53,7 +53,7 @@ set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'niksingh710/minimal-tmux-status'
 
 # minimal-tmux-status configuration
-set -g @minimal-tmux-bg "#c3c2c5"
+set -g @minimal-tmux-bg "#c2c2c2"
 set -g @minimal-tmux-justify "centre"
 set -g @minimal-tmux-indicator-str " "
 set -g @minimal-tmux-indicator true

@@ -80,8 +80,8 @@ bindsym $mod+Shift+b exec --no-startup-id blueman-manager
 bindsym $mod+Return exec --no-startup-id kitty
 
 # -- bindsym -- screenshots
-bindsym $mod+Shift+p exec --no-startup-id maim --select "/home/$USER/Pictures/$(date).jpg"
-bindsym $mod+Ctrl+p exec --no-startup-id maim "/home/$USER/Pictures/$(date).jpg"
+bindsym $mod+Shift+p exec --no-startup-id maim -m 10 --select "/home/$USER/Pictures/$(date).jpg"
+bindsym $mod+Ctrl+p exec --no-startup-id maim -m 10 "/home/$USER/Pictures/$(date).jpg"
 
 # -- bindsym -- audio --
 bindsym XF86AudioRaiseVolume exec --no-startup-id ~/Codes/dots/scripts/volumecontrol -o i
