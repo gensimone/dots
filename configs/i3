@@ -53,17 +53,22 @@ for_window [instance="keepassxc"] floating enable
 for_window [instance="keepassxc"] resize set 800 600
 for_window [instance="keepassxc"] move scratchpad
 for_window [instance="keepassxc"] border pixel 2
-for_window [instance="pulsemixer"] floating enable
-for_window [instance="pulsemixer"] resize set 800 300
-for_window [instance="pulsemixer"] move scratchpad
-for_window [instance="pulsemixer"] border pixel 2
+for_window [instance="pulsemixer-sc"] floating enable
+for_window [instance="pulsemixer-sc"] resize set 800 300
+for_window [instance="pulsemixer-sc"] move scratchpad
+for_window [instance="pulsemixer-sc"] border pixel 2
+for_window [instance="set-theme-cli"] floating enable
+for_window [instance="set-theme-cli"] resize set 340 200
+for_window [instance="set-theme-cli"] border pixel 2
 
 # -- bindsym -- scratchpads
-bindsym $mod+t [instance="terminal"] scratchpad show; [instance="terminal"] move position center
 bindsym $mod+Shift+t exec --no-startup-id kitty --class terminal
+bindsym $mod+Shift+a exec --no-startup-id kitty --class pulsemixer-sc pulsemixer
+bindsym $mod+a [instance="pulsemixer-sc"] scratchpad show; [instance="pulsemixer-sc"] move position center
+bindsym $mod+t [instance="terminal"] scratchpad show; [instance="terminal"] move position center
 bindsym $mod+p [instance="keepassxc"] scratchpad show; [instance="keepassxc"] move position center
-bindsym $mod+a [instance="pulsemixer"] scratchpad show; [instance="pulsemixer"] move position center
-bindsym $mod+Shift+a exec --no-startup-id kitty --class pulsemixer --command pulsemixer
+
+# bindsym $mod+Control+s exec --no-startup-id kitty --class set-theme-cli set-theme-cli
 
 # -- bindsym -- general
 bindsym $mod+Escape exec ~/Codes/dots/scripts/lock
