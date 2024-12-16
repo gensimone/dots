@@ -32,6 +32,9 @@ for file in $AUR $PACMAN $PYTHON $UCONFIG $SCONFIG $CONFIGS $FONTS $THEMES; do
   fi
 done
 
+sudo pacman -R i3lock
+[ $? -ne 0 ] && sudo pacman -R i3lock-color
+
 sudo pacman -S --needed --noconfirm --overwrite "*" - <$PACMAN
 [ $? -ne 0 ] && exit 1
 
@@ -80,6 +83,10 @@ done <"$SCONFIG"
 mkdir -p ~/.local/share/fonts
 cp -v $FONTS/* ~/.local/share/fonts
 
+# -- Papirus
+mkdir ~/.icons
+cp -fv -rfv /usr/share/icons/Papirus ~/.icons
+
 pip install -qr $PYTHON
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm &&
   ~/.tmux/plugins/tpm/scripts/install_plugins.sh
@@ -97,4 +104,4 @@ sudo chmod a+wr /opt/spotify/Apps -R
 
 source ~/.bashrc
 
-set-theme ~/Codes/dots/themes/themes/space_dark_blue
+~/Codes/dots/scripts/set-theme-cli

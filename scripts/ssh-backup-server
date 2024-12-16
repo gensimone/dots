@@ -7,7 +7,7 @@ import getpass
 from signal import signal, SIGINT
 from argparse import ArgumentParser, REMAINDER
 from typing import Callable, List, Optional, Tuple
-from paramiko import SFTP, Transport, SSHClient, AutoAddPolicy
+from paramiko import Transport, SSHClient, AutoAddPolicy
 from paramiko.sftp_client import SFTPClient
 from paramiko.ssh_exception import AuthenticationException, SSHException
 
@@ -192,7 +192,12 @@ def print_paths(paths: List[str]) -> None:
         print(f'=> {path}')
 
 
-def sigint_handler(sig: int, sftp: SFTPClient, transport: Transport, ssh: SSHClient) -> None:
+def sigint_handler(
+        sig: int, 
+        sftp: SFTPClient, 
+        transport: Transport, 
+        ssh: SSHClient
+) -> None:
     print(f'Received signal {sig}')
     print('Closing sftp and ssh connection')
     transport.close()

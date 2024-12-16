@@ -1,8 +1,17 @@
 #!/bin/python
 
+from signal import signal, SIGINT
+import sys
 import subprocess as sp
 import curses
 import os
+
+
+def sigint_handler(_: int) -> None:
+    sys.exit(1)
+
+
+signal(signalnum=SIGINT, handler=lambda sig, _: sigint_handler(sig))
 
 
 def main(stdscr, theme_path: str) -> None:
@@ -11,7 +20,7 @@ def main(stdscr, theme_path: str) -> None:
 
     themes = [theme for theme in os.listdir(theme_path)]
 
-    cursor_position = 1
+    cursor_position = 0
 
     while True:
         stdscr.clear()
@@ -27,12 +36,20 @@ def main(stdscr, theme_path: str) -> None:
         stdscr.refresh()
         c = stdscr.getch()
 
-        if c == ord('k') and cursor_position > 0:
-            cursor_position -= 1
-        elif c == ord('j') and cursor_position < len(themes) - 1:
-            cursor_position += 1
+        if c == ord('k'):
+            if cursor_position > 0:
+                cursor_position -= 1
+            else:
+                cursor_position = len(themes) - 1
+
+        elif c == ord('j'):
+            if cursor_position < len(themes) - 1:
+                cursor_position += 1
+            else:
+                cursor_position = 0
+
         elif c == ord('\n'):
-            selected_theme = themes[cursor_position].split(': ')[0]
+            selected_theme = themes[cursor_position]
             stdscr.clear()
             curses.endwin()
             process = sp.Popen(f'set-theme {theme_path}/{selected_theme}', shell=True)

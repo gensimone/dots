@@ -1,3 +1,6 @@
+# Pywal16
+include ~/.cache/wal/colors-kitty.conf
+
 # -- Font
 font_family      CaskaydiaCove Nerd Font
 font_size        11.0
@@ -71,7 +74,7 @@ open_url_with default
 window_padding_width 4
 
 # -- Color scheme
-background_opacity 0.75
+background_opacity 0.9
 
 # -- Audio
 enable_audio_bell no
