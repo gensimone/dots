@@ -206,9 +206,9 @@ def put(
 
 
 def sigint_handler(
-        sig: int, 
-        sftp: SFTPClient, 
-        transport: Transport, 
+        sig: int,
+        sftp: SFTPClient,
+        transport: Transport,
         ssh: SSHClient
 ) -> None:
     print(f'Received signal {sig}')
@@ -220,6 +220,25 @@ def sigint_handler(
     sys.exit(1)
 
 
+def expand_paths(paths: str) -> List[Tuple[List[str], List[str]]]:
+    expanded_paths: List[Tuple[List[str], List[str]]] = []
+    localpaths, remotepaths = [], []
+    add_remote = False
+    for path in paths:
+        if path == '--':
+            add_remote = True
+        elif path == '++':
+            expanded_paths.append((localpaths, remotepaths))
+            localpaths, remotepaths = [], []
+            add_remote = False
+        elif add_remote:
+            remotepaths.append(path)
+        else:
+            localpaths.append(path)
+    expanded_paths.append((localpaths, remotepaths))
+    return expanded_paths
+
+
 def main() -> None:
 
     # Arguments
@@ -229,27 +248,29 @@ def main() -> None:
     port = args.port
     username = args.username
 
-    localpaths, remotepaths = [], []
-    if args.paths:
-        add_remote = False
-        for path in args.paths:
-            if path == '--':
-                add_remote = True
-            elif add_remote:
-                remotepaths.append(path)
-            else:
-                localpaths.append(path)
-
-    print(':: Local paths')
-    print_paths(localpaths)
-    print()
-    print(':: Remote paths')
-    print_paths(remotepaths)
-    print()
-
-    if not localpaths or not remotepaths:
+    if not args.paths:
         print('Provide at least one file to transfer and one remote destination')
         sys.exit(1)
+
+    expanded_paths = expand_paths(args.paths)
+
+    for paths in expanded_paths:
+        localpaths, remotepaths = paths
+
+        if not localpaths or not remotepaths:
+            print('Provide at least one file to transfer and one remote destination')
+            sys.exit(1)
+
+
+    for paths in expanded_paths:
+        localpaths, remotepaths = paths
+
+        print(':: Local paths')
+        print_paths(localpaths)
+        print()
+        print(':: Remote paths')
+        print_paths(remotepaths)
+        print()
 
     try:
         password = getpass.getpass()
@@ -279,17 +300,18 @@ def main() -> None:
         ssh=ssh
     ))
 
-    # Transfer ops
-    for localpath in localpaths:
-        for remotepath in remotepaths:
-            print(f':: Root path: {remotepath}')
-            put(
-                sftp=sftp,
-                ssh=ssh,
-                localpath=localpath,
-                remotepath=remotepath
-            )
-            print()
+    for paths in expanded_paths:
+        localpaths, remotepaths = paths
+        for localpath in localpaths:
+            for remotepath in remotepaths:
+                print(f':: Root path: {remotepath}')
+                put(
+                    sftp=sftp,
+                    ssh=ssh,
+                    localpath=localpath,
+                    remotepath=remotepath
+                )
+                print()
 
     transport.close()
     sftp.close()

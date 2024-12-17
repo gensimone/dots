@@ -13,5 +13,6 @@ nvim:.config/nvim
 picom:.config/picom/picom.conf
 pip:.config/pip/pip.conf
 polybar:.config/polybar
+ranger:.config/ranger
 tmux:.tmux.conf
 xsettingsd:.xsettingsd

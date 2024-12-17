@@ -19,7 +19,6 @@ dosfstools
 dunst
 fastfetch
 feh
-felix-rs
 ffmpeg
 flake8
 gdk-pixbuf2
@@ -53,6 +52,7 @@ polybar
 pulsemixer
 pyright
 python-pip
+ranger
 ripgrep
 ruby
 ruff

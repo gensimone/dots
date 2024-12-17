@@ -1,0 +1,3 @@
+#!/bin/bash
+
+tts -H 192.168.1.220 -p 49303 -u simone $@ -- /mnt/hdd-2/movies
