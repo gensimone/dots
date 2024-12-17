@@ -4,6 +4,7 @@ import shutil
 import sys
 import os
 import getpass
+import errno
 from signal import signal, SIGINT
 from argparse import ArgumentParser, REMAINDER
 from typing import Callable, List, Optional, Tuple
@@ -47,29 +48,17 @@ def get_parser() -> ArgumentParser:
     return parser
 
 
-def _handle_authentication_error(func: Callable) -> Callable:
-    def _inner(*args, **kwargs):
-        try:
-            return func(*args, **kwargs)
-        except AuthenticationException:
-            print(f'Invalid password')
-            return _inner(*args, **kwargs)
-    return _inner
+#########
+# Print #
+#########
 
 
-@_handle_authentication_error
-def get_ssh_client(hostname: str, port: int, username: str, password: str) -> SSHClient:
-    ssh_client = SSHClient()
-    ssh_client.set_missing_host_key_policy(AutoAddPolicy())
-    ssh_client.connect(hostname=hostname, username=username, port=port, password=password)
-    return ssh_client
+def print_error(msg: str, end: str = '\n') -> None:
+    print(f'\033[91m{msg}\033[0m', end=end)
 
 
-@_handle_authentication_error
-def get_sftp_client(hostname: str, port: int, username: str, password: str) -> Tuple[Optional[SFTPClient], Transport]:
-    transport = Transport((hostname, port))
-    transport.connect(username=username, password=password)
-    return SFTPClient.from_transport(transport), transport
+def print_warning(msg: str, end: str = '\n') -> None:
+    print(f'\033[93m{msg}\033[0m', end=end)
 
 
 def display_progress_bar(
@@ -101,16 +90,48 @@ def display_progress_bar(
     sys.stdout.flush()
 
 
+def print_paths(paths: List[str]) -> None:
+    for path in paths:
+        print(f'=> {path}')
+
+
+###########
+# Utility #
+###########
+
+
 def expand_filename(filename: str) -> str:
     return f'{os.path.expanduser('~')}{filename[1:]}' if filename.startswith('~') else filename
 
 
-def print_error(msg: str, end: str = '\n') -> None:
-    print(f'\033[91m{msg}\033[0m', end=end)
+##############
+# SSH & SFTP #
+##############
 
 
-def print_warning(msg: str, end: str = '\n') -> None:
-    print(f'\033[93m{msg}\033[0m', end=end)
+def _handle_authentication_error(func: Callable) -> Callable:
+    def _inner(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except AuthenticationException:
+            print(f'Invalid password')
+            return _inner(*args, **kwargs)
+    return _inner
+
+
+@_handle_authentication_error
+def get_ssh_client(hostname: str, port: int, username: str, password: str) -> SSHClient:
+    ssh_client = SSHClient()
+    ssh_client.set_missing_host_key_policy(AutoAddPolicy())
+    ssh_client.connect(hostname=hostname, username=username, port=port, password=password)
+    return ssh_client
+
+
+@_handle_authentication_error
+def get_sftp_client(hostname: str, port: int, username: str, password: str) -> Tuple[Optional[SFTPClient], Transport]:
+    transport = Transport((hostname, port))
+    transport.connect(username=username, password=password)
+    return SFTPClient.from_transport(transport), transport
 
 
 def put(
@@ -130,12 +151,10 @@ def put(
         basename = os.path.basename(localpath)
         remotepath = f'{remotepath}/{basename}'
 
-        # directory case
         if os.path.isdir(localpath):
-
             try:
                 sftp.mkdir(remotepath)
-            except OSError:
+            except OSError as e:
                 pass
 
             for file in os.listdir(localpath):
@@ -144,7 +163,6 @@ def put(
                     remotepath=remotepath
                 )
 
-        # file case
         else:
             try:
                 sftp.put(
@@ -185,11 +203,6 @@ def put(
         localpath=localpath,
         remotepath=remotepath
     )
-
-
-def print_paths(paths: List[str]) -> None:
-    for path in paths:
-        print(f'=> {path}')
 
 
 def sigint_handler(
