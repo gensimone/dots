@@ -80,5 +80,12 @@ cp -fv $wallpaper /usr/share/wallpapers/lightdm-wallpaper
 mkdir ~/.config/fastfetch/pngs
 cp -fv "$HOME/Codes/dots/themes/pngs/$fastfetch_image" ~/.config/fastfetch/pngs/
 
+# -- keepmenu
+echo "[dmenu]
+dmenu_command = dmenu -nb $color0 -nf $color15 -sb $color1 -sf $color15 -fn 'CaskaydiaCove Nerd Font:pixelsize=13'
+" >~/.config/keepmenu/tmp
+tail -n +4 ~/.config/keepmenu/config.ini >>~/.config/keepmenu/tmp
+mv ~/.config/keepmenu/tmp ~/Codes/dots/configs/keepmenu
+
 # -- notify
 notify-send "Theme changed"

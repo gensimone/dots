@@ -16,3 +16,4 @@ polybar:.config/polybar
 ranger:.config/ranger
 tmux:.tmux.conf
 xsettingsd:.xsettingsd
+keepmenu:.config/keepmenu/config.ini
