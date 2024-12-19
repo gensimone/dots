@@ -86,6 +86,7 @@ dmenu_command = dmenu -nb $color0 -nf $color15 -sb $color1 -sf $color15 -fn 'Cas
 " >~/.config/keepmenu/tmp
 tail -n +4 ~/.config/keepmenu/config.ini >>~/.config/keepmenu/tmp
 mv ~/.config/keepmenu/tmp ~/Codes/dots/configs/keepmenu
+killall keepmenu
 
 # -- notify
 notify-send "Theme changed"
