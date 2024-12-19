@@ -1,10 +1,6 @@
 [dmenu]
 dmenu_command = dmenu -nb #081117 -nf #c1c3c5 -sb #184D6D -sf #c1c3c5 -fn 'CaskaydiaCove Nerd Font:pixelsize=13'
 
-[dmenu_passphrase]
-obscure = False
-obscure_color = #222222
-
 [database]
 database_1 = ~/.vault/.nicefile
 keyfile_1 = 

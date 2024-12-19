@@ -30,7 +30,6 @@ gtk-engines
 gvfs
 i3
 jdk-openjdk
-keepassxc
 kitty
 less
 librsvg
@@ -81,6 +80,7 @@ wget
 wireplumber
 xclip
 xorg-xrandr
+xsel
 xsettingsd
 xss-lock
 zip

@@ -7,6 +7,7 @@ dunst:.config/dunst/dunstrc
 fastfetch:.config/fastfetch/config.jsonc
 git:.gitconfig
 i3:.config/i3/config
+keepmenu:.config/keepmenu/config.ini
 kitty:.config/kitty/kitty.conf
 musikcube:.config/musikcube/hotkeys.json
 nvim:.config/nvim
@@ -16,4 +17,3 @@ polybar:.config/polybar
 ranger:.config/ranger
 tmux:.tmux.conf
 xsettingsd:.xsettingsd
-keepmenu:.config/keepmenu/config.ini

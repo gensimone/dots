@@ -32,7 +32,6 @@ exec --no-startup-id batsignal -bp -n BAT1
 exec --no-startup-id caffeine &
 exec --no-startup-id python ~/Codes/dots/scripts/alternating_layouts
 exec --no-startup-id python ~/Codes/dots/scripts/i3_scr_auto_switch
-exec --no-startup-id keepassxc
 exec --no-startup-id wal -R
 exec --no-startup-id picom -b
 exec --no-startup-id nm-applet
@@ -51,11 +50,6 @@ for_window [instance="terminal"] resize set 1150 835
 for_window [instance="terminal"] move scratchpad
 for_window [instance="terminal"] border pixel 2
 
-for_window [instance="keepassxc"] floating enable
-for_window [instance="keepassxc"] resize set 800 600
-for_window [instance="keepassxc"] move scratchpad
-for_window [instance="keepassxc"] border pixel 2
-
 for_window [instance="pulsemixer"] floating enable
 for_window [instance="pulsemixer"] resize set 800 300
 for_window [instance="pulsemixer"] move scratchpad
@@ -67,7 +61,6 @@ bindsym $mod+Shift+a exec --no-startup-id kitty --class pulsemixer pulsemixer
 
 bindsym $mod+a [instance="pulsemixer"] scratchpad show; [instance="pulsemixer"] move position center
 bindsym $mod+t [instance="terminal"] scratchpad show; [instance="terminal"] move position center
-bindsym $mod+p [instance="keepassxc"] scratchpad show; [instance="keepassxc"] move position center
 
 # -- bindsym -- general
 bindsym $mod+Escape exec ~/Codes/dots/scripts/lock
@@ -82,6 +75,7 @@ bindsym $mod+d exec --no-startup-id ~/Codes/dots/scripts/dmenu_launcher
 bindsym $mod+b exec --no-startup-id chromium
 bindsym $mod+Shift+b exec --no-startup-id blueman-manager
 bindsym $mod+Return exec --no-startup-id kitty
+bindsym $mod+p exec --no-startup-id keepmenu -C
 
 # -- bindsym -- screenshots
 bindsym $mod+Shift+p exec --no-startup-id maim -m 10 --select "/home/$USER/Pictures/$(date).jpg"
