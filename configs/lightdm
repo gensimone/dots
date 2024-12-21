@@ -1,6 +1,7 @@
 [greeter]
 theme-name = oomox-colors-oomox
 icon-theme-name = Papirus
+cursor-theme-name=capitaine-cursors-light
 font-name = CaskaydiaCove Nerd Font Semi-Light 10
 background = /usr/share/wallpapers/lightdm-wallpaper
 hide-user-image = true
