@@ -44,6 +44,7 @@ alias nvim-remove='rm -rv\
   ~/.cache/nvim'
 alias poetry-register='poetry config pypi-token.pypi'
 alias fx='felix'
+alias gpu-show='lspci -k -d ::03xx'
 
 # bk aliases
 alias tts-vault='tts -H 192.168.1.56 -p 52301 -u simone ~/.vault -- /home/simone /mnt/WD /mnt/verbatim-pendrive'
