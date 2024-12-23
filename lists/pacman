@@ -40,6 +40,7 @@ man-db
 mpv
 neovim
 network-manager-applet
+python-paramiko
 networkmanager
 noto-fonts-emoji
 npm
