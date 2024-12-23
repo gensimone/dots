@@ -40,7 +40,6 @@ man-db
 mpv
 neovim
 network-manager-applet
-python-paramiko
 networkmanager
 noto-fonts-emoji
 npm
@@ -51,6 +50,7 @@ pipewire-pulse
 polybar
 pulsemixer
 pyright
+python-paramiko
 python-pip
 ranger
 ripgrep
