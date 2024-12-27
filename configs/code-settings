@@ -4,5 +4,6 @@
         "asvetliakov.vscode-neovim": 1
     },
     "editor.fontFamily": "CaskaydiaCove Nerd Font",
-    "git.openRepositoryInParentFolders": "never"
+    "git.openRepositoryInParentFolders": "never",
+    "editor.fontSize": 13
 }
