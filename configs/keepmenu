@@ -1,8 +1,8 @@
 [dmenu]
-dmenu_command = dmenu -nb #081117 -nf #c1c3c5 -sb #184D6D -sf #c1c3c5 -fn 'CaskaydiaCove Nerd Font:pixelsize=13'
+dmenu_command = dmenu -nb #10100c -nf #c3c3c2 -sb #B05226 -sf #c3c3c2 -fn 'CaskaydiaCove Nerd Font:pixelsize=13'
 
 [database]
-database_1 = ~/.vault/.nicefile
+database_1 = ~/Vaults/kp-vault
 keyfile_1 = 
 pw_cache_period_min = 360
 autotype_default = {USERNAME}{TAB}{PASSWORD}{ENTER}

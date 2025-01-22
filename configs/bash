@@ -12,6 +12,19 @@ HISTFILESIZE=200
 shopt -s checkwinsize
 
 # aliases.
+alias grep='grep --color=auto'
+alias ls='ls --color=auto'
+alias pacman='pacman --color=auto'
+alias df='df -h'
+alias du='du -h'
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -i'
+alias dots='cd ~/Codes/dots'
+alias paclean='pacman -Qtdq | sudo pacman -Rns -'
+alias gpt='tgpt --multiline'
+alias poetry-register='poetry config pypi-token.pypi'
+alias gpu-show='lspci -k -d ::03xx'
 alias glog="git log\
   --graph\
   --abbrev-commit\
@@ -23,36 +36,11 @@ alias glog="git log\
  %C(dim white)-\
  %an%C(reset)%C(auto)%d%C(reset)'\
  --all"
-alias screen-off='xrandr --output eDP-1 --off'
-alias dots='cd ~/Codes/dots'
-alias ls='ls --color=auto'
-alias cp='cp -i'
-alias mv='mv -i'
-alias rm='rm -i'
-alias grep='grep --color=auto'
-alias gpt='tgpt --multiline'
-alias pacman='pacman --color=auto'
-alias paclean='pacman -Qtdq | sudo pacman -Rns -'
-alias wlan0-on='iwctl device wlan0 set-property Powered on'
-alias wlan0-off='iwctl device wlan0 set-property Powered off'
-alias ftp='sftp'
-alias df='df -h'
-alias du='du -h'
-alias nvim-remove='rm -rv\
-  ~/.local/share/nvim\
-  ~/.local/state/nvim\
-  ~/.cache/nvim'
-alias poetry-register='poetry config pypi-token.pypi'
-alias fx='felix'
-alias gpu-show='lspci -k -d ::03xx'
-alias poweroff-backup-server="ssh backup-server 'sudo poweroff'"
-
-# bk aliases
-alias tts-vault='tts -H 192.168.1.56 -p 52301 -u simone ~/.vault -- /home/simone /mnt/WD /mnt/verbatim-pendrive'
-alias tts-codes='tts -H 192.168.1.56 -p 52301 -u simone ~/Codes -- /mnt/WD'
-alias tts-music='tts -H 192.168.1.56 -p 52301 -u simone ~/Music -- /mnt/WD'
-alias tts-unive='tts -H 192.168.1.56 -p 52301 -u simone ~/University/ -- /mnt/WD'
-alias tts-full='tts -H 192.168.1.56 -p 52301 -u simone ~/.vault -- /home/simone /mnt/WD /mnt/verbatim-pendrive ++ ~/Music -- /mnt/WD ++ ~/Codes -- /mnt/WD /mnt/verbatim-pendrive ++ ~/University -- /mnt/WD'
+# alias tts-vault='tts -H 192.168.1.56 -p 52301 -u simone ~/.vault -- /home/simone /mnt/WD /mnt/verbatim-pendrive'
+# alias tts-codes='tts -H 192.168.1.56 -p 52301 -u simone ~/Codes -- /mnt/WD'
+# alias tts-music='tts -H 192.168.1.56 -p 52301 -u simone ~/Music -- /mnt/WD'
+# alias tts-unive='tts -H 192.168.1.56 -p 52301 -u simone ~/University/ -- /mnt/WD'
+# alias tts-full='tts -H 192.168.1.56 -p 52301 -u simone ~/.vault -- /home/simone /mnt/WD /mnt/verbatim-pendrive ++ ~/Music -- /mnt/WD ++ ~/Codes -- /mnt/WD /mnt/verbatim-pendrive ++ ~/University -- /mnt/WD'
 
 # enable programmable completion features.
 if ! shopt -oq posix; then
