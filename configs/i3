@@ -27,7 +27,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/Codes/dots/scripts/lock
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id dunst &
 exec --no-startup-id xsettingsd &
-exec --no-startup-id blueman-applet &
+exec --no-startup-id blueberry-tray &
 exec --no-startup-id batsignal -bp -n BAT1
 exec --no-startup-id caffeine &
 exec --no-startup-id python ~/Codes/dots/scripts/alternating_layouts
@@ -42,8 +42,8 @@ exec --no-startup-id kitty --class pulsemixer pulsemixer
 exec --no-startup-id kitty --class terminal
 
 # -- windows rules --
-for_window [instance="blueman-manager"] floating enable
-for_window [instance="blueman-manager"] move position center
+for_window [instance="blueberry"] floating enable
+for_window [instance="blueberry"] move position center
 
 for_window [instance="terminal"] floating enable
 for_window [instance="terminal"] resize set 1150 835

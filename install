@@ -32,9 +32,6 @@ for file in $AUR $PACMAN $PYTHON $UCONFIG $SCONFIG $CONFIGS $FONTS $THEMES; do
   fi
 done
 
-sudo pacman -R i3lock
-[ $? -ne 0 ] && sudo pacman -R i3lock-color
-
 sudo pacman -S --needed --noconfirm --overwrite "*" - <$PACMAN
 [ $? -ne 0 ] && exit 1
 
@@ -52,9 +49,6 @@ fi
 
 # -- AUR packages installation --
 yay -S --needed --noconfirm - <$AUR
-
-# -- i3lock-color (workaround: i3lock dependency of i3)
-sudo pacman --noconfirm -R i3lock && yay -S --needed --noconfirm i3lock-color
 
 # -- lightdm wallpaper
 sudo mkdir /usr/share/wallpapers/
