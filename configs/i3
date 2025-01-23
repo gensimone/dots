@@ -73,8 +73,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m '' -b 'Yes, exit i3' 'i3-msg 
 bindsym XF86MonBrightnessUp exec --no-startup-id ~/Codes/dots/scripts/brightnesscontrol i
 bindsym XF86MonBrightnessDown exec --no-startup-id ~/Codes/dots/scripts/brightnesscontrol d
 bindsym $mod+d exec --no-startup-id ~/Codes/dots/scripts/dmenu_launcher
-bindsym $mod+b exec --no-startup-id chromium
-bindsym $mod+Shift+b exec --no-startup-id blueman-manager
+bindsym $mod+b exec --no-startup-id zen-browser
 bindsym $mod+Return exec --no-startup-id kitty
 bindsym $mod+p exec --no-startup-id keepmenu -C
 
