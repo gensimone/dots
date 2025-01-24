@@ -74,7 +74,7 @@ open_url_with default
 window_padding_width 4
 
 # -- Color scheme
-background_opacity 0.65
+background_opacity 0.8
 
 # -- Audio
 enable_audio_bell no

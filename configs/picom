@@ -170,7 +170,7 @@ blur-size = 7
 #
 # blur-deviation = false
 #
-blur-strength = 17
+blur-strength = 16
 
 # Blur background of semi-transparent / ARGB windows.
 # Bad in performance, with driver-dependent behavior.
