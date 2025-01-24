@@ -11,6 +11,7 @@ keepmenu:.config/keepmenu/config.ini
 kitty:.config/kitty/kitty.conf
 musikcube:.config/musikcube/hotkeys.json
 nvim:.config/nvim
+clipcat:.config/clipcat
 nyaa:.config/nyaa/config.toml
 picom:.config/picom/picom.conf
 pip:.config/pip/pip.conf

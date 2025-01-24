@@ -1,5 +1,5 @@
 [dmenu]
-dmenu_command = dmenu -nb #150d12 -nf #c4c2c3 -sb #66602D -sf #c4c2c3 -fn 'CaskaydiaCove Nerd Font:pixelsize=13'
+dmenu_command = dmenu -nb #070707 -nf #c1c1c1 -sb #4C4C4C -sf #c1c1c1 -fn 'CaskaydiaCove Nerd Font:pixelsize=13'
 
 [database]
 database_1 = ~/Vaults/kp-vault

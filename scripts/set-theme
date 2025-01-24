@@ -88,5 +88,19 @@ tail -n +4 ~/.config/keepmenu/config.ini >>~/.config/keepmenu/tmp
 mv ~/.config/keepmenu/tmp ~/Codes/dots/configs/keepmenu
 killall keepmenu
 
+# -- keepmenu
+echo "server_endpoint = \"/run/user/1000/clipcat/grpc.sock\"
+finder = \"dmenu\"
+preview_length = 80
+
+[dmenu]
+line_length = 100
+menu_length = 30
+menu_prompt = \"Clipcat\"
+extra_arguments = [\"-nb\", \"$color0\", \"-nf\", \"$color15\", \"-sb\", \"$color1\", \"-sf\", \"$color15\", \"-fn\", \"CaskaydiaCove Nerd Font:pixelsize=13\"]
+" >~/.config/clipcat/tmp
+tail -n +11 ~/.config/clipcat/clipcat-menu.toml >>~/.config/clipcat/tmp
+mv ~/.config/clipcat/tmp ~/Codes/dots/configs/clipcat/clipcat-menu.toml
+
 # -- notify
 notify-send "Theme changed"
