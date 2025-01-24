@@ -36,32 +36,41 @@ exec --no-startup-id wal -R
 exec --no-startup-id picom -b
 exec --no-startup-id nm-applet
 exec --no-startup-id megasync &
+exec --no-startup-id clipcatd &
 exec --no-startup-id sleep 1 && ~/.config/polybar/launch.sh
 
 # -- startup programs -- scratchpads --
 exec --no-startup-id kitty --class pulsemixer pulsemixer
 exec --no-startup-id kitty --class terminal
+exec --no-startup-id kitty --class musikcube
 
 # -- windows rules --
 for_window [instance="blueberry"] floating enable
 for_window [instance="blueberry"] move position center
 
-for_window [instance="terminal"] floating enable
-for_window [instance="terminal"] resize set 1150 835
-for_window [instance="terminal"] move scratchpad
-for_window [instance="terminal"] border pixel 2
-
+# -- pulsemixer scratchpad
 for_window [instance="pulsemixer"] floating enable
 for_window [instance="pulsemixer"] resize set 800 300
 for_window [instance="pulsemixer"] move scratchpad
 for_window [instance="pulsemixer"] border pixel 2
-
-# -- bindsym -- scratchpads
-bindsym $mod+Shift+t exec --no-startup-id kitty --class terminal
+bindsym $mod+a [instance="pulsemixer"] scratchpad show; [instance="pulsemixer"] move position center
 bindsym $mod+Shift+a exec --no-startup-id kitty --class pulsemixer pulsemixer
 
-bindsym $mod+a [instance="pulsemixer"] scratchpad show; [instance="pulsemixer"] move position center
+# -- musikcube scratchpad
+for_window [instance="musikcube"] floating enable
+for_window [instance="musikcube"] resize set 800 300
+for_window [instance="musikcube"] move scratchpad
+for_window [instance="musikcube"] border pixel 2
+bindsym $mod+Shift+m exec --no-startup-id kitty --class musikcube musikcube
+bindsym $mod+m [instance="musikcube"] scratchpad show; [instance="musikcube"] move position center
+
+# -- terminal scratchpad
+for_window [instance="terminal"] floating enable
+for_window [instance="terminal"] resize set 1150 835
+for_window [instance="terminal"] move scratchpad
+for_window [instance="terminal"] border pixel 2
 bindsym $mod+t [instance="terminal"] scratchpad show; [instance="terminal"] move position center
+bindsym $mod+Shift+t exec --no-startup-id kitty --class terminal
 
 # -- bindsym -- general
 bindsym $mod+Escape exec ~/Codes/dots/scripts/lock
@@ -76,6 +85,7 @@ bindsym $mod+d exec --no-startup-id ~/Codes/dots/scripts/dmenu_launcher
 bindsym $mod+b exec --no-startup-id zen-browser
 bindsym $mod+Return exec --no-startup-id kitty
 bindsym $mod+p exec --no-startup-id keepmenu -C
+bindsym $mod+c exec --no-startup-id clipcat-menu
 
 # -- bindsym -- screenshots
 bindsym $mod+Shift+p exec --no-startup-id maim -m 10 --select "/home/$USER/Pictures/$(date).jpg"
@@ -85,7 +95,7 @@ bindsym $mod+Ctrl+p exec --no-startup-id maim -m 10 "/home/$USER/Pictures/$(date
 bindsym XF86AudioRaiseVolume exec --no-startup-id ~/Codes/dots/scripts/volumecontrol -o i
 bindsym XF86AudioLowerVolume exec --no-startup-id ~/Codes/dots/scripts/volumecontrol -o d
 bindsym XF86AudioMute exec --no-startup-id ~/Codes/dots/scripts/volumecontrol -o m
-bindsym $mod+m exec --no-startup-id ~/Codes/dots/scripts/volumecontrol -i m
+bindsym $mod+Ctrl+m exec --no-startup-id ~/Codes/dots/scripts/volumecontrol -i m
 
 # -- focus window --
 bindsym $mod+h focus left

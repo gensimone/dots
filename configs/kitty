@@ -3,7 +3,7 @@ include ~/.cache/wal/colors-kitty.conf
 
 # -- Font
 font_family      CaskaydiaCove Nerd Font
-font_size        10.0
+font_size        10
 bold_font        auto
 italic_font      auto
 bold_italic_font auto
@@ -74,7 +74,7 @@ open_url_with default
 window_padding_width 4
 
 # -- Color scheme
-background_opacity 0.9
+background_opacity 0.65
 
 # -- Audio
 enable_audio_bell no
