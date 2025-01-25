@@ -1,6 +1,8 @@
 set $mod Mod4
-font pango:Iosevka Nerd Font 9
-for_window [class="^.*"] border pixel 2
+font pango:CaskaydiaCove Nerd Font 10
+# for_window [class="^.*"] border pixel 2  # basically removes the decoration on top of the windows
+for_window [class="[.]*"] floating enable
+default_border normal 2
 gaps inner 25
 gaps outer 8
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -15,7 +17,7 @@ set_from_resource $fg i3wm.color7 #f0f0f0
 set_from_resource $bg i3wm.color2 #f0f0f0
 
 # class                 border  backgr. text indicator child_border
-client.unfocused          $bg     $bg     $fg  $bg       $bg
+client.unfocused          $bg     $bg     $fg  $bg       $fg
 client.unfocused_inactive $fg     $bg     $fg  $bg       $fg
 client.focused            $fg     $bg     $fg  $bg       $fg
 client.urgent             $bg     $bg     $fg  $bg       $bg
@@ -34,10 +36,9 @@ exec --no-startup-id python ~/Codes/dots/scripts/alternating_layouts
 exec --no-startup-id python ~/Codes/dots/scripts/i3_scr_auto_switch
 exec --no-startup-id wal -R
 exec --no-startup-id picom -b
-exec --no-startup-id nm-applet
-exec --no-startup-id megasync &
-exec --no-startup-id clipcatd &
+exec --no-startup-id nm-applet &
 exec --no-startup-id sleep 1 && ~/.config/polybar/launch.sh
+exec --no-startup-id clipcatd &
 
 # -- startup programs -- scratchpads --
 exec --no-startup-id kitty --class pulsemixer pulsemixer
@@ -45,6 +46,8 @@ exec --no-startup-id kitty --class terminal
 exec --no-startup-id kitty --class musikcube
 
 # -- windows rules --
+for_window [instance="kitty"] resize set 1200 800
+for_window [instance="kitty"] move position center
 for_window [instance="blueberry"] floating enable
 for_window [instance="blueberry"] move position center
 
@@ -58,7 +61,7 @@ bindsym $mod+Shift+a exec --no-startup-id kitty --class pulsemixer pulsemixer
 
 # -- musikcube scratchpad
 for_window [instance="musikcube"] floating enable
-for_window [instance="musikcube"] resize set 800 300
+for_window [instance="musikcube"] resize set 1050 480
 for_window [instance="musikcube"] move scratchpad
 for_window [instance="musikcube"] border pixel 2
 bindsym $mod+Shift+m exec --no-startup-id kitty --class musikcube musikcube
