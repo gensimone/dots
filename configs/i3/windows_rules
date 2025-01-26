@@ -1,15 +1,19 @@
 for_window [instance="kitty"] resize set 1000 630
 for_window [instance="kitty"] move position center
+
 for_window [instance="blueberry"] floating enable
 for_window [instance="blueberry"] move position center
+
 for_window [instance="pulsemixer"] floating enable
 for_window [instance="pulsemixer"] resize set 800 300
 for_window [instance="pulsemixer"] move scratchpad
 for_window [instance="pulsemixer"] border pixel 2
+
 for_window [instance="musikcube"] floating enable
 for_window [instance="musikcube"] resize set 1050 480
 for_window [instance="musikcube"] move scratchpad
 for_window [instance="musikcube"] border pixel 2
+
 for_window [instance="terminal"] floating enable
 for_window [instance="terminal"] resize set 1150 835
 for_window [instance="terminal"] move scratchpad

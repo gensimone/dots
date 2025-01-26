@@ -10,7 +10,6 @@ bindsym XF86MonBrightnessDown exec --no-startup-id ~/Codes/dots/scripts/brightne
 bindsym $mod+d exec --no-startup-id ~/Codes/dots/scripts/dmenu_launcher
 bindsym $mod+b exec --no-startup-id zen-browser
 bindsym $mod+Return exec --no-startup-id kitty
-bindsym $mod+p exec --no-startup-id keepmenu -C
 bindsym $mod+c exec --no-startup-id clipcat-menu
 
 # -- bindsym -scratchpads
