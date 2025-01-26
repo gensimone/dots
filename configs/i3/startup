@@ -1,0 +1,17 @@
+exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/Codes/dots/scripts/lock
+exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id dunst &
+exec --no-startup-id xsettingsd &
+exec --no-startup-id blueberry-tray &
+exec --no-startup-id batsignal -bp -n BAT1
+exec --no-startup-id caffeine &
+exec --no-startup-id python ~/Codes/dots/scripts/alternating_layouts
+exec --no-startup-id python ~/Codes/dots/scripts/i3_scr_auto_switch
+exec --no-startup-id wal -R
+exec --no-startup-id picom -b
+exec --no-startup-id clipcatd &
+exec --no-startup-id nm-applet &
+exec --no-startup-id sleep 1 && ~/.config/polybar/launch.sh
+exec --no-startup-id kitty --class pulsemixer pulsemixer
+exec --no-startup-id kitty --class terminal
+exec --no-startup-id kitty --class musikcube
