@@ -5,7 +5,7 @@ include ~/.config/i3/windows_rules
 set $mod Mod4
 font pango:CaskaydiaCove Nerd Font 10
 # for_window [class="^.*"] border pixel 2  # basically removes the decoration on top of the windows
-for_window [class="[.]*"] floating enable
+# for_window [class="[.]*"] floating enable
 default_border normal 3
 gaps inner 25
 gaps outer 8

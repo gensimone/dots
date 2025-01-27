@@ -12,6 +12,8 @@ exec --no-startup-id picom -b
 exec --no-startup-id clipcatd &
 exec --no-startup-id nm-applet &
 exec --no-startup-id sleep 1 && ~/.config/polybar/launch.sh
+
+# -- scratchpads
 exec --no-startup-id kitty --class pulsemixer pulsemixer
+exec --no-startup-id kitty --class musikcube musikcube
 exec --no-startup-id kitty --class terminal
-exec --no-startup-id kitty --class musikcube
