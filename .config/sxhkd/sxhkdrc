@@ -1,19 +1,19 @@
 XF86AudioRaiseVolume
-	amixer sset 'Master' 10%+
+        pulsemixer --set-volume +$(($(pulsemixer --get-volume | cut -d ' ' -f 1)+10))
 XF86AudioLowerVolume
-	amixer sset 'Master' 10%-
+        pulsemixer --set-volume $(($(pulsemixer --get-volume | cut -d ' ' -f 1)-10))
 XF86AudioMute
-  amixer sset 'Master' 0%
+        pulsemixer --toggle-mute
 XF86MonBrightnessUp
 	brightnessctl set 10%+
 XF86MonBrightnessDown
 	brightnessctl set 10%-
 alt + i
-	amixer sset 'Master' 10%+
+        pulsemixer --set-volume +$(($(pulsemixer --get-volume | cut -d ' ' -f 1)+10))
 alt + u
-	amixer sset 'Master' 10%-
+        pulsemixer --set-volume $(($(pulsemixer --get-volume | cut -d ' ' -f 1)-10))
 alt + m
-        amixer sset 'Master' 0%
+        pulsemixer --toggle-mute
 alt + Escape
 	slock
 alt + c
