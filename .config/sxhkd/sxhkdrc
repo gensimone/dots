@@ -14,6 +14,8 @@ alt + u
         pulsemixer --set-volume $(($(pulsemixer --get-volume | cut -d ' ' -f 1)-10))
 alt + m
         pulsemixer --toggle-mute
+alt + n
+        pulsemixer --toggle-mute --id source-1
 alt + Escape
 	slock
 alt + c
