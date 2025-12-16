@@ -17,7 +17,7 @@ append_path () {
 append_path $HOME/.local/bin
 append_path $HOME/.cargo/bin
 
-PS1='[\W]\$ '
+PS1='[\W]\n:: '
 
 set -o vi
 
@@ -39,4 +39,4 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-eval "$(starship init bash)"
+export PROMPT_COMMAND="echo"
