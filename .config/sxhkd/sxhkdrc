@@ -4,6 +4,8 @@ XF86AudioLowerVolume
         pulsemixer --set-volume $(($(pulsemixer --get-volume | cut -d ' ' -f 1)-10))
 XF86AudioMute
         pulsemixer --toggle-mute
+XF86AudioMicMute
+        pulsemixer --toggle-mute --id source-1
 XF86MonBrightnessUp
 	brightnessctl set 10%+
 XF86MonBrightnessDown
