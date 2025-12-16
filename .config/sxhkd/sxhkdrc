@@ -1,0 +1,22 @@
+XF86AudioRaiseVolume
+	amixer sset 'Master' 10%+
+XF86AudioLowerVolume
+	amixer sset 'Master' 10%-
+XF86AudioMute
+  amixer sset 'Master' 0%
+XF86MonBrightnessUp
+	brightnessctl set 10%+
+XF86MonBrightnessDown
+	brightnessctl set 10%-
+alt + i
+	amixer sset 'Master' 10%+
+alt + u
+	amixer sset 'Master' 10%-
+alt + m
+        amixer sset 'Master' 0%
+alt + Escape
+	slock
+alt + c
+        clipmenu
+alt + d
+        /home/simone/.local/bin/ddocs
