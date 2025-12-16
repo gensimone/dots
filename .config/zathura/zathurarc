@@ -17,11 +17,6 @@ set completion-group-fg         "#ED722E"
 set completion-highlight-bg     "#969896"
 set completion-highlight-fg     "#21252D"
 
-set index-bg                    "#1A1A1A"
-set index-fg                    "#C5C8C6"
-set index-active-bg             "#C5C8C6"
-set index-active-fg             "#1A1A1A"
-
 set inputbar-bg                 "#1A1A1A"
 set inputbar-fg                 "#C5C8C6"
 set statusbar-bg                "#C5C8C6"
