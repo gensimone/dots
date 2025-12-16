@@ -5,6 +5,6 @@ if [ "$#" -eq 0 ]; then
   exit 1
 fi
 
-sudo cryptsetup luksOpen $1 encrypted
-mkdir -p $HOME/external
+sudo cryptsetup luksOpen $1 encrypted &&\
+mkdir -p $HOME/external &&\
 sudo mount /dev/mapper/encrypted $HOME/external
