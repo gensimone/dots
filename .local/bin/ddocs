@@ -1,9 +1,6 @@
 #!/bin/sh
 
 
-TARGET="$(xdg-user-dir DOCUMENTS)"
-CHOOICE=$(find $TARGET -name *.pdf | dmenu -i -l 5)
-
-if [ -n "$CHOOICE" ]; then
-        zathura "$CHOOICE"
-fi
+PDF="$(xdg-user-dir DOCUMENTS)/pdf"
+CHOOICE=$(find $PDF -iname *.pdf -exec basename {} \; | dmenu -i -l 10)
+[ -n "$CHOOICE" ] && zathura "$PDF/$CHOOICE"
