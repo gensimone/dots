@@ -4,7 +4,7 @@
 
 LOCK="/tmp/setup-monitor.lock"
 
-trap 'rm -fv "$LOCK"; exit 0' SIGINT SIGTERM
+trap 'rm -f "$LOCK"; exit 0' SIGINT SIGTERM
 if [ -f "$LOCK" ]; then
         echo "Lock file exists: $LOCK"
         exit 1
@@ -43,4 +43,4 @@ while true; do
         sleep 3s
 done
 
-rm -fv "$LOCK"
+rm -f "$LOCK"
