@@ -31,7 +31,7 @@ if [ -f ~/.bash_aliases ]; then
 fi
 
 lmlbk() {
-        lmount $@ && locbk $HOME/external && lumount
+        lmount $@ && locbk && lumount
 }
 
 h() {
