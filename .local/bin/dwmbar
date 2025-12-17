@@ -1,0 +1,9 @@
+#!/bin/sh
+
+
+while true; do 
+        DATE="$(date '+%d %A %R')"
+        BATTERY="$(acpi | awk '{print $4, $5}')"
+        xsetroot -name "$DATE - $BATTERY"
+        sleep 60s
+done
