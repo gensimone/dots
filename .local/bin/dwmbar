@@ -1,9 +1,24 @@
 #!/bin/sh
 
+# Handle lock file
+
+LOCK="/tmp/dwmbar.lock"
+
+trap 'rm -f "$LOCK"; exit 0' SIGINT SIGTERM
+if [ -f "$LOCK" ]; then
+        echo "Lock file exists: $LOCK"
+        exit 1
+elif ! touch $LOCK; then
+        echo "Could not create lock file: $LOCK"
+        exit 1
+fi
+
+echo "$$" > $LOCK
 
 while true; do 
         DATE="$(date '+%d %A %R')"
-        BATTERY="$(acpi | awk '{print $4, $5}')"
-        xsetroot -name "$DATE - $BATTERY"
+        xsetroot -name "$DATE"
         sleep 60s
 done
+
+rm -f "$LOCK"
