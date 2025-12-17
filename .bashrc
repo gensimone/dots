@@ -17,7 +17,7 @@ append_path () {
 append_path $HOME/.local/bin
 append_path $HOME/.cargo/bin
 
-PS1='[\W]\n:: '
+PS1='[\W]$ '
 
 set -o vi
 
