@@ -1,36 +1,14 @@
 #!/bin/sh
 
-if [ "$#" -eq 0 ]; then
-  echo "Path not specified."
-  exit 1
-elif [ ! -d "$1" ]; then
-  echo "The specified path does not exist."
-  exit 1
-fi
-
-bk() {
-  rsync --archive --delete --partial --progress --verbose -hhh "$@";
-}
-
-while true; do
-  read -p "Proceeding with "$1" ? " yn
-  case $yn in
-    [Yy]* )
-      start=$(date "+%s")
-      mkdir -p "$1"/backup
-      bk "$HOME/codes"            "$1"/backup
-      bk "$HOME/documents"        "$1"/backup
-      bk "$HOME/music"            "$1"/backup
-      bk "$HOME/vault"            "$1"/backup
-      end=$(date "+%s")
-      notify-send "Local backup done. Took $((end-start)) seconds"
-      break
-      ;;
-    [Nn]* )
-      exit
-      ;;
-    * )
-      echo "Please answer yes or no."
-      ;;
-  esac
-done
+rsync \
+--archive \
+--delete \
+--partial \
+--progress \
+--verbose \
+-hhh \
+/home/simone/codes \
+/home/simone/documents \
+/home/simone/music \
+/home/simone/vault \
+/home/simone/external/backup
