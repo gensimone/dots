@@ -2,7 +2,6 @@
 
 rsync \
 --archive \
---delete \
 --partial \
 --progress \
 --verbose \
