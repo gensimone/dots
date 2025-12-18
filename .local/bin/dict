@@ -1,0 +1,15 @@
+#!/bin/bash
+
+QUERY=$(echo "" | dmenu -p "Query: ")
+
+if [ -n "$QUERY" ]; then
+  RESPONSE=$(wget -qO- "https://api.dictionaryapi.dev/api/v2/entries/en/$QUERY")
+  CHOOICE=$(echo $RESPONSE | jq '.[]? | .meanings[]? | ["("+.partOfSpeech+") ", .definitions[]?.definition] | join("")' | dmenu -p "Results:" -l 5)  
+else
+        echo "Aborting.."
+        exit 0
+fi
+
+CHOOICE=$(echo $CHOOICE | sed -e $'s/\.,/\\n -/g')
+
+echo -n $CHOOICE | xclip -selection clipboard
