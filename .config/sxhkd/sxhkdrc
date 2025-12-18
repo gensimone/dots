@@ -1,7 +1,7 @@
 XF86AudioRaiseVolume
-        pulsemixer --set-volume +$(($(pulsemixer --get-volume | cut -d ' ' -f 1)+10))
+        pulsemixer --set-volume +$(($(pulsemixer --get-volume | cut -d ' ' -f 1)+5))
 XF86AudioLowerVolume
-        pulsemixer --set-volume $(($(pulsemixer --get-volume | cut -d ' ' -f 1)-10))
+        pulsemixer --set-volume $(($(pulsemixer --get-volume | cut -d ' ' -f 1)-5))
 XF86AudioMute
         pulsemixer --toggle-mute
 XF86AudioMicMute
@@ -11,9 +11,9 @@ XF86MonBrightnessUp
 XF86MonBrightnessDown
 	brightnessctl set 10%-
 alt + i
-        pulsemixer --set-volume +$(($(pulsemixer --get-volume | cut -d ' ' -f 1)+10))
+        pulsemixer --set-volume +$(($(pulsemixer --get-volume | cut -d ' ' -f 1)+5))
 alt + u
-        pulsemixer --set-volume $(($(pulsemixer --get-volume | cut -d ' ' -f 1)-10))
+        pulsemixer --set-volume $(($(pulsemixer --get-volume | cut -d ' ' -f 1)-5))
 alt + m
         pulsemixer --toggle-mute
 alt + n
