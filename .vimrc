@@ -16,7 +16,7 @@ set wildignore+=**/__py_cache__/**
 set wildmenu
 set makeprg=clear;\ make
 syntax on
-colorscheme openbsd
+colorscheme custom
 
 let g:netrw_browse_split = 4
 let g:netrw_banner = 0
