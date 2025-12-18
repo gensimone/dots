@@ -25,4 +25,4 @@ alt + c
 alt + d
         /home/simone/.local/bin/dmenu-docs
 alt + a
-        /home/simone/.local/bin/dmenu-dict
+        LC_ALL=it_IT.UTF-8 /home/simone/.local/bin/dmenu-tran
