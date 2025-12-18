@@ -1,141 +1,9 @@
-" Vim color file
-" Name: openbsd
-" Author: Dee Sub Wun
-
-
 set background=dark
 hi clear
 if exists("syntax_on")
   syntax reset
 endif
-let g:colors_name = "openbsd"
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                      GUI                                     "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-""""""
-" SYNTAX HIGHLIGHTING
-""""""""""""""""""""""""
-hi Constant         gui=NONE              guifg=#93BF3D         guibg=NONE
-hi String           gui=NONE              guifg=#AFAFBE         guibg=NONE
-hi Character        gui=NONE              guifg=#EBAF12         guibg=NONE
-hi Number           gui=NONE              guifg=#AFAFBE         guibg=NONE
-hi Boolean          gui=NONE              guifg=#AFAFBE         guibg=NONE
-hi Float            gui=NONE              guifg=#AFAFBE         guibg=NONE
-hi Comment          gui=italic            guifg=#009AB5         guibg=NONE
-
-hi Identifier       gui=NONE              guifg=#BF3131         guibg=NONE
-hi Function         gui=NONE              guifg=#DEDEDE         guibg=NONE
-
-hi Statement        gui=bold              guifg=#EBAF12         guibg=NONE
-hi Conditional      gui=bold              guifg=#EBAF12         guibg=NONE
-hi Repeat           gui=bold              guifg=#EBAF12         guibg=NONE
-hi Label            gui=bold              guifg=#EBAF12         guibg=NONE
-hi Operator         gui=NONE              guifg=#808080         guibg=NONE
-hi Keyword          gui=bold              guifg=#EBAF12         guibg=NONE
-hi Exception        gui=NONE              guifg=#C067CC         guibg=NONE
-
-hi PreProc          gui=NONE              guifg=#C067CC         guibg=NONE
-hi Include          gui=NONE              guifg=#C067CC         guibg=NONE
-hi Define           gui=NONE              guifg=#C067CC         guibg=NONE
-hi Macro            gui=NONE              guifg=#C067CC         guibg=NONE
-hi PreCondit        gui=NONE              guifg=#C067CC         guibg=NONE
-
-hi Type             gui=NONE              guifg=#93BF3D         guibg=NONE
-hi StorageClass     gui=NONE              guifg=#93BF3D         guibg=NONE
-hi Structure        gui=NONE              guifg=#93BF3D         guibg=NONE
-hi Typedef          gui=NONE              guifg=#93BF3D         guibg=NONE
-
-hi Special          gui=NONE              guifg=#BF3131         guibg=NONE
-hi SpecialChar      gui=NONE              guifg=#BF3131         guibg=NONE
-hi Tag              gui=NONE              guifg=#BF3131         guibg=NONE
-hi Delimiter        gui=NONE              guifg=#BF3131         guibg=NONE
-hi SpecialComment   gui=NONE              guifg=#BF3131         guibg=NONE
-hi Debug            gui=NONE              guifg=#BF3131         guibg=NONE
-
-hi Underlined       gui=underline         guifg=#505050         guibg=NONE
-
-hi Ignore           gui=NONE              guifg=#222222         guibg=NONE
-
-hi Error            gui=bold              guifg=#FFFFFF         guibg=#BF3131
-
-hi Todo             gui=NONE              guifg=#505050         guibg=#93BF3D
-
-
-""""""
-" INTERFACE
-""""""""""""""""""""""""
-hi Cursor           gui=bold              guifg=#000000         guibg=#FFFFFF
-hi Directory        gui=NONE              guifg=#93BF3D         guibg=NONE
-hi ErrorMsg         gui=bold              guifg=#FFFFFF         guibg=#BF3131
-hi LineNr           gui=NONE              guifg=#222222         guibg=#979797
-hi MatchParen       gui=bold              guifg=#000000         guibg=#93BF3D
-hi ModeMsg          gui=NONE              guifg=#EBAF12         guibg=NONE
-hi MoreMsg          gui=NONE              guifg=#93BF3D         guibg=NONE
-hi NonText          gui=bold              guifg=#0F629E         guibg=NONE
-hi Normal           gui=NONE              guifg=#DEDEDE         guibg=#4A4A4A
-hi Question         gui=NONE              guifg=#93BF3D         guibg=NONE
-hi SpecialKey       gui=NONE              guifg=#93BF3D         guibg=NONE
-hi Title            gui=NONE              guifg=#C067CC         guibg=NONE
-hi VertSplit        gui=reverse           guifg=#222222         guibg=#979797
-hi WarningMsg       gui=NONE              guifg=#FFFFFF         guibg=#BF3131
-hi WildMenu         gui=NONE              guifg=#000000         guibg=#EBAF12
-
-
-""""""
-" TABS
-""""""""""""""""""""""""
-hi TabLine          gui=bold,reverse      guifg=#222222         guibg=#000000
-hi TabLineFill      gui=bold,reverse      guifg=#222222         guibg=#505050
-hi TabLineSel       gui=bold,reverse      guifg=#EBAF12         guibg=#000000
-
-
-""""""
-" COMPLETION
-""""""""""""""""""""""""
-hi Pmenu            gui=NONE              guifg=#DEDEDE         guibg=#0F629E
-hi PmenuSel         gui=NONE              guifg=#000000         guibg=#EBAF12
-
-
-""""""
-" STATUS
-""""""""""""""""""""""""
-hi StatusLine       gui=bold,reverse      guifg=#EBAF12         guibg=#000000
-hi StatusLineNC     gui=bold,reverse      guifg=#222222         guibg=#979797
-
-
-""""""
-" DIFF
-""""""""""""""""""""""""
-hi DiffAdd          gui=NONE              guifg=NONE            guibg=#0F629E
-hi DiffChange       gui=NONE              guifg=NONE            guibg=#C067CC
-hi DiffDelete       gui=bold              guifg=#0F629E         guibg=#009AB5
-hi DiffText         gui=bold              guibg=#BF3131         guibg=NONE
-
-
-""""""
-" VISUAL
-""""""""""""""""""""""""
-hi Visual           gui=NONE              guifg=#FFFFFF         guibg=#0F629E
-hi VisualNOS        gui=bold,underline    guifg=NONE            guibg=NONE
-
-
-""""""
-" FOLDING
-""""""""""""""""""""""""
-hi Folded           gui=NONE              guifg=#222222         guibg=NONE
-hi FoldColumn       gui=NONE              guifg=#222222         guibg=NONE
-
-
-""""""
-" SEARCH
-""""""""""""""""""""""""
-hi IncSearch        gui=NONE              guifg=#FFFFFF          guibg=#93BF3D
-hi Search           gui=NONE              guifg=#FFFFFF          guibg=#93BF3D
-
-
+let g:colors_name = "custom"
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -189,7 +57,7 @@ hi Ignore           cterm=NONE              ctermfg=darkgrey        ctermbg=NONE
 
 hi Error            cterm=NONE              ctermfg=white           ctermbg=darkred
 
-hi Todo             cterm=NONE              ctermfg=grey            ctermbg=darkgreen
+hi Todo             cterm=NONE              ctermfg=black            ctermbg=darkgreen
 
 
 """"""
