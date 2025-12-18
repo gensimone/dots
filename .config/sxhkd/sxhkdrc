@@ -23,6 +23,6 @@ alt + Escape
 alt + c
         clipmenu
 alt + d
-        /home/simone/.local/bin/ddocs
+        /home/simone/.local/bin/dmenu-docs
 alt + a
-        /home/simone/.local/bin/dict
+        /home/simone/.local/bin/dmenu-dict
