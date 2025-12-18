@@ -24,3 +24,5 @@ alt + c
         clipmenu
 alt + d
         /home/simone/.local/bin/ddocs
+alt + a
+        /home/simone/.local/bin/dict
