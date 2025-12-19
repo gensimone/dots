@@ -24,6 +24,8 @@ alt + c
         clipmenu
 alt + d
         /home/simone/.local/bin/dmenu-docs
+alt + shift + d
+        /home/simone/.local/bin/dmenu-dict
 alt + a
         LC_ALL=it_IT.UTF-8 /home/simone/.local/bin/dmenu-tran
 alt + p
