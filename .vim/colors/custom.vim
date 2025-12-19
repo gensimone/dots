@@ -15,18 +15,18 @@ let g:colors_name = "custom"
 " SYNTAX HIGHLIGHTING
 """"""""""""""""""""""""
 hi Constant         cterm=NONE              ctermfg=darkgreen       ctermbg=NONE
-hi String           cterm=NONE              ctermfg=darkgrey        ctermbg=NONE
+hi String           cterm=NONE              ctermfg=blue            ctermbg=NONE
 hi Character        cterm=NONE              ctermfg=brown           ctermbg=NONE
 hi Number           cterm=NONE              ctermfg=darkgrey        ctermbg=NONE
 hi Boolean          cterm=NONE              ctermfg=darkgrey        ctermbg=NONE
 hi Float            cterm=NONE              ctermfg=darkgrey        ctermbg=NONE
-hi Comment          cterm=NONE              ctermfg=darkcyan        ctermbg=NONE
+hi Comment          cterm=NONE              ctermfg=darkgrey        ctermbg=NONE
 
 hi Identifier       cterm=NONE              ctermfg=darkred         ctermbg=NONE
 hi Function         cterm=NONE              ctermfg=grey            ctermbg=NONE
 
-hi Statement        cterm=NONE              ctermfg=yellow          ctermbg=NONE
-hi Conditional      cterm=NONE              ctermfg=yellow          ctermbg=NONE
+hi Statement        cterm=NONE              ctermfg=green           ctermbg=NONE
+hi Conditional      cterm=NONE              ctermfg=green           ctermbg=NONE
 hi Repeat           cterm=NONE              ctermfg=yellow          ctermbg=NONE
 hi Label            cterm=NONE              ctermfg=yellow          ctermbg=NONE
 hi Operator         cterm=NONE              ctermfg=grey            ctermbg=NONE
@@ -68,37 +68,37 @@ hi Directory        cterm=NONE              ctermfg=darkgreen       ctermbg=NONE
 hi ErrorMsg         cterm=NONE              ctermfg=white           ctermbg=darkred
 hi LineNr           cterm=NONE              ctermfg=darkgrey        ctermbg=NONE
 hi MatchParen       cterm=NONE              ctermfg=black           ctermbg=green
-hi ModeMsg          cterm=NONE              ctermfg=brown           ctermbg=NONE
+hi ModeMsg          cterm=NONE              ctermfg=NONE            ctermbg=NONE
 hi MoreMsg          cterm=NONE              ctermfg=darkgreen       ctermbg=NONE
 hi NonText          cterm=NONE              ctermfg=darkblue        ctermbg=NONE
 hi Question         cterm=NONE              ctermfg=green           ctermbg=NONE
 hi SpecialKey       cterm=NONE              ctermfg=darkgreen       ctermbg=NONE
 hi Title            cterm=NONE              ctermfg=darkmagenta     ctermbg=NONE
-hi VertSplit        cterm=bold,reverse      ctermfg=darkgrey        ctermbg=black
+hi VertSplit        cterm=reverse           ctermfg=darkgrey        ctermbg=black
 hi WarningMsg       cterm=NONE              ctermfg=white           ctermbg=darkred
-hi WildMenu         cterm=NONE              ctermfg=black           ctermbg=brown
+hi WildMenu         cterm=NONE              ctermfg=black           ctermbg=white
 
 
 """"""
 " TABS
 """"""""""""""""""""""""
-hi TabLine          cterm=bold,reverse      ctermfg=darkgrey        ctermbg=black
-hi TabLineFill      cterm=bold,reverse      ctermfg=darkgrey        ctermbg=grey
-hi TabLineSel       cterm=bold,reverse      ctermfg=brown           ctermbg=black
+hi TabLine          cterm=reverse           ctermfg=darkgrey        ctermbg=black
+hi TabLineFill      cterm=reverse           ctermfg=darkgrey        ctermbg=grey
+hi TabLineSel       cterm=reverse           ctermfg=brown           ctermbg=black
 
 
 """"""
 " COMPLETION
 """"""""""""""""""""""""
 hi Pmenu            cterm=reverse           ctermfg=darkgrey        ctermbg=black
-hi PmenuSel         cterm=bold              ctermfg=black           ctermbg=brown
+hi PmenuSel         cterm=NONE              ctermfg=black           ctermbg=brown
 
 
 """"""
 " STATUS
 """"""""""""""""""""""""
-hi StatusLine       cterm=bold,reverse      ctermfg=brown           ctermbg=black
-hi StatusLineNC     cterm=bold,reverse      ctermfg=darkgrey        ctermbg=black
+hi StatusLine       cterm=reverse          ctermfg=darkgray         ctermbg=black
+hi StatusLineNC     cterm=reverse          ctermfg=darkgrey         ctermbg=black
 
 
 """"""
@@ -114,7 +114,7 @@ hi DiffText         cterm=NONE              ctermbg=darkred         ctermbg=NONE
 " VISUAL
 """"""""""""""""""""""""
 hi Visual           cterm=reverse           ctermfg=NONE            ctermbg=NONE
-hi VisualNOS        cterm=bold,underline    ctermfg=NONE            ctermbg=NONE
+hi VisualNOS        cterm=underline         ctermfg=NONE            ctermbg=NONE
 
 
 """"""
