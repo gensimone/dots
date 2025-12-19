@@ -26,3 +26,7 @@ alt + d
         /home/simone/.local/bin/dmenu-docs
 alt + a
         LC_ALL=it_IT.UTF-8 /home/simone/.local/bin/dmenu-tran
+alt + p
+        dmenu_run
+alt + shift + Return
+        st
