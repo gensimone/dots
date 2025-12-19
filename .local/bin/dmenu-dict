@@ -1,15 +1,54 @@
-#!/bin/bash
+#!/usr/bin/python
+import sys
+import shutil
+import subprocess
 
-QUERY=$(echo "" | dmenu -p "Query: ")
+DMENU = "/usr/local/bin/dmenu"
+TRANS = "/usr/bin/trans"
 
-if [ -n "$QUERY" ]; then
-  RESPONSE=$(wget -qO- "https://api.dictionaryapi.dev/api/v2/entries/en/$QUERY")
-  CHOOICE=$(echo $RESPONSE | jq '.[]? | .meanings[]? | ["("+.partOfSpeech+") ", .definitions[]?.definition] | join("")' | dmenu -p "Results:" -l 5)  
-else
-        echo "Aborting.."
-        exit 0
-fi
+def dmenu(
+        input: str,
+        args: list[str] = [],
+        stdout=subprocess.PIPE,
+) -> str:
+    cp = subprocess.run(
+            [DMENU] + args,
+            input=input.encode(),
+            stdout=stdout
+    )
+    return cp.stdout.decode()
 
-CHOOICE=$(echo $CHOOICE | sed -e $'s/\.,/\\n -/g')
 
-echo -n $CHOOICE | xclip -selection clipboard
+def trans(
+        args: list[str] = [],
+        stdout=subprocess.PIPE
+) -> str:
+    cp = subprocess.run(
+            [TRANS] + args,
+            stdout=stdout
+    )
+    cp.check_returncode()
+    return cp.stdout.decode()
+
+
+def main() -> int:
+    query = dmenu(input="", args=["-p", "Type:"])
+    if not query:
+        return 0
+
+    trans_args = [
+            "-no-ansi",
+            "-n",
+            "-p",
+            "-d",
+            ":it",
+            query
+        ]
+    result = trans(args=["-no-ansi", "-d", ":it", query])
+    lines = len(result.split('\n'))
+    dmenu(input=result, args=["-l", "20"])
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
