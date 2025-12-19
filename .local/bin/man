@@ -1,19 +1,21 @@
 #!/bin/sh
 
-PYTHON=0
+USE_PYDOCS=0
 QUERY=""
 
-if [ $# -eq 2 ] && [ $1 == "py" ]; then
+if [ $# -eq 2 ]; then
+        if [ $1 == "py" ]; then
+                USE_PYDOCS=1
+        fi
         QUERY=$2
-        PYTHON=1
 else
         QUERY=$1
 fi
 
-if [ $PYTHON -eq 1 ]; then
+if [ $USE_PYDOCS -eq 1 ]; then
         pydoc $QUERY
 else
-        /usr/bin/man $QUERY 2>/dev/null
+        /usr/bin/man $@ 2>/dev/null
         if [ $? -eq 16 ]; then
                 pydoc $QUERY 2>/dev/null
         fi
