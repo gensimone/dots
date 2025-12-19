@@ -1,0 +1,20 @@
+#!/bin/sh
+
+PYTHON=0
+QUERY=""
+
+if [ $# -eq 2 ] && [ $1 == "py" ]; then
+        QUERY=$2
+        PYTHON=1
+else
+        QUERY=$1
+fi
+
+if [ $PYTHON -eq 1 ]; then
+        pydoc $QUERY
+else
+        /usr/bin/man $QUERY 2>/dev/null
+        if [ $? -eq 16 ]; then
+                pydoc $QUERY 2>/dev/null
+        fi
+fi
