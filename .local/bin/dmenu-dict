@@ -1,52 +1,62 @@
 #!/usr/bin/python
 import sys
 import shutil
-import subprocess
+import subprocess as sp
+from enum import Enum
+
+# TODO: Implement clipboard support!
 
 DMENU = "/usr/local/bin/dmenu"
 TRANS = "/usr/bin/trans"
 
-def dmenu(
-        input: str,
-        args: list[str] = [],
-        stdout=subprocess.PIPE,
-) -> str:
-    cp = subprocess.run(
-            [DMENU] + args,
-            input=input.encode(),
-            stdout=stdout
-    )
+def dmenu(input: str, args: list[str] = [], stdout=sp.PIPE) -> str:
+    cp = sp.run([DMENU] + args, input=input.encode(), stdout=stdout)
     return cp.stdout.decode()
 
-
-def trans(
-        args: list[str] = [],
-        stdout=subprocess.PIPE
-) -> str:
-    cp = subprocess.run(
-            [TRANS] + args,
-            stdout=stdout
-    )
+def trans(args: list[str] = [], stdout=sp.PIPE) -> str:
+    cp = sp.run([TRANS] + args, stdout=stdout)
     cp.check_returncode()
     return cp.stdout.decode()
 
+class OPT(Enum):
+    BOTH = "Both"
+    DICTIONARY = "Dictionary"
+    LISTEN = "Listen"
 
 def main() -> int:
+    chooice = dmenu(input='\n'.join([x.value for x in OPT]), args=["-p", "Type:"])
+    if not chooice:
+        return 0
+
+    both, dictionary, listen = (0, 0, 0)
+    chooice = chooice.strip()
+    match chooice:
+        case OPT.BOTH.value:
+            both = 1
+        case OPT.DICTIONARY.value:
+            dictionary = 1
+        case OPT.LISTEN.value:
+            listen = 1
+        case _:
+            print("Invalid option: ", chooice)
+            return 1
+
     query = dmenu(input="", args=["-p", "Type:"])
     if not query:
         return 0
 
-    trans_args = [
-            "-no-ansi",
-            "-n",
-            "-p",
-            "-d",
-            ":it",
-            query
-        ]
-    result = trans(args=["-no-ansi", "-d", ":it", query])
-    lines = len(result.split('\n'))
-    dmenu(input=result, args=["-l", "20"])
+    if listen or both:
+        listen_p = sp.Popen([TRANS] + ["-b", "-p", ":en", query], stdout=sp.PIPE)
+    else:
+        listen_p = None
+
+    if dictionary or both:
+        result = trans(args=["-no-ansi", "-d", ":it", query])
+        dmenu(input=result, args=["-l", "20"])
+
+    if listen_p:
+        listen_p.wait()
+
     return 0
 
 
