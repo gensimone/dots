@@ -1,0 +1,5 @@
+#!/bin/sh
+
+
+CHOOICE=$(ps -e | awk '{print $1 " " $NF}' | dmenu -p Kill: -l 20 | cut -d ' ' -f 1) || exit 0
+kill $CHOOICE
