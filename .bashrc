@@ -21,14 +21,11 @@ PS1='[\W]$ '
 
 set -o vi
 
+export PAGER=less
 export EDITOR=vi
 export VISUAL=vi
 export PROMPT_COMMAND="echo"
 export PYTHON_BASIC_REPL=1
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
 
 lmlbk() {
         lmount $@ && locbk && lumount
@@ -37,3 +34,7 @@ lmlbk() {
 h() {
         "$@" --help | less
 }
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
