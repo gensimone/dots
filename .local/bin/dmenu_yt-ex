@@ -1,0 +1,7 @@
+#!/bin/sh
+
+QUERY=$(echo "" | dmenu -p Type:) || exit 0
+CHOOICE=$(yt-exp "$QUERY" | dmenu -l 10 -p Type:) || exit 0
+notify-send "Downloading: $CHOOICE"
+echo $CHOOICE | awk '{print $NF}' | yt-dlp
+notify-send "Download finished."
