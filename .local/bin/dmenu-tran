@@ -19,17 +19,6 @@ check_dep trans https://github.com/soimort/translate-shell
 check_dep notify-send
 
 load_config() {
-	config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/dmenu-translate"
-	[ -d "$config_dir" ] || mkdir -p "$config_dir"
-
-	config_file="$config_dir/config.sh"
-	[ -f "$config_file" ] || touch "$config_file"
-
-	old_config_file="$config_dir/config.conf"
-	[ -f "$old_config_file" ] && notify-send "dmenu-translate warning" "Found old configuration file at <code>$old_config_file</code>, which is no longer supported. Please move your settings to a new file at <code>$config_file</code> and delete the old one."
-
-	. "$config_file"
-
 	# Check others
         : "${CLIP_COPY:=xclip -i -r -selection clipboard}"
         : "${CLIP_PASTE_CLIP:=xclip -o -selection clipboard}"
