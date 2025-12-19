@@ -2,12 +2,21 @@
 import sys
 import shutil
 import subprocess as sp
+import threading as th
 from enum import Enum
 
-# TODO: Implement clipboard support!
 
 DMENU = "/usr/local/bin/dmenu"
 TRANS = "/usr/bin/trans"
+XCLIP = "/usr/bin/xclip"
+
+_exit = 0
+_trans_proc = None
+
+class OPT(Enum):
+    BOTH = "Both"
+    DICTIONARY = "Dictionary"
+    LISTEN = "Listen"
 
 def dmenu(input: str, args: list[str] = [], stdout=sp.PIPE) -> str:
     cp = sp.run([DMENU] + args, input=input.encode(), stdout=stdout)
@@ -18,18 +27,38 @@ def trans(args: list[str] = [], stdout=sp.PIPE) -> str:
     cp.check_returncode()
     return cp.stdout.decode()
 
-class OPT(Enum):
-    BOTH = "Both"
-    DICTIONARY = "Dictionary"
-    LISTEN = "Listen"
+def _trans_listen(query: str) -> None:
+    return sp.Popen([TRANS] + ["-b", "-e", "auto", "-p", ":en", query], stdout=sp.PIPE)
+
+def trans_listen(query: str, limit: int = 200) -> None:
+    qchunk: str = ""
+    for word in [x for x in query if x]:
+        if len(qchunk) + len(word) > limit:
+            global _trans_proc
+            global _exit
+            _trans_proc = _trans_listen(qchunk)
+            print(_trans_proc.pid)
+            _trans_proc.wait()
+            if _exit == 1:
+                return
+            qchunk = word
+        # this should not happen.
+        elif len(word) > limit:
+            nquery = [word[i:i+limit] for i in range(0, len(word), limit)]
+            trans_listen(nquery, limit)
+        else:
+            qchunk += f" {word}"
+
+    if qchunk:
+        p = _trans_listen(qchunk)
+        p.wait()
 
 def main() -> int:
-    chooice = dmenu(input='\n'.join([x.value for x in OPT]), args=["-p", "Type:"])
+    chooice = dmenu(input='\n'.join([x.value for x in OPT]), args=["-p", "Type:"]).strip()
     if not chooice:
         return 0
 
     both, dictionary, listen = (0, 0, 0)
-    chooice = chooice.strip()
     match chooice:
         case OPT.BOTH.value:
             both = 1
@@ -41,24 +70,54 @@ def main() -> int:
             print("Invalid option: ", chooice)
             return 1
 
-    query = dmenu(input="", args=["-p", "Type:"])
+    cp = sp.run([XCLIP, "-o", "-selection", "clipboard"], stdout=sp.PIPE)
+    clipboard = cp.stdout.decode()
+    mclipboard = f"Clipboard: {clipboard}"
+
+    cp = sp.run([XCLIP, "-o", "-selection", "primary"], stdout=sp.PIPE)
+    primary = cp.stdout.decode()
+    mprimary = f"Primary: {primary}"
+
+    query = dmenu(input=f"{mclipboard}\n{mprimary}", args=["-p", "Type:"])
     if not query:
         return 0
+    elif query.startswith("Clipboard:"):
+        query = clipboard
+    elif query.startswith("Primary:"):
+        query = primary
 
+    pool = []
     if listen or both:
-        listen_p = sp.Popen([TRANS] + ["-b", "-p", ":en", query], stdout=sp.PIPE)
-    else:
-        listen_p = None
+        thread = th.Thread(target=trans_listen, args=(query.split(),))
+        thread.start()
+        pool.append(thread)
 
     if dictionary or both:
         result = trans(args=["-no-ansi", "-d", ":it", query])
-        dmenu(input=result, args=["-l", "20"])
+        if listen or both:
+            result = "=> Listen Again\n" + result
+        while True:
+            chooice = dmenu(input=result, args=["-l", "20"]).strip()
+            if chooice != "=> Listen Again":
+                break
+            else:
+                thread = th.Thread(target=trans_listen, args=(query.split(),))
+                thread.start()
+                pool.append(thread)
 
-    if listen_p:
-        listen_p.wait()
+    # #FIXME: conditional var?
+    # dmenu(input="")
+    # global _trans_proc
+    # global _exit
+    # _trans_proc.terminate()
+    # _exit = 1
+    # _trans_proc.wait()
+    # print(f"{_trans_proc.pid} Killed")
+
+    for t in pool:
+        t.join()
 
     return 0
-
 
 if __name__ == "__main__":
     sys.exit(main())
