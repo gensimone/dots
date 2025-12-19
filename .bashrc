@@ -10,12 +10,12 @@ append_path () {
         *:"$1":*)
             ;;
         *)
-            PATH="${PATH:+$PATH:}$1"
+            PATH="$1:${PATH:+$PATH}"
     esac
 }
 
-append_path $HOME/.local/bin
 append_path $HOME/.cargo/bin
+append_path $HOME/.local/bin
 
 PS1='[\W]$ '
 
