@@ -32,3 +32,7 @@ alt + p
         dmenu_run
 alt + shift + Return
         st
+alt + y
+        dmenu_yt-ex
+alt + shift + k
+        dmenu-kill
