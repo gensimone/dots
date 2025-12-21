@@ -32,7 +32,7 @@ alt + p
         dmenu_run
 alt + shift + Return
         st
-alt + y
+alt + shift + y
         dmenu-ytdl
 alt + shift + k
         dmenu-kill
