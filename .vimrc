@@ -41,11 +41,7 @@ nnoremap struct :-1read $HOME/.vim/snippets/struct.c<CR>2ja
 "Remove all trailing whitespace by pressing F5
 nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 
-" commentary.vim - Comment stuff out
-" Maintainer:   Tim Pope <http://tpo.pe/>
-" Version:      1.3
-" GetLatestVimScripts: 3695 1 :AutoInstall: commentary.vim
-
+" https://github.com/tpope/vim-commentary
 
 if exists("g:loaded_commentary") || v:version < 703
   finish
@@ -163,9 +159,8 @@ endif
 
 nmap <silent> <Plug>CommentaryUndo :echoerr "Change your <Plug>CommentaryUndo map to <Plug>Commentary<Plug>Commentary"<CR>
 
-" vim:set et sw=2:
-" Maps <C-h/j/k/l> to switch vim splits in the given direction. If there are no more windows in that direction, forwards the operation to tmux.
-" Additionally, <C-\> toggles between last active vim splits/tmux panes.
+
+" https://github.com/christoomey/vim-tmux-navigator
 
 if exists("g:loaded_tmux_navigator") || &cp || v:version < 700
   finish
