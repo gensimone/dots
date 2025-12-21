@@ -33,6 +33,6 @@ alt + p
 alt + shift + Return
         st
 alt + y
-        dmenu_yt-ex
+        dmenu-ytdl
 alt + shift + k
         dmenu-kill
