@@ -20,6 +20,7 @@ append_path $HOME/.local/bin
 PS1='[\W]$ '
 
 set -o vi
+set -o ignoreeof  # Same as setting IGNOREEOF=10
 
 export PAGER=less
 export EDITOR=vi
