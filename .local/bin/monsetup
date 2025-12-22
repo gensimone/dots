@@ -2,7 +2,7 @@
 
 # Handle lock file
 
-LOCK="/tmp/setup-monitor.lock"
+LOCK="/tmp/monsetup.lock"
 
 trap 'rm -f "$LOCK"; exit 0' SIGINT SIGTERM
 if [ -f "$LOCK" ]; then
