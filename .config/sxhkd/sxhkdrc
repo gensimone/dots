@@ -29,7 +29,7 @@ alt + d
 alt + shift + d
         /home/simone/.local/bin/dmenu-dict
 alt + shift + y
-        /home/simone/.local/bin/dmenu-ytdl
+        /home/simone/.local/bin/dmenu-ytdl > /tmp/yt-dlp
 alt + shift + k
         /home/simone/.local/bin/dmenu-kill
 alt + a
