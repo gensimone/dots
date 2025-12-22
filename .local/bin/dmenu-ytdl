@@ -5,7 +5,9 @@ import sys
 
 DMENU = "/usr/local/bin/dmenu"
 NOTIFY_SEND = "/usr/bin/notify-send"
-
+YT_DLP = "/home/simone/.local/bin/yt-dlp"
+YT_DLP_CONFIG = "/home/simone/.config/yt-dlp/config"
+YT_EX = "/home/simone/.local/bin/yt-ex"
 
 def notify(msg: str, urgency: str = "normal") -> None:
     sp.run([NOTIFY_SEND, "-u", urgency, "-a", "dmenu-ytdl", msg]).check_returncode()
@@ -19,7 +21,7 @@ def main() -> int:
     if not query:
         return 0
 
-    cp = sp.run(["yt-ex", "--title", "--playlist-id", query], stdout=sp.PIPE)
+    cp = sp.run([YT_EX, "--title", "--playlist-id", query], stdout=sp.PIPE)
     if cp.returncode:
         notify("No results found.", urgency="critical")
         return 1
@@ -36,7 +38,7 @@ def main() -> int:
 
     notify(f'Download of "{chooice}" started')
 
-    cp = sp.run(["yt-dlp", playlist_id], stderr=sp.PIPE)
+    cp = sp.run([YT_DLP, "--config-location", YT_DLP_CONFIG, "/home/simone", playlist_id], stderr=sp.PIPE)
     if cp.returncode:
         notify(cp.stderr.decode(), urgency="critical")
         return 1
