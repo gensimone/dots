@@ -34,6 +34,7 @@ PREV=$(xrandr | grep HDMI-1 | cut -d ' ' -f 2)
 
 if ! [ "$PREV" == "connected" ]; then
         echo "HDMI-1 Not connected. Exiting..."
+        rm -fv $LOCK
         exit 1;
 fi
 
