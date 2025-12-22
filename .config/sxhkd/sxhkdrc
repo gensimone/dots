@@ -22,17 +22,17 @@ alt + Escape
 	slock
 alt + c
         clipmenu
+alt + shift + Return
+        st
 alt + d
         /home/simone/.local/bin/dmenu-docs
 alt + shift + d
         /home/simone/.local/bin/dmenu-dict
+alt + shift + y
+        /home/simone/.local/bin/dmenu-ytdl
+alt + shift + k
+        /home/simone/.local/bin/dmenu-kill
 alt + a
         LC_ALL=it_IT.UTF-8 /home/simone/.local/bin/dmenu-tran
 alt + p
         dmenu_run
-alt + shift + Return
-        st
-alt + shift + y
-        dmenu-ytdl
-alt + shift + k
-        dmenu-kill
