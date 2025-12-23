@@ -58,9 +58,9 @@
   (kbd "SPC fb") #'switch-to-buffer
   (kbd "SPC fd") #'describe-function
   (kbd "SPC ff") #'find-file
-  (kbd "SPC fp") #'project-switch-project)
+  (kbd "SPC fp") #'project-switch-project
   (kbd "SPC n") #'switch-to-next-buffer
-  (kbd "SPC p") #'switch-to-prev-buffer
+  (kbd "SPC p") #'switch-to-prev-buffer)
 
 ;; Compile command
 (setq compile-command "make")
@@ -86,3 +86,13 @@
 (setq initial-scratch-message "")             ;; Remove scratch-buf message
 (setq use-file-dialog nil)                    ;; Do not use GUI dialog
 (toggle-truncate-lines 0)                     ;; Do not truncate lines
+
+;; Enable transient mark mode
+(transient-mark-mode 1)
+
+;;;;Org mode configuration
+;; Enable Org mode
+(require 'org)
+;; Make Org mode work with files ending in .org
+;; (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+;; The above is the default in recent emacsen
