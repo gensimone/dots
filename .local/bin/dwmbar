@@ -17,8 +17,9 @@ echo "$$" > $LOCK
 
 while true; do 
         DATE="$(date '+%d %A %R')"
-        xsetroot -name "$DATE"
-        sleep 60s
+	BATTERY="$(acpi | head -1 | cut -d ',' -f 2)"
+        xsetroot -name "$DATE -$BATTERY "
+        sleep 1s
 done
 
 rm -f "$LOCK"
