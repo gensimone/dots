@@ -40,7 +40,7 @@ def main() -> int:
 
     cp = sp.run([YT_DLP, "--config-location", YT_DLP_CONFIG, "/home/simone", playlist_id], stderr=sp.PIPE)
     if cp.returncode:
-        notify(cp.stderr.decode(), urgency="critical")
+        notify(cp.stderr.decode())
         return 1
 
     notify(f'Download of "{chooice}" finished')
