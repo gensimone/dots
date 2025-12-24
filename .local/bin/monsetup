@@ -6,15 +6,14 @@ LOCK="/tmp/monsetup.lock"
 
 trap 'rm -f "$LOCK"; exit 0' SIGINT SIGTERM
 if [ -f "$LOCK" ]; then
-        echo "Lock file exists: $LOCK"
-        exit 1
+    echo "Lock file exists: $LOCK"
+    exit 1
 elif ! touch $LOCK; then
-        echo "Could not create lock file: $LOCK"
-        exit 1
+    echo "Could not create lock file: $LOCK"
+    exit 1
 fi
 
-echo "$$" > $LOCK
-
+echo "$$" >$LOCK
 
 # Handle monitor updates
 
@@ -22,12 +21,12 @@ LAP_DEV="eDP-1"
 HDMI_DEV="HDMI-1"
 
 update_monitors() {
-        if [ $1 == "connected" ]; then
-                xrandr --auto
-                xrandr --output $HDMI_DEV --primary --right-of $LAP_DEV
-        else
-                xrandr --auto
-        fi
+    if [ $1 == "connected" ]; then
+        xrandr --auto
+        xrandr --output $HDMI_DEV --primary --right-of $LAP_DEV
+    else
+        xrandr --auto
+    fi
 }
 
 PREV=$(xrandr | grep HDMI-1 | cut -d ' ' -f 2)
@@ -41,12 +40,12 @@ PREV=$(xrandr | grep HDMI-1 | cut -d ' ' -f 2)
 # update_monitors "$PREV"
 
 while true; do
-        CUR=$(xrandr | grep HDMI-1 | cut -d ' ' -f 2)
-        if [ $CUR != $PREV ]; then
-                update_monitors "$CUR"
-                PREV=$CUR
-        fi
-        sleep 5s
+    CUR=$(xrandr | grep HDMI-1 | cut -d ' ' -f 2)
+    if [ $CUR != $PREV ]; then
+        update_monitors "$CUR"
+        PREV=$CUR
+    fi
+    sleep 5s
 done
 
 rm -f "$LOCK"
