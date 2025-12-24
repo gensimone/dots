@@ -32,6 +32,8 @@ alt + shift + y
         /home/simone/.local/bin/dmenu-ytdl > /tmp/yt-dlp
 alt + shift + k
         /home/simone/.local/bin/dmenu-kill
+alt + w
+	/home/simone/.local/bin/dmenu-wall
 alt + a
         LC_ALL=it_IT.UTF-8 /home/simone/.local/bin/dmenu-tran
 alt + p
