@@ -31,6 +31,10 @@
 (customize-set-variable 'tool-bar-mode nil)
 (setq use-file-dialog nil)
 
+;; Frame transparency
+(set-frame-parameter (selected-frame) 'alpha '(90 . 90))
+(add-to-list 'default-frame-alist '(alpha . (90 . 90)))
+
 ;; Line numbers
 (global-display-line-numbers-mode +1)
 (setq display-line-numbers-type 'relative)
