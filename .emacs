@@ -6,49 +6,33 @@
   (package-refresh-contents)
   (package-install 'use-package)) (eval-when-compile (require 'use-package))
 
-;; Vim Bindings
+;; Packages
 (use-package evil
   :demand t :bind (("<escape>" . keyboard-escape-quit))
   :init
-  ;; allows for using cgn
-  ;; (setq evil-search-module 'evil-search)
   (setq evil-want-keybinding nil)
   :config
   (evil-mode 1))
-
-;; Vim Bindings Everywhere else
 (use-package evil-collection
   :after evil
   :config
   (setq evil-want-integration t)
   (evil-collection-init))
-
-;; Magit
+(use-package evil-commentary
+  :config
+  (evil-commentary-mode))
 (use-package magit)
-
-;; Feebleline
 (use-package feebleline
   :config
   (feebleline-mode 1))
-
-;; Ivy
 (use-package ivy
   :config
   (ivy-mode)
   (setopt ivy-use-virtual-buffers t)
   (setopt enable-recursive-minibuffers t))
-
-;; Tmux Integration
 (use-package tmux-pane
   :config
   (tmux-pane-mode))
-
-;; Custom theme
-(use-package adwaita-dark-theme
-  :config
-  (load-theme 'adwaita-dark :no-confirm))
-
-;; Dashboard
 (use-package minimal-dashboard
     :init
     (setq initial-buffer-choice #'minimal-dashboard)
@@ -56,13 +40,21 @@
     (minimal-dashboard-buffer-name "Dashboard")
     (minimal-dashboard-image-path "~/.config/emacs/logo.svg")
     (minimal-dashboard-text ""))
-
-; Option 2: Globally
-(with-eval-after-load 'org (global-org-modern-mode))
-
-;; Option 2: Globally
-(with-eval-after-load 'org (global-org-modern-mode))
-;; Add frame borders and window dividers
+(use-package pdf-tools
+  :ensure t
+  :config
+  (pdf-tools-install))
+(add-hook 'pdf-view-mode-hook
+          (lambda ()
+            (display-line-numbers-mode 0)))
+(use-package vterm
+    :ensure t)
+(add-hook 'image-mode-hook
+          (lambda ()
+            (display-line-numbers-mode 0)))
+;; Org Mode
+(require 'org)
+(use-package org-modern)
 (modify-all-frames-parameters
  '((right-divider-width . 0)
    (internal-border-width . 0)))
@@ -72,21 +64,16 @@
   (face-spec-reset-face face)
   (set-face-foreground face (face-attribute 'default :background)))
 (set-face-background 'fringe (face-attribute 'default :background))
-
 (setq
- ;; Edit settings
  org-auto-align-tags nil
- org-tags-column 0
+org-tags-column 0
  org-catch-invisible-edits 'show-and-error
  org-special-ctrl-a/e t
  org-insert-heading-respect-content t
-
- ;; Org styling, hide markup etc.
  org-hide-emphasis-markers t
  org-pretty-entities t
  org-agenda-tags-column 0
  org-ellipsis "…")
-
 (global-org-modern-mode)
 
 ;; Backup files 
@@ -99,15 +86,9 @@
   (kbd "C-j") #'windmove-down
   (kbd "C-k") #'windmove-up
   (kbd "C-l") #'windmove-right
-  (kbd "SPC bd") #'kill-current-buffer
-  (kbd "SPC fb") #'switch-to-buffer
-  (kbd "SPC fd") #'describe-function
-  (kbd "SPC ff") #'find-file
-  (kbd "SPC fp") #'project-switch-project
-  (kbd "SPC n") #'switch-to-next-buffer
-  (kbd "SPC p") #'switch-to-prev-buffer
-  (kbd "SPC e") #'dired)
+  (kbd "C--") #'maximize-window)
 
+;; Dired
 (with-eval-after-load 'dired
   (define-key dired-mode-map (kbd "C-c C-e") #'wdired-change-to-wdired-mode))
 
@@ -124,7 +105,7 @@
 
 ;; (global-visual-line-mode 1)                
 (transient-mark-mode 1)
-(set-default 'truncate-lines nil)             
+(setq-default truncate-lines t)
 (customize-set-variable 'menu-bar-mode nil)   
 (customize-set-variable 'scroll-bar-mode nil) 
 (customize-set-variable 'tool-bar-mode nil)   
@@ -137,3 +118,5 @@
       inhibit-startup-screen t
       ;; inhibit-startup-echo-area-message t
       initial-scratch-message nil)
+
+(load-theme 'manoj-dark :no-confirm)
