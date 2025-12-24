@@ -108,6 +108,9 @@
   (kbd "SPC p") #'switch-to-prev-buffer
   (kbd "SPC e") #'dired)
 
+(with-eval-after-load 'dired
+  (define-key dired-mode-map (kbd "C-c C-e") #'wdired-change-to-wdired-mode))
+
 ;; Compile command
 (setq compile-command "make")
 
@@ -115,35 +118,22 @@
 (add-to-list 'default-frame-alist '(font . "JetBrainsMono Nerd Font-12" ))
 (set-face-attribute 'default t :font "JetBrainsMono Nerd Font-12" )
 
-;; Remeber and restore the last cursor location of opened files
-(save-place-mode 1)
-
 ;; Move customization variables to a separate file and load it
 (setq custom-file (locate-user-emacs-file "custom-vars.el"))
 (load custom-file 'noerror 'nomessages)
 
-;; (global-visual-line-mode 1)                ;; Alternative to truncate
-(set-default 'truncate-lines nil)             ;; Do not truncate lines
-(customize-set-variable 'menu-bar-mode nil)   ;; Remove menu-bar
-(customize-set-variable 'scroll-bar-mode nil) ;; Remove scroll-bar
-(customize-set-variable 'tool-bar-mode nil)   ;; Remove tool-bar
-(setq use-file-dialog nil)                    ;; Do not use GUI dialog
-(global-auto-revert-mode 1)                   ;; Revert buffers when the underlying file has changed
-(global-display-line-numbers-mode +1)         ;; ..
-(setq display-line-numbers-type 'relative)    ;; Relative line numbers
-
-;; Make emacs minimal
+;; (global-visual-line-mode 1)                
+(transient-mark-mode 1)
+(set-default 'truncate-lines nil)             
+(customize-set-variable 'menu-bar-mode nil)   
+(customize-set-variable 'scroll-bar-mode nil) 
+(customize-set-variable 'tool-bar-mode nil)   
+(setq use-file-dialog nil)                    
+(global-auto-revert-mode 1)                   
+(global-display-line-numbers-mode +1)         
+(setq display-line-numbers-type 'relative)    
+(save-place-mode 1)                           
 (setq inhibit-startup-message t
       inhibit-startup-screen t
-      inhibit-startup-echo-area-message t
+      ;; inhibit-startup-echo-area-message t
       initial-scratch-message nil)
-
-;; Enable transient mark mode
-(transient-mark-mode 1)
-
-;;;;Org mode configuration
-;; Enable Org mode
-(require 'org)
-;; Make Org mode work with files ending in .org
-;; (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-;; The above is the default in recent emacsen
