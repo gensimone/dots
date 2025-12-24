@@ -12,7 +12,7 @@
 ;; Theme
 (add-to-list 'default-frame-alist '(font . "JetBrainsMono Nerd Font-12"))
 (set-face-attribute 'default t :font "JetBrainsMono Nerd Font-12")
-(load-theme 'manoj-dark :no-confirm)
+(load-theme 'modus-vivendi :no-confirm)
 
 ;; Window appearance
 (modify-all-frames-parameters
@@ -70,7 +70,7 @@
   :hook (prog-mode . format-all-mode)
   :config
   (setq-default format-all-formatters
-                '(("C"     (astyle "--mode=c"))
+                '(("C"     (clang-format))
                   ("Shell" (shfmt "-i" "4" "-ci")))))
 
 ;;; --- Packages Configuration ---
@@ -95,10 +95,6 @@
 
 ;; Interface packages
 (use-package magit)
-
-(use-package feebleline
-  :config
-  (feebleline-mode 1))
 
 (use-package ivy
   :config
