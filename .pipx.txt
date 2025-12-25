@@ -1,0 +1,5 @@
+aider-install
+black
+poetry
+yt-dlp
+yt-ex
