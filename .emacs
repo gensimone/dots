@@ -31,10 +31,6 @@
 (customize-set-variable 'tool-bar-mode nil)
 (setq use-file-dialog nil)
 
-;; Frame transparency
-(set-frame-parameter (selected-frame) 'alpha '(90 . 90))
-(add-to-list 'default-frame-alist '(alpha . (90 . 90)))
-
 ;; Line numbers
 (global-display-line-numbers-mode +1)
 (setq display-line-numbers-type 'relative)
@@ -164,3 +160,7 @@
   (kbd "C-k") #'windmove-up
   (kbd "C-l") #'windmove-right
   (kbd "C--") #'maximize-window)
+
+;; Frame transparency
+(set-frame-parameter (selected-frame) 'alpha '(85 . 85))
+(add-to-list 'default-frame-alist '(alpha . (85 . 85)))
