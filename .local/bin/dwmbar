@@ -4,7 +4,8 @@
 
 LOCK="/tmp/dwmbar.lock"
 
-trap 'rm -f "$LOCK"; exit 0' SIGINT SIGTERM
+trap "rm $LOCK; exit 0" EXIT
+
 if [ -f "$LOCK" ]; then
     echo "Lock file exists: $LOCK"
     exit 1
@@ -21,5 +22,3 @@ while true; do
     xsetroot -name " $DATE -$BATTERY "
     sleep 1s
 done
-
-rm -f "$LOCK"
