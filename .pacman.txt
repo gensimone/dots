@@ -31,7 +31,6 @@ mpv
 mupdf
 ninja
 obs-studio
-olor
 openssh
 picom
 pulseaudio
@@ -49,6 +48,7 @@ shfmt
 slock
 wget
 xclip
+xcolor
 xorg
 xss-lock
 zathura
