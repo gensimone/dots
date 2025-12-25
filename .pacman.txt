@@ -1,4 +1,5 @@
 astyle
+bash-completion
 batsignal
 bluetui
 brightnessctl
@@ -24,6 +25,7 @@ lightdm
 lightdm-gtk-greeter
 lightdm-gtk-greeter-settings
 linux-firmware
+lxappearance
 man-db
 man-pages
 meson
@@ -46,6 +48,9 @@ rsync
 rustup
 shfmt
 slock
+sxhkd
+ttf-jetbrains-mono-nerd
+unzip
 wget
 xclip
 xcolor
