@@ -100,7 +100,8 @@
   :config
   (ivy-mode)
   (setopt ivy-use-virtual-buffers t)
-  (setopt enable-recursive-minibuffers t))
+  (setopt enable-recursive-minibuffers t)
+  (setq ivy-use-selectable-prompt t))
 
 (use-package tmux-pane
   :config
@@ -160,6 +161,9 @@
   (kbd "C-k") #'windmove-up
   (kbd "C-l") #'windmove-right
   (kbd "C--") #'maximize-window)
+
+;; Global keys
+(global-set-key (kbd "C-x C-c") #'ignore)
 
 ;; Frame transparency
 (set-frame-parameter (selected-frame) 'alpha '(85 . 85))
