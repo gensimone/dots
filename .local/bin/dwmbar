@@ -6,20 +6,20 @@ LOCK="/tmp/dwmbar.lock"
 
 trap 'rm -f "$LOCK"; exit 0' SIGINT SIGTERM
 if [ -f "$LOCK" ]; then
-        echo "Lock file exists: $LOCK"
-        exit 1
+    echo "Lock file exists: $LOCK"
+    exit 1
 elif ! touch $LOCK; then
-        echo "Could not create lock file: $LOCK"
-        exit 1
+    echo "Could not create lock file: $LOCK"
+    exit 1
 fi
 
-echo "$$" > $LOCK
+echo "$$" >$LOCK
 
-while true; do 
-        DATE="$(date '+%d %A %R')"
-	BATTERY="$(acpi | head -1 | cut -d ',' -f 2)"
-        xsetroot -name "$DATE -$BATTERY "
-        sleep 1s
+while true; do
+    DATE="$(date '+%d %A %R')"
+    BATTERY="$(acpi | head -1 | cut -d ',' -f 2)"
+    xsetroot -name " $DATE -$BATTERY "
+    sleep 1s
 done
 
 rm -f "$LOCK"
