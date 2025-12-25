@@ -19,7 +19,7 @@ alt + m
 alt + n
         pulsemixer --toggle-mute --id source-1
 alt + Escape
-	slock
+	loginctl lock-session
 alt + c
         clipmenu
 alt + shift + Return
