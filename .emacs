@@ -107,14 +107,6 @@
   :config
   (tmux-pane-mode))
 
-(use-package minimal-dashboard
-  :init
-  (setq initial-buffer-choice #'minimal-dashboard)
-  :custom
-  (minimal-dashboard-buffer-name "Dashboard")
-  (minimal-dashboard-image-path "~/.config/emacs/logo.svg")
-  (minimal-dashboard-text ""))
-
 ;; Application packages
 (use-package pdf-tools
   :ensure t
