@@ -5,12 +5,12 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-append_path () {
+append_path() {
     case ":$PATH:" in
-        *:"$1":*)
-            ;;
+        *:"$1":*) ;;
         *)
             PATH="$1:${PATH:+$PATH}"
+            ;;
     esac
 }
 
@@ -20,7 +20,7 @@ append_path $HOME/.local/bin
 PS1='[\W]$ '
 
 set -o vi
-set -o ignoreeof  # Same as setting IGNOREEOF=10
+set -o ignoreeof # Same as setting IGNOREEOF=10
 
 export PAGER=less
 export EDITOR=vi
@@ -29,15 +29,15 @@ export PROMPT_COMMAND="echo"
 export PYTHON_BASIC_REPL=1
 
 lmlbk() {
-        lmount $@ && locbk && lumount
+    lmount $@ && locbk && lumount
 }
 
 h() {
-        "$@" --help | less
+    "$@" --help | less
 }
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-source $HOME/.secrets/openrouter_api_key
+source $HOME/vault/openrouter_api_key

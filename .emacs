@@ -70,7 +70,7 @@
   :hook (prog-mode . format-all-mode)
   :config
   (setq-default format-all-formatters
-                '(("C"     (clang-format))
+                '(("C"     (astyle))
                   ("Shell" (shfmt "-i" "4" "-ci")))))
 
 ;;; --- Packages Configuration ---

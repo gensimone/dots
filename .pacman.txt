@@ -1,4 +1,5 @@
 astyle
+bash-completion
 batsignal
 bluetui
 brightnessctl
@@ -24,6 +25,7 @@ lightdm
 lightdm-gtk-greeter
 lightdm-gtk-greeter-settings
 linux-firmware
+lxappearance
 man-db
 man-pages
 meson
@@ -31,7 +33,6 @@ mpv
 mupdf
 ninja
 obs-studio
-olor
 openssh
 picom
 pulseaudio
@@ -47,8 +48,12 @@ rsync
 rustup
 shfmt
 slock
+sxhkd
+ttf-jetbrains-mono-nerd
+unzip
 wget
 xclip
+xcolor
 xorg
 xss-lock
 zathura
