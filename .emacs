@@ -15,7 +15,7 @@
 
 ;; Gruvbox
 (use-package gruvbox-theme :ensure t)
-(load-theme 'gruvbox-light-medium :no-confirm)
+(load-theme 'gruvbox-dark-medium :no-confirm)
 
 ;; Window appearance
 (modify-all-frames-parameters
