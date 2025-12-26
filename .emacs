@@ -34,19 +34,6 @@
 (customize-set-variable 'tool-bar-mode nil)
 (setq use-file-dialog nil)
 
-;; Mode Line
-(setq-default
- mode-line-format
- '((:eval
-    (if-let ((f (buffer-file-name)))
-        (abbreviate-file-name f)
-      (buffer-name)))
-   mode-line-modified
-   " "
-   (:eval
-    (when-let ((vc vc-mode))
-      (format "[%s]" (substring vc 5))))))
-
 ;; Line numbers
 (global-display-line-numbers-mode +1)
 (setq display-line-numbers-type 'relative)
@@ -75,8 +62,24 @@
 (load custom-file 'noerror 'nomessages)
 
 ;; Backup files
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-saves/" t)))
+(let ((auto-saves-dir (expand-file-name "auto-saves" user-emacs-directory)))
+  ;; Create the directory if it doesn't exist
+  (unless (file-directory-p auto-saves-dir)
+    (make-directory auto-saves-dir t))
+
+  ;; Put auto-save files there
+  (setq auto-save-file-name-transforms
+        `((".*" ,(concat auto-saves-dir "/\\1") t)))
+
+  ;; Put backup files there (files ending with ~)
+  (setq backup-directory-alist
+        `((".*" . ,auto-saves-dir)))
+
+  ;; Optional: keep numbered backups
+  (setq version-control t
+        kept-new-versions 10
+        kept-old-versions 2
+        delete-old-versions t))
 
 ;; Global modes
 (transient-mark-mode 1)
@@ -146,12 +149,6 @@
   (tmux-pane-mode))
 
 ;; Application packages
-(use-package pdf-tools
-  :ensure t
-  :hook (pdf-view-mode . (lambda () (display-line-numbers-mode 0)))
-  :config
-  (pdf-tools-install))
-
 (use-package vterm
   :ensure t
   :hook (image-mode . (lambda () (display-line-numbers-mode 0))))
@@ -166,14 +163,71 @@
 
 (use-package nerd-icons)
 
-(use-package undo-fu
-  :ensure t)
+;;; --- Snippets
+(use-package yasnippet
+  :config
+  ;; Set custom snippet directories
+  (setq yas-snippet-dirs '("~/.snippets"))
+  ;; Enable yasnippet globally
+  (yas-global-mode 1))
 
-(use-package undo-fu-session
-  :ensure t
-  :init
-  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'"))
-  (global-undo-fu-session-mode))
+;;; --- Auto Insert Mode
+(require 'autoinsert)
+(auto-insert-mode 1)
+(setq auto-insert-query nil)  ;; ask before inserting
+
+;; Function to get Git username
+(defun my/git-username ()
+  "Return the Git username for the current repository or fallback to ENV."
+  (or
+   (string-trim (shell-command-to-string "git config user.name"))
+   (getenv "USER")
+   "Unknown Author"))
+
+;; Function to choose license text
+(defun my/choose-license ()
+  "Prompt the user to choose a license and return the text."
+  (let ((choice (completing-read "Choose license: "
+                                 '("MIT" "GPLv3" "BSD-3-Clause" "None")
+                                 nil t)))
+    (pcase choice
+      ("MIT"
+       "Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the \"Software\"), to deal
+in the Software without restriction...")
+      ("GPLv3"
+       "This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version...")
+      ("BSD-3-Clause"
+       "Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met...")
+      ("None" ""))))
+
+;; Template function.
+(defun my/insert-c-template ()
+  "Insert a C file template with optional copyright/license header."
+  (let ((license-text (my/choose-license)))
+    (when (> (length license-text) 0)
+      (insert "/*\n")
+      (insert " * File: " (file-name-nondirectory buffer-file-name) "\n")
+      (insert " * Author: " (my/git-username) "\n")
+      (insert " * Created: " (format-time-string "%Y-%m-%d") "\n")
+      (insert " * Copyright (c) " (format-time-string "%Y") " " (my/git-username) ". All rights reserved.\n")
+      (insert " * License: \n")
+      (insert (mapconcat (lambda (line) (concat " * " line))
+                         (split-string license-text "\n") "\n")))
+    (insert " */\n\n")))
+
+;; Auto-insert definitions
+(define-auto-insert
+  '("\\.c\\'" . "C source file")
+  (lambda () (my/insert-c-template)))
+
+(define-auto-insert
+  '("\\.h\\'" . "C header file")
+  (lambda () (my/insert-h-template)))
 
 ;;; --- Org Mode Configuration ---
 (use-package org
@@ -209,7 +263,3 @@
 
 ;; Global keys
 (global-set-key (kbd "C-x C-c") #'ignore)
-
-;; Frame transparency
-(set-frame-parameter nil 'alpha-background 100) ; For current frame
-(add-to-list 'default-frame-alist '(alpha-background . 100)) ; For all new frames henceforth
