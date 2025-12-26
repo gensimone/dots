@@ -6,3 +6,4 @@ sxhkd &
 xss-lock slock &
 ~/.fehbg &
 ~/.local/bin/dwmbar &
+~/.local/bin/monsetup &
