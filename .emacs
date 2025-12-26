@@ -12,7 +12,10 @@
 ;; Theme
 (add-to-list 'default-frame-alist '(font . "JetBrainsMono Nerd Font-12"))
 (set-face-attribute 'default t :font "JetBrainsMono Nerd Font-12")
-(load-theme 'modus-vivendi :no-confirm)
+
+;; Gruvbox
+(use-package gruvbox-theme :ensure t)
+(load-theme 'gruvbox-light-medium :no-confirm)
 
 ;; Window appearance
 (modify-all-frames-parameters
@@ -126,6 +129,13 @@
   (aidermacs-default-chat-mode 'code)
   (aidermacs-default-model "openrouter/tngtech/deepseek-r1t2-chimera:free"))
 
+(use-package doom-modeline
+  :ensure t
+  :init
+  (doom-modeline-mode 1))
+
+(use-package nerd-icons)
+
 ;;; --- Org Mode Configuration ---
 (use-package org
   :ensure nil  ; built-in package
@@ -158,5 +168,5 @@
 (global-set-key (kbd "C-x C-c") #'ignore)
 
 ;; Frame transparency
-(set-frame-parameter nil 'alpha-background 90) ; For current frame
-(add-to-list 'default-frame-alist '(alpha-background . 90)) ; For all new frames henceforth
+(set-frame-parameter nil 'alpha-background 100) ; For current frame
+(add-to-list 'default-frame-alist '(alpha-background . 100)) ; For all new frames henceforth
