@@ -34,12 +34,43 @@
 (customize-set-variable 'tool-bar-mode nil)
 (setq use-file-dialog nil)
 
+;; Mode Line
+(setq-default
+ mode-line-format
+ '((:eval
+    (if-let ((f (buffer-file-name)))
+        (abbreviate-file-name f)
+      (buffer-name)))
+   mode-line-modified
+   " "
+   (:eval
+    (when-let ((vc vc-mode))
+      (format "[%s]" (substring vc 5))))))
+
 ;; Line numbers
 (global-display-line-numbers-mode +1)
 (setq display-line-numbers-type 'relative)
 
+;; Window rules
+(setq display-buffer-alist
+      '(("\\*compilation\\*"
+         display-buffer-at-bottom
+         (window-height . 0.3))
+
+        ("\\*Help\\*"
+         display-buffer-reuse-window
+         display-buffer-in-side-window
+         (side . right)
+         (window-width . 0.33))
+
+        ("\\*.*\\*"
+         display-buffer-reuse-window
+         display-buffer-in-side-window
+         (side . bottom)
+         (window-height . 0.25))))
+
 ;;; --- Core Configuration ---
-;; Custom file
+;; Custm file
 (setq custom-file (locate-user-emacs-file "custom-vars.el"))
 (load custom-file 'noerror 'nomessages)
 
@@ -65,6 +96,10 @@
 
 ;; Compile command
 (setq compile-command "make")
+(defun my/compile-no-prompt ()
+  (interactive)
+  (let ((compilation-read-command nil))
+    (call-interactively #'compile)))
 
 ;;; --- Programming ---
 ;; Formatting
@@ -129,12 +164,16 @@
   (aidermacs-default-chat-mode 'code)
   (aidermacs-default-model "openrouter/tngtech/deepseek-r1t2-chimera:free"))
 
-(use-package doom-modeline
+(use-package nerd-icons)
+
+(use-package undo-fu
+  :ensure t)
+
+(use-package undo-fu-session
   :ensure t
   :init
-  (doom-modeline-mode 1))
-
-(use-package nerd-icons)
+  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'"))
+  (global-undo-fu-session-mode))
 
 ;;; --- Org Mode Configuration ---
 (use-package org
@@ -157,12 +196,16 @@
 
 ;;; --- Keybindings ---
 ;; Evil mode navigation
-(evil-define-key 'normal 'global
-  (kbd "C-h") #'windmove-left
-  (kbd "C-j") #'windmove-down
-  (kbd "C-k") #'windmove-up
-  (kbd "C-l") #'windmove-right
-  (kbd "C--") #'maximize-window)
+(with-eval-after-load 'evil
+  (evil-define-key 'normal 'global
+    (kbd "C-h") #'windmove-left
+    (kbd "C-j") #'windmove-down
+    (kbd "C-k") #'windmove-up
+    (kbd "C-l") #'windmove-right
+    (kbd "C--") #'maximize-window)
+  (evil-define-key '(normal insert) 'global
+    (kbd "C-c C-c") #'my/compile-no-prompt
+    (kbd "C-x C-r") #'recentf))
 
 ;; Global keys
 (global-set-key (kbd "C-x C-c") #'ignore)
