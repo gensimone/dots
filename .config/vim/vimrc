@@ -35,8 +35,8 @@ nnoremap <c-l> <c-w>l
 map <leader>y "+y
 
 " Snippets
-nnoremap main :-1read $HOME/.vim/snippets/main.c<CR>2jO
-nnoremap struct :-1read $HOME/.vim/snippets/struct.c<CR>2ja
+nnoremap main :-1read ~/.config/vim/snippets/main.c<CR>2jO
+nnoremap struct :-1read ~/.config/vim/snippets/struct.c<CR>2ja
 
 "Remove all trailing whitespace by pressing F5
 nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
