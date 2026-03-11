@@ -1,0 +1,13 @@
+.cache/*
+.cargo/*
+.local/state/*
+.rustup/*
+
+documents/*
+external/*
+music/*
+pictures/*
+private/*
+public/*
+templates/*
+videos/*
