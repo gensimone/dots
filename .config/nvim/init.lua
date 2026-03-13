@@ -46,6 +46,7 @@ opt.wrap = false
 cmd("set noshowmode")
 cmd("set noshowcmd")
 cmd("set noruler")
+cmd("colorscheme vim")
 cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 diagnostic({ underline = false })
 
