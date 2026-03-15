@@ -32,7 +32,7 @@ opt.ignorecase = true
 opt.incsearch = true
 opt.number = true
 opt.relativenumber = false
-opt.laststatus = 0
+opt.laststatus = 2
 opt.scrolloff = 8
 opt.shiftwidth = 4
 opt.signcolumn = "no"
@@ -46,7 +46,7 @@ opt.wrap = false
 cmd("set noshowmode")
 cmd("set noshowcmd")
 cmd("set noruler")
-cmd("colorscheme vim")
+cmd("colorscheme koehler")
 cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 diagnostic({ underline = false })
 
@@ -94,25 +94,18 @@ keymap('n', '<leader>g', ':Neogit<CR>')
 keymap('n', '<leader>r', ':lua vim.lsp.buf.rename()<CR>')
 keymap('n', '<leader>y', '"+y')
 keymap('n', '<leader>t', ':term<CR>')
+keymap('n', '<leader>c', ':Compile<CR>')
 keymap({'n', 'x'}, "gz", "<Cmd>MultipleCursorsAddMatches<CR>")
 keymap({'n', 'x'}, "<C-n>", "<Cmd>MultipleCursorsAddJumpNextMatch<CR>")
 keymap('', 'f', function() require('hop').hint_char1({ current_line_only = false}) end, opts)
 
 -- Terminal
 keymap("t", "<Esc><Esc>", [[<C-\><C-n>]], opts)
-keymap('t', '<C-h>', [[<C-\><C-n><C-w>h]], opts)
-keymap('t', '<C-j>', [[<C-\><C-n><C-w>j]], opts)
-keymap('t', '<C-k>', [[<C-\><C-n><C-w>k]], opts)
-keymap('t', '<C-l>', [[<C-\><C-n><C-w>l]], opts)
+keymap('t', '<C-w>h', [[<C-\><C-n><C-w>h]], opts)
+keymap('t', '<C-w>j', [[<C-\><C-n><C-w>j]], opts)
+keymap('t', '<C-w>k', [[<C-\><C-n><C-w>k]], opts)
+keymap('t', '<C-w>l', [[<C-\><C-n><C-w>l]], opts)
 keymap("t", "<A-h>", [[<C-\><C-n><C-w><]], opts)
 keymap("t", "<A-l>", [[<C-\><C-n><C-w>>]], opts)
 keymap("t", "<A-j>", [[<C-\><C-n><C-w>-]], opts)
 keymap("t", "<A-k>", [[<C-\><C-n><C-w>+]], opts)
--- vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
---     pattern = { "*" },
---     callback = function()
---         if vim.opt.buftype:get() == "terminal" then
---             vim.cmd(":startinsert")
---         end
---     end
--- })
