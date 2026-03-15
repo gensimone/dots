@@ -20,8 +20,6 @@ else
     sudo cryptsetup luksOpen $1 encrypted || exit 1
 fi
 
-
-
 sudo mount --mkdir /dev/mapper/encrypted ~/external || {
     sudo cryptsetup luksClose encrypted
     echo "Aborted." >&2;
