@@ -20,6 +20,7 @@ font pango:LigaMonaco Nerd Font 12
 #font pango:DejaVu Sans Mono 8
 
 exec --no-startup-id xrandr --auto
+exec --no-startup-id picom -b
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
@@ -110,8 +111,8 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+a focus parent
 
-# focus the child container
-#bindsym $mod+d focus child
+# Lock the screen
+bindsym $mod+Escape exec --no-startup-id i3lock -c 000000
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
