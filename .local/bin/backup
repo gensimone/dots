@@ -18,4 +18,5 @@ rsync \
 	/home/simone/music \
 	/home/simone/pictures \
 	/home/simone/private \
+	/home/simone/wallpapers \
     $1
