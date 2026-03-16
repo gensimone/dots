@@ -46,7 +46,7 @@ opt.wrap = false
 cmd("set noshowmode")
 cmd("set noshowcmd")
 cmd("set noruler")
-cmd("colorscheme koehler")
+cmd("colorscheme lunaperche")
 cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 diagnostic({ underline = false })
 
@@ -73,6 +73,11 @@ require("lazy").setup({
 -- Keymaps
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
+
+keymap('n', '<C-h>', '<C-w>h', { desc = 'Move to left window' })
+keymap('n', '<C-j>', '<C-w>j', { desc = 'Move to lower window' })
+keymap('n', '<C-k>', '<C-w>k', { desc = 'Move to upper window' })
+keymap('n', '<C-l>', '<C-w>l', { desc = 'Move to right window' })
 
 -- Telescope
 local telescope_builtin = require('telescope.builtin')
@@ -101,10 +106,10 @@ keymap('', 'f', function() require('hop').hint_char1({ current_line_only = false
 
 -- Terminal
 keymap("t", "<Esc><Esc>", [[<C-\><C-n>]], opts)
-keymap('t', '<C-w>h', [[<C-\><C-n><C-w>h]], opts)
-keymap('t', '<C-w>j', [[<C-\><C-n><C-w>j]], opts)
-keymap('t', '<C-w>k', [[<C-\><C-n><C-w>k]], opts)
-keymap('t', '<C-w>l', [[<C-\><C-n><C-w>l]], opts)
+keymap('t', '<C-h>', [[<C-\><C-n><C-w>h]], opts)
+keymap('t', '<C-j>', [[<C-\><C-n><C-w>j]], opts)
+keymap('t', '<C-k>', [[<C-\><C-n><C-w>k]], opts)
+keymap('t', '<C-l>', [[<C-\><C-n><C-w>l]], opts)
 keymap("t", "<A-h>", [[<C-\><C-n><C-w><]], opts)
 keymap("t", "<A-l>", [[<C-\><C-n><C-w>>]], opts)
 keymap("t", "<A-j>", [[<C-\><C-n><C-w>-]], opts)
