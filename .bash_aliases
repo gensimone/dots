@@ -19,4 +19,7 @@ alias python='python3'
 
 alias vi='nvim'
 alias vim='nvim'
-alias remove-orphans='pacman -Qqd | sudo pacman -Rsu -'
+
+if [ -f ~/.bash_aliases_extra ]; then
+	. ~/.bash_aliases_extra
+fi
