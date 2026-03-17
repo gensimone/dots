@@ -24,7 +24,7 @@ vim.g.maplocalleader = "\\"
 local opt= vim.opt
 local cmd = vim.cmd
 local diagnostic = vim.diagnostic.config
-opt.clipboard = "unnamedplus"
+-- opt.clipboard = "unnamedplus"
 opt.cursorline = false
 opt.expandtab = true
 opt.hlsearch = false
@@ -91,6 +91,12 @@ require("lazy").setup({
                 -- bang_expansion = true,
             }
         end
+    },
+    {
+         "aserowy/tmux.nvim",
+         config = function()
+             require('tmux').setup()
+         end
     },
     {
         "smoka7/hop.nvim",
@@ -257,10 +263,11 @@ require("lazy").setup({
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
-keymap('n', '<C-h>', '<C-w>h', { desc = 'Move to left window' })
-keymap('n', '<C-j>', '<C-w>j', { desc = 'Move to lower window' })
-keymap('n', '<C-k>', '<C-w>k', { desc = 'Move to upper window' })
-keymap('n', '<C-l>', '<C-w>l', { desc = 'Move to right window' })
+-- Do not enable this unless disabling tmux.nvim
+-- keymap('n', '<C-h>', '<C-w>h', { desc = 'Move to left window' })
+-- keymap('n', '<C-j>', '<C-w>j', { desc = 'Move to lower window' })
+-- keymap('n', '<C-k>', '<C-w>k', { desc = 'Move to upper window' })
+-- keymap('n', '<C-l>', '<C-w>l', { desc = 'Move to right window' })
 
 -- Telescope
 local telescope_builtin = require('telescope.builtin')
