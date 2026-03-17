@@ -59,12 +59,195 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   command = [[%s/\s\+$//e]],
 })
 
--- Setup lazy.nvim
+-- Plugin installation and configuration.
+-- Lazy configuration.
 require("lazy").setup({
   spec = {
-    -- import your plugins
-    { import = "plugins" },
-  },
+    {
+        "ej-shafran/compile-mode.nvim",
+        version = "^5.0.0",
+        -- you can just use the latest version:
+        -- branch = "latest",
+        -- or the most up-to-date updates:
+        -- branch = "nightly",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            -- if you want to enable coloring of ANSI escape codes in
+            -- compilation output, add:
+            -- { "m00qek/baleia.nvim", tag = "v1.3.0" },
+        },
+        config = function()
+            ---@type CompileModeOpts
+            vim.g.compile_mode = {
+                -- if you use something like `nvim-cmp` or `blink.cmp` for completion,
+                -- set this to fix tab completion in command mode:
+                -- input_word_completion = true,
+
+                -- to add ANSI escape code support, add:
+                baleia_setup = true,
+
+                -- to make `:Compile` replace special characters (e.g. `%`) in
+                -- the command (and behave more like `:!`), add:
+                -- bang_expansion = true,
+            }
+        end
+    },
+    {
+        "smoka7/hop.nvim",
+        version = "*",
+        config = function()
+            require("hop").setup {
+                keys = 'etovxqpdygfblzhckisuran'
+            }
+        end
+    },
+    {
+        'stevearc/oil.nvim',
+        opts = {
+            -- Set to true to watch the filesystem for changes and reload oil
+            watch_for_changes = true,
+            default_file_explorer = true,
+            -- Id is automatically added at the beginning, and name at the end
+            -- See :help oil-columns
+            columns = {
+                -- "icon",
+                "permissions",
+                "size",
+                "mtime",
+            },
+            view_options = {
+                show_hidden = true
+            },
+            -- Send deleted files to the trash instead of permanently deleting them (:help oil-trash)
+            delete_to_trash = false,
+            -- Skip the confirmation popup for simple operations (:help oil.skip_confirm_for_simple_edits)
+            skip_confirm_for_simple_edits = true,
+            -- Selecting a new/moved/renamed file or directory will prompt you to save changes first
+            -- (:help prompt_save_on_select_new_entry)
+            prompt_save_on_select_new_entry = true,
+            -- Keymaps
+            keymaps = {
+                ["g?"] = { "actions.show_help", mode = "n" },
+                ["<CR>"] = "actions.select",
+                ["<C-s>"] = { "actions.select", opts = { vertical = true } },
+                -- ["<C-h>"] = { "actions.select", opts = { horizontal = true } },
+                ["<C-h>"] = false,
+                ["<C-t>"] = { "actions.select", opts = { tab = true } },
+                ["<C-p>"] = "actions.preview",
+                ["q"] = { "actions.close", mode = "n" },
+                -- ["<C-l>"] = "actions.refresh",
+                ["<C-l>"] = false,
+                ["-"] = { "actions.parent", mode = "n" },
+                ["_"] = { "actions.open_cwd", mode = "n" },
+                ["`"] = { "actions.cd", mode = "n" },
+                ["g~"] = { "actions.cd", opts = { scope = "tab" }, mode = "n" },
+                ["gs"] = { "actions.change_sort", mode = "n" },
+                ["gx"] = "actions.open_external",
+                ["g."] = { "actions.toggle_hidden", mode = "n" },
+                ["g\\"] = { "actions.toggle_trash", mode = "n" },
+            },
+
+        },
+
+        -- Optional dependencies
+        -- dependencies = { { "nvim-mini/mini.icons", opts = {} } },
+        -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+        -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+        lazy = false,
+    },
+    {
+        "neovim/nvim-lspconfig",
+        config = function()
+            vim.lsp.enable('pyright')
+            vim.lsp.enable('clangd')
+            vim.lsp.enable('bashls')
+        end
+    },
+    {
+        "brenton-leighton/multiple-cursors.nvim",
+        version = "*",
+        opts = {}
+    },
+    {
+        'NeogitOrg/neogit',
+        lazy = true,
+        dependencies = {
+            'nvim-lua/plenary.nvim',         -- required
+            'sindrets/diffview.nvim',        -- optional - Diff integration
+            'nvim-telescope/telescope.nvim', -- optional
+        },
+        cmd = 'Neogit'
+    },
+    {
+        'nvim-telescope/telescope.nvim',
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            -- optional but recommended
+            { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+        },
+        config = function()
+            require('telescope').setup {
+                defaults = require('telescope.themes').get_ivy {
+                    initial_mode = "insert",
+                    mappings = {
+                        i = {
+                            -- Press ESC in insert mode to close Telescope
+                            ["<Esc>"] = require('telescope.actions').close,
+                        }
+                    },
+                    layout_config = {
+                        height = 0.35,
+                        preview_cutoff = 9999999,
+                    }
+                },
+                pickers = {
+                    live_grep = {
+                        additional_args = {
+                            "--hidden",
+                            "--glob",
+                            "!**/.git/*"
+                        }
+                    },
+                    find_files = {
+                        find_command = {
+                            "fd",
+                            "--type", "f",
+                            "--type", "d",
+                            "--hidden",
+                            "--follow",
+                            "--exclude", ".git"
+                        }
+                    }
+                }
+            }
+        end
+    },
+    {
+        "xiyaowong/transparent.nvim",
+        config = function()
+            -- Optional, you don't have to run setup.
+            require("transparent").setup({
+                -- table: default groups
+                groups = {
+                    'Normal', 'NormalNC', 'Comment', 'Constant', 'Special', 'Identifier',
+                    'Statement', 'PreProc', 'Type', 'Underlined', 'Todo', 'String', 'Function',
+                    'Conditional', 'Repeat', 'Operator', 'Structure', 'LineNr', 'NonText',
+                    'SignColumn', 'CursorLine', 'CursorLineNr', 'StatusLine', 'StatusLineNC',
+                    'EndOfBuffer',
+                },
+                -- table: additional groups that should be cleared
+                extra_groups = {},
+                -- table: groups you don't want to clear
+                exclude_groups = {},
+                -- function: code to be executed after highlight groups are cleared
+                -- Also the user event "TransparentClear" will be triggered
+                on_clear = function() end,
+            })
+            vim.cmd('TransparentEnable') -- Enable transparency at boot.
+        end
+    }
+  }, -- spec: close
+
   -- automatically check for plugin updates
   checker = { enabled = false },
   change_detection = { enabled = false }
