@@ -11,4 +11,6 @@ if [ -f ~/.bash_aliases ]; then
 	. ~/.bash_aliases
 fi
 
+PROMPT_COMMAND+=('echo -e -n "\\x1b[0 q"')
+
 set -o vi
