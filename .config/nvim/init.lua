@@ -84,7 +84,7 @@ require("lazy").setup({
                 -- input_word_completion = true,
 
                 -- to add ANSI escape code support, add:
-                baleia_setup = true,
+                -- baleia_setup = true,
 
                 -- to make `:Compile` replace special characters (e.g. `%`) in
                 -- the command (and behave more like `:!`), add:
