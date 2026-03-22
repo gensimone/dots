@@ -24,7 +24,6 @@ vim.g.maplocalleader = "\\"
 local opt= vim.opt
 local cmd = vim.cmd
 local diagnostic = vim.diagnostic.config
-opt.clipboard = "unnamedplus"
 opt.cursorline = false
 opt.expandtab = true
 opt.hlsearch = false
@@ -259,17 +258,17 @@ require("lazy").setup({
   change_detection = { enabled = false }
 })
 
--- Keymaps
+-- Keymaps.
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
--- Do not enable this unless disabling tmux.nvim
+-- This conflict with tmux.nvim
 -- keymap('n', '<C-h>', '<C-w>h', { desc = 'Move to left window' })
 -- keymap('n', '<C-j>', '<C-w>j', { desc = 'Move to lower window' })
 -- keymap('n', '<C-k>', '<C-w>k', { desc = 'Move to upper window' })
 -- keymap('n', '<C-l>', '<C-w>l', { desc = 'Move to right window' })
 
--- Telescope
+-- Telescope.
 local telescope_builtin = require('telescope.builtin')
 keymap('n', '<leader>ff', telescope_builtin.find_files)
 keymap('n', '<leader>fr', telescope_builtin.oldfiles)
@@ -277,24 +276,24 @@ keymap('n', '<leader>fg', telescope_builtin.live_grep)
 keymap('n', '<leader>fb', telescope_builtin.buffers)
 keymap('n', '<leader>fh', telescope_builtin.help_tags)
 keymap('n', '<leader>fm', function() telescope_builtin.man_pages({ sections = { 'ALL' } }) end)
-keymap('n', '<leader>fc', function() telescope_builtin.find_files({ cwd = vim.fn.stdpath('config') }) end)
+keymap('n', '<leader>fc', function() vim.cmd('edit ~/.config/nvim/init.lua') end)
 keymap('n', '<leader>ds', telescope_builtin.diagnostics)
 
--- Various stuff
+-- Various stuff.
 keymap('n', '<leader>bd', ':bd<CR>')
 keymap('n', '<leader>n', ':bn<CR>')
 keymap('n', '<leader>p', ':bp<CR>')
 keymap('n', '<leader>e', ':Oil<CR>')
 keymap('n', '<leader>g', ':Neogit<CR>')
 keymap('n', '<leader>r', ':lua vim.lsp.buf.rename()<CR>')
-keymap('n', '<leader>y', '"+y')
+keymap('n', '<leader>y', '"+yy')
 keymap('n', '<leader>t', ':term<CR>')
 keymap('n', '<leader>c', ':Compile<CR>')
 keymap({'n', 'x'}, "gz", "<Cmd>MultipleCursorsAddMatches<CR>")
 keymap({'n', 'x'}, "<C-n>", "<Cmd>MultipleCursorsAddJumpNextMatch<CR>")
 keymap('', 'f', function() require('hop').hint_char1({ current_line_only = false}) end, opts)
 
--- Terminal
+-- Terminal.
 keymap("t", "<Esc><Esc>", [[<C-\><C-n>]], opts)
 keymap('t', '<C-h>', [[<C-\><C-n><C-w>h]], opts)
 keymap('t', '<C-j>', [[<C-\><C-n><C-w>j]], opts)
