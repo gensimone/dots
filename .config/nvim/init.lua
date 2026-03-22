@@ -289,8 +289,8 @@ keymap('n', '<leader>r', ':lua vim.lsp.buf.rename()<CR>')
 keymap('n', '<leader>y', '"+yy')
 keymap('n', '<leader>t', ':term<CR>')
 keymap('n', '<leader>c', ':Compile<CR>')
-keymap({'n', 'x'}, "gz", "<Cmd>MultipleCursorsAddMatches<CR>")
-keymap({'n', 'x'}, "<C-n>", "<Cmd>MultipleCursorsAddJumpNextMatch<CR>")
+keymap({'n', 'x'}, 'gz', '<Cmd>MultipleCursorsAddMatches<CR>')
+keymap({'n', 'x'}, '<C-n>', '<Cmd>MultipleCursorsAddJumpNextMatch<CR>')
 keymap('', 'f', function() require('hop').hint_char1({ current_line_only = false}) end, opts)
 
 -- Terminal.
@@ -299,7 +299,34 @@ keymap('t', '<C-h>', [[<C-\><C-n><C-w>h]], opts)
 keymap('t', '<C-j>', [[<C-\><C-n><C-w>j]], opts)
 keymap('t', '<C-k>', [[<C-\><C-n><C-w>k]], opts)
 keymap('t', '<C-l>', [[<C-\><C-n><C-w>l]], opts)
-keymap("t", "<A-h>", [[<C-\><C-n><C-w><]], opts)
-keymap("t", "<A-l>", [[<C-\><C-n><C-w>>]], opts)
-keymap("t", "<A-j>", [[<C-\><C-n><C-w>-]], opts)
-keymap("t", "<A-k>", [[<C-\><C-n><C-w>+]], opts)
+keymap("t", '<A-h>', [[<C-\><C-n><C-w><]], opts)
+keymap("t", '<A-l>', [[<C-\><C-n><C-w>>]], opts)
+keymap("t", '<A-j>', [[<C-\><C-n><C-w>-]], opts)
+keymap("t", '<A-k>', [[<C-\><C-n><C-w>+]], opts)
+
+local maximize = {
+  session = nil,
+  hidden_save = nil,
+}
+
+function MaximizeToggle()
+  if maximize.session then
+    -- Restore session
+    vim.cmd("source " .. maximize.session)
+    vim.fn.delete(maximize.session)
+    maximize.session = nil
+
+    vim.o.hidden = maximize.hidden_save
+    maximize.hidden_save = nil
+  else
+    -- Save current state
+    maximize.hidden_save = vim.o.hidden
+    maximize.session = vim.fn.tempname()
+
+    vim.o.hidden = true
+    vim.cmd("mksession! " .. maximize.session)
+    vim.cmd("only")
+  end
+end
+
+keymap("n", '<C-w>o', MaximizeToggle)
