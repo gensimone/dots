@@ -15,5 +15,7 @@ append_path $HOME/.local/bin
 
 export QT_QPA_PLATFORM=wayland
 export QT_QPA_PLATFORMTHEME=qt6ct
+export VISUAL=less
+export EDITOR=vi
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
