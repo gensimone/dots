@@ -11,7 +11,7 @@
 	s = status
 	undo = reset HEAD~
 	unstage = reset HEAD --
-        r = restore
+    r = restore
 [init]
 	defaultBranch = main
 [core]
