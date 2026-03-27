@@ -17,7 +17,7 @@ if ls /dev/mapper/encrypted >/dev/null 2>&1; then
         exit 1
     fi
 else
-    sudo cryptsetup luksOpen $1 encrypted || exit 1
+    sudo cryptsetup luksOpen "$1" encrypted || exit 1
 fi
 
 sudo mount --mkdir /dev/mapper/encrypted ~/external || {
