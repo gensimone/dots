@@ -121,6 +121,50 @@ require("lazy").setup({
         },
         cmd = 'Neogit'
     },
+    {
+        'nvim-telescope/telescope.nvim',
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            -- optional but recommended
+            { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+        },
+        config = function()
+            require('telescope').setup {
+                defaults = require('telescope.themes').get_dropdown {
+                    initial_mode = "insert",
+                    mappings = {
+                        i = {
+                            -- Press ESC in insert mode to close Telescope
+                            ["<Esc>"] = require('telescope.actions').close,
+                        }
+                    },
+                    layout_config = {
+                        height = 0.35,
+                        preview_cutoff = 9999999,
+                    }
+                },
+                pickers = {
+                    live_grep = {
+                        additional_args = {
+                            "--hidden",
+                            "--glob",
+                            "!**/.git/*"
+                        }
+                    },
+                    find_files = {
+                        find_command = {
+                            "fd",
+                            "--type", "f",
+                            "--type", "d",
+                            "--hidden",
+                            "--follow",
+                            "--exclude", ".git"
+                        }
+                    }
+                }
+            }
+        end
+    }
   }
 })
 
@@ -132,12 +176,23 @@ keymap('n', '<leader>n', ':bn<CR>')
 keymap('n', '<leader>p', ':bp<CR>')
 keymap('n', '<leader>e', ':Oil<CR>')
 keymap('n', '<leader>g', ':Neogit<CR>')
-keymap('n', '<leader>y', '"+yy')
+keymap('n', '<leader>y', '"+y')
 keymap('n', '<leader>t', ':term<CR>')
 keymap('n', '<leader>c', ':Compile<CR>')
 keymap({'n', 'x'}, 'gz', '<Cmd>MultipleCursorsAddMatches<CR>')
 keymap({'n', 'x'}, '<C-n>', '<Cmd>MultipleCursorsAddJumpNextMatch<CR>')
 keymap('', 'f', function() require('hop').hint_char1({ current_line_only = false}) end, opts)
+
+-- Telescope.
+local telescope_builtin = require('telescope.builtin')
+keymap('n', '<leader>ff', telescope_builtin.find_files)
+keymap('n', '<leader>fr', telescope_builtin.oldfiles)
+keymap('n', '<leader>fg', telescope_builtin.live_grep)
+keymap('n', '<leader>fb', telescope_builtin.buffers)
+keymap('n', '<leader>fh', telescope_builtin.help_tags)
+keymap('n', '<leader>fm', function() telescope_builtin.man_pages({ sections = { 'ALL' } }) end)
+keymap('n', '<leader>fc', function() vim.cmd('edit ~/.config/nvim/init.lua') end)
+keymap('n', '<leader>ds', telescope_builtin.diagnostics)
 
 -- Terminal keymaps.
 keymap("t", "<Esc><Esc>", [[<C-\><C-n>]], opts)
