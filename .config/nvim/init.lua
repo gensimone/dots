@@ -169,6 +169,16 @@ vim.api.nvim_create_autocmd('FileType', {
         })
     end,
 })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'python',
+    callback = function(ev)
+        vim.lsp.start({
+            name = 'python lsp',
+            cmd = { 'pylsp' },
+            root_dir = vim.fs.root(ev.buf, { '.git/', 'pyproject.toml', 'setup.py' })
+        })
+    end,
+})
 keymap('n', '<leader>r', ':lua vim.lsp.buf.rename()<CR>')
 cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 
