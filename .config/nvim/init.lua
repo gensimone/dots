@@ -130,7 +130,7 @@ require("lazy").setup({
         },
         config = function()
             require('telescope').setup {
-                defaults = require('telescope.themes').get_dropdown {
+                defaults = require('telescope.themes').get_ivy {
                     initial_mode = "insert",
                     mappings = {
                         i = {
@@ -237,3 +237,6 @@ vim.api.nvim_create_autocmd('FileType', {
 keymap('n', '<leader>r', ':lua vim.lsp.buf.rename()<CR>')
 cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 
+vim.diagnostic.config({
+  virtual_text = false,
+})
