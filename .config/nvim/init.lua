@@ -76,6 +76,12 @@ require("lazy").setup({
         end
     },
     {
+        "xiyaowong/transparent.nvim",
+        config = function()
+            vim.cmd("TransparentEnable")
+        end
+    },
+    {
         'stevearc/oil.nvim',
         opts = {
             watch_for_changes = true,
@@ -177,7 +183,6 @@ keymap('n', '<leader>p', ':bp<CR>')
 keymap('n', '<leader>e', ':Oil<CR>')
 keymap('n', '<leader>g', ':Neogit<CR>')
 keymap('n', '<leader>y', '"+y')
-keymap('n', '<leader>t', ':term<CR>')
 keymap('n', '<leader>c', ':Compile<CR>')
 keymap({'n', 'x'}, 'gz', '<Cmd>MultipleCursorsAddMatches<CR>')
 keymap({'n', 'x'}, '<C-n>', '<Cmd>MultipleCursorsAddJumpNextMatch<CR>')
@@ -195,6 +200,7 @@ keymap('n', '<leader>fc', function() vim.cmd('edit ~/.config/nvim/init.lua') end
 keymap('n', '<leader>ds', telescope_builtin.diagnostics)
 
 -- Terminal keymaps.
+keymap('n', '<leader>t', ':TermToggle<CR>') -- Custom command that spawn the same terminal in split mode.
 keymap("t", "<Esc><Esc>", [[<C-\><C-n>]], opts)
 keymap('t', '<C-h>', [[<C-\><C-n><C-w>h]], opts)
 keymap('t', '<C-j>', [[<C-\><C-n><C-w>j]], opts)
@@ -240,3 +246,54 @@ cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 vim.diagnostic.config({
   virtual_text = false,
 })
+
+vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
+    pattern = { "*" },
+    callback = function()
+        if vim.opt.buftype:get() == "terminal" then
+            vim.cmd(":startinsert")
+        end
+    end
+})
+
+-- local term_buf = nil
+--
+-- function OpenOrReuseTerminal()
+--   if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
+--     -- If terminal already exists, switch to it
+--     vim.api.nvim_set_current_buf(term_buf)
+--   else
+--     -- Otherwise create a new one
+--     vim.cmd("term")
+--     term_buf = vim.api.nvim_get_current_buf()
+--   end
+-- end
+--
+-- -- Create a command
+-- vim.api.nvim_create_user_command("TermToggle", OpenOrReuseTerminal, {})
+
+local term_buf = nil
+local term_win = nil
+
+function OpenOrReuseTerminal()
+  if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
+    -- If buffer exists, check if it's visible in a window
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if vim.api.nvim_win_get_buf(win) == term_buf then
+        -- Jump to that window
+        vim.api.nvim_set_current_win(win)
+        return
+      end
+    end
+
+    -- Buffer exists but not visible → open it in a horizontal split
+    vim.cmd("split")
+    vim.api.nvim_set_current_buf(term_buf)
+  else
+    -- No terminal yet → create one in horizontal split
+    vim.cmd("split | term")
+    term_buf = vim.api.nvim_get_current_buf()
+  end
+end
+
+vim.api.nvim_create_user_command("TermToggle", OpenOrReuseTerminal, {})
