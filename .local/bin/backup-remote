@@ -1,0 +1,29 @@
+#!/bin/sh
+
+stty_orig=`stty -g`
+stty -echo
+printf "Pass: "
+read pass
+echo
+stty $stty_orig
+
+if [ -z "$pass" ]; then
+    echo "Aborted." >&2
+    exit 1
+fi
+
+abort_if_fail() {
+    $@
+    if [ $? -gt 0 ]; then
+        echo "Aborted." >&2
+        exit 1
+    fi
+}
+
+DEVNAME="encrypted"
+
+abort_if_fail ssh server-root echo $pass \| cryptsetup luksOpen /dev/sda $DEVNAME
+abort_if_fail ssh server-root mount /dev/mapper/$DEVNAME /home/simone/otherdisk
+abort_if_fail backup server:~/otherdisk
+abort_if_fail ssh server-root umount /home/simone/otherdisk
+abort_if_fail ssh server-root crypsetup luksClose encrypted
