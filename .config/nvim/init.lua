@@ -190,14 +190,13 @@ keymap('', 'f', function() require('hop').hint_char1({ current_line_only = false
 
 -- Telescope.
 local telescope_builtin = require('telescope.builtin')
-keymap('n', '<leader>ff', telescope_builtin.find_files)
-keymap('n', '<leader>fr', telescope_builtin.oldfiles)
-keymap('n', '<leader>fg', telescope_builtin.live_grep)
+keymap('n', '<leader>ds', telescope_builtin.diagnostics)
 keymap('n', '<leader>fb', telescope_builtin.buffers)
+keymap('n', '<leader>ff', telescope_builtin.find_files)
+keymap('n', '<leader>fg', telescope_builtin.live_grep)
 keymap('n', '<leader>fh', telescope_builtin.help_tags)
 keymap('n', '<leader>fm', function() telescope_builtin.man_pages({ sections = { 'ALL' } }) end)
-keymap('n', '<leader>fc', function() vim.cmd('edit ~/.config/nvim/init.lua') end)
-keymap('n', '<leader>ds', telescope_builtin.diagnostics)
+keymap('n', '<leader>fr', telescope_builtin.oldfiles)
 
 -- Terminal keymaps.
 keymap('n', '<leader>t', ':TermToggle<CR>') -- Custom command that spawn the same terminal in split mode.
@@ -211,7 +210,7 @@ keymap("t", '<A-l>', [[<C-\><C-n><C-w>>]], opts)
 keymap("t", '<A-j>', [[<C-\><C-n><C-w>-]], opts)
 keymap("t", '<A-k>', [[<C-\><C-n><C-w>+]], opts)
 
--- Nvim >= 0.11
+-- Newer version of Neovim support this cool syntax for LSP autostart.
 -- vim.lsp.config['clangd'] = {
 --   cmd = { 'clangd' },
 --   filetypes = { 'c' },
@@ -219,7 +218,9 @@ keymap("t", '<A-k>', [[<C-\><C-n><C-w>+]], opts)
 --
 -- vim.lsp.enable('clangd')
 
--- This works on debian (Nvim 0.10.4)
+-- Automatically start LSP servers.
+-- Compatible with older version of Neovim, like the 0.10.4 distributed in
+-- Debian 13 trixie.
 vim.api.nvim_create_autocmd('FileType', {
     pattern = 'c',
     callback = function(ev)
@@ -243,10 +244,12 @@ vim.api.nvim_create_autocmd('FileType', {
 keymap('n', '<leader>r', ':lua vim.lsp.buf.rename()<CR>')
 cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 
+-- Disable annoying diagnostics.
 vim.diagnostic.config({
   virtual_text = false,
 })
 
+-- Activate insert mode when terminal gets focus.
 vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
     pattern = { "*" },
     callback = function()
@@ -256,44 +259,22 @@ vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
     end
 })
 
--- local term_buf = nil
---
--- function OpenOrReuseTerminal()
---   if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
---     -- If terminal already exists, switch to it
---     vim.api.nvim_set_current_buf(term_buf)
---   else
---     -- Otherwise create a new one
---     vim.cmd("term")
---     term_buf = vim.api.nvim_get_current_buf()
---   end
--- end
---
--- -- Create a command
--- vim.api.nvim_create_user_command("TermToggle", OpenOrReuseTerminal, {})
-
+-- TermToggle Implementation.
 local term_buf = nil
 local term_win = nil
-
 function OpenOrReuseTerminal()
   if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
-    -- If buffer exists, check if it's visible in a window
     for _, win in ipairs(vim.api.nvim_list_wins()) do
       if vim.api.nvim_win_get_buf(win) == term_buf then
-        -- Jump to that window
         vim.api.nvim_set_current_win(win)
         return
       end
     end
-
-    -- Buffer exists but not visible → open it in a horizontal split
     vim.cmd("split")
     vim.api.nvim_set_current_buf(term_buf)
   else
-    -- No terminal yet → create one in horizontal split
     vim.cmd("split | term")
     term_buf = vim.api.nvim_get_current_buf()
   end
 end
-
 vim.api.nvim_create_user_command("TermToggle", OpenOrReuseTerminal, {})
