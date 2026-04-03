@@ -1,5 +1,8 @@
 #!/bin/sh
 
+ssh -o ConnectTimeout=3 server-root .
+[ $? -gt 0 ] && exit 1
+
 stty_orig=`stty -g`
 stty -echo
 printf "Pass: "
@@ -26,4 +29,4 @@ abort_if_fail ssh server-root echo $pass \| cryptsetup luksOpen /dev/sda $DEVNAM
 abort_if_fail ssh server-root mount /dev/mapper/$DEVNAME /home/simone/otherdisk
 abort_if_fail backup server:~/otherdisk
 abort_if_fail ssh server-root umount /home/simone/otherdisk
-abort_if_fail ssh server-root crypsetup luksClose encrypted
+abort_if_fail ssh server-root cryptsetup luksClose encrypted
