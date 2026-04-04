@@ -209,6 +209,8 @@ keymap("t", '<A-h>', [[<C-\><C-n><C-w><]], opts)
 keymap("t", '<A-l>', [[<C-\><C-n><C-w>>]], opts)
 keymap("t", '<A-j>', [[<C-\><C-n><C-w>-]], opts)
 keymap("t", '<A-k>', [[<C-\><C-n><C-w>+]], opts)
+keymap('t', '<C-f>', [[<C-\><C-n><C-f>]], opts)
+keymap('t', '<C-b>', [[<C-\><C-n><C-b>]], opts)
 
 -- Newer version of Neovim support this cool syntax for LSP autostart.
 -- vim.lsp.config['clangd'] = {
