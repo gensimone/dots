@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ssh -o ConnectTimeout=3 server-root .
+ssh -o ConnectTimeout=3 server-root : # no-op
 [ $? -gt 0 ] && exit 1
 
 stty_orig=`stty -g`
@@ -24,9 +24,10 @@ abort_if_fail() {
 }
 
 DEVNAME="encrypted"
+MOUNTING_POINT="/home/simone/otherdisk"
 
 abort_if_fail ssh server-root echo $pass \| cryptsetup luksOpen /dev/sda $DEVNAME
-abort_if_fail ssh server-root mount /dev/mapper/$DEVNAME /home/simone/otherdisk
-abort_if_fail backup server:~/otherdisk
-abort_if_fail ssh server-root umount /home/simone/otherdisk
+abort_if_fail ssh server-root mount /dev/mapper/$DEVNAME $MOUNTING_POINT
+abort_if_fail backup server:$MOUNTING_POINT
+abort_if_fail ssh server-root umount $MOUNTING_POINT
 abort_if_fail ssh server-root cryptsetup luksClose encrypted
