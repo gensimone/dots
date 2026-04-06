@@ -144,14 +144,7 @@ keymap("t", "<C-f>", [[<C-\><C-n><C-f>]], opts)
 keymap("t", "<C-b>", [[<C-\><C-n><C-b>]], opts)
 keymap("n", "<leader>r", ":lua vim.lsp.buf.rename()<CR>")
 
-vim.lsp.config["clangd"] = {
-  cmd = { "clangd" },
-  filetypes = { "c" },
-}
-
 vim.lsp.enable("clangd")
-
-cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 vim.lsp.enable("pyright")
 vim.lsp.enable("bashls")
 vim.lsp.enable("gopls")
