@@ -36,6 +36,7 @@ vim.pack.add({
     "https://github.com/aserowy/tmux.nvim",
     "https://github.com/brenton-leighton/multiple-cursors.nvim",
     "https://github.com/ej-shafran/compile-mode.nvim",
+    "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/nvim-lua/plenary.nvim",
     "https://github.com/nvim-telescope/telescope.nvim",
     "https://github.com/smoka7/hop.nvim",
@@ -151,6 +152,13 @@ vim.lsp.config["clangd"] = {
 vim.lsp.enable("clangd")
 
 cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
+vim.lsp.enable("pyright")
+vim.lsp.enable("bashls")
+vim.lsp.enable("gopls")
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  command = [[lua vim.lsp.buf.format()]],
+})
 
 vim.diagnostic.config({
   virtual_text = false,
