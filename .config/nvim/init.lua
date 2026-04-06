@@ -1,7 +1,7 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
-local opt= vim.opt
+local opt = vim.opt
 local cmd = vim.cmd
 local diagnostic = vim.diagnostic.config
 
@@ -120,9 +120,9 @@ keymap("n", "<leader>e", ":Oil<CR>")
 keymap("n", "<leader>g", ":Neogit<CR>")
 keymap("n", "<leader>y", '"+y')
 keymap("n", "<leader>c", ":Compile<CR>")
-keymap({"n", "x"}, "gz", "<Cmd>MultipleCursorsAddMatches<CR>")
-keymap({"n", "x"}, "<C-n>", "<Cmd>MultipleCursorsAddJumpNextMatch<CR>")
-keymap("", "f", function() require("hop").hint_char1({ current_line_only = false}) end, opts)
+keymap({ "n", "x" }, "gz", "<Cmd>MultipleCursorsAddMatches<CR>")
+keymap({ "n", "x" }, "<C-n>", "<Cmd>MultipleCursorsAddJumpNextMatch<CR>")
+keymap("", "f", function() require("hop").hint_char1({ current_line_only = false }) end, opts)
 keymap("n", "<leader>ds", telescope_builtin.diagnostics)
 keymap("n", "<leader>fb", telescope_builtin.buffers)
 keymap("n", "<leader>ff", telescope_builtin.find_files)
@@ -144,17 +144,20 @@ keymap("t", "<C-f>", [[<C-\><C-n><C-f>]], opts)
 keymap("t", "<C-b>", [[<C-\><C-n><C-b>]], opts)
 keymap("n", "<leader>r", ":lua vim.lsp.buf.rename()<CR>")
 
-vim.lsp.enable("clangd")
-vim.lsp.enable("pyright")
 vim.lsp.enable("bashls")
+vim.lsp.enable("clangd")
 vim.lsp.enable("gopls")
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
-  command = [[lua vim.lsp.buf.format()]],
-})
+vim.lsp.enable("lua_ls")
+vim.lsp.enable("pyright")
+
+vim.api.nvim_create_user_command("Format", [[lua vim.lsp.buf.format()]], {})
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--   pattern = "*",
+--   command = [[lua vim.lsp.buf.format()]],
+-- })
 
 vim.diagnostic.config({
-  virtual_text = false,
+    virtual_text = false,
 })
 
 vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
@@ -169,23 +172,24 @@ vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
 local term_buf = nil
 local term_win = nil
 function OpenOrReuseTerminal()
-  if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
-    for _, win in ipairs(vim.api.nvim_list_wins()) do
-      if vim.api.nvim_win_get_buf(win) == term_buf then
-        vim.api.nvim_set_current_win(win)
-        return
-      end
+    if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+            if vim.api.nvim_win_get_buf(win) == term_buf then
+                vim.api.nvim_set_current_win(win)
+                return
+            end
+        end
+        vim.cmd("split")
+        vim.api.nvim_set_current_buf(term_buf)
+    else
+        vim.cmd("split | term")
+        term_buf = vim.api.nvim_get_current_buf()
     end
-    vim.cmd("split")
-    vim.api.nvim_set_current_buf(term_buf)
-  else
-    vim.cmd("split | term")
-    term_buf = vim.api.nvim_get_current_buf()
-  end
 end
+
 vim.api.nvim_create_user_command("TermToggle", OpenOrReuseTerminal, {})
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
-  command = [[%s/\s\+$//e]],
+    pattern = "*",
+    command = [[%s/\s\+$//e]],
 })
