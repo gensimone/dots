@@ -27,7 +27,7 @@ opt.wrap = false
 cmd("set noshowmode")
 cmd("set noshowcmd")
 cmd("set noruler")
-cmd("colorscheme lunaperche")
+cmd("colorscheme default")
 
 diagnostic({ underline = false })
 
@@ -48,7 +48,7 @@ require("oil").setup({
     watch_for_changes = true,
     default_file_explorer = true,
     columns = { "permissions", "size", "mtime" },
-    view_options = { show_hidden = false },
+    view_options = { show_hidden = true },
     delete_to_trash = false,
     skip_confirm_for_simple_edits = true,
     prompt_save_on_select_new_entry = true,
