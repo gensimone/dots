@@ -27,7 +27,7 @@ opt.wrap = false
 cmd("set noshowmode")
 cmd("set noshowcmd")
 cmd("set noruler")
-cmd("colorscheme default")
+cmd("colorscheme lunaperche")
 
 diagnostic({ underline = false })
 
