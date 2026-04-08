@@ -144,6 +144,9 @@ keymap("t", "<C-f>", [[<C-\><C-n><C-f>]], opts)
 keymap("t", "<C-b>", [[<C-\><C-n><C-b>]], opts)
 keymap("n", "<leader>r", ":lua vim.lsp.buf.rename()<CR>")
 
+keymap("c", "<C-F>", "<Right>")
+keymap("c", "<C-B>", "<Left>")
+
 vim.lsp.enable("bashls")
 vim.lsp.enable("clangd")
 vim.lsp.enable("gopls")
