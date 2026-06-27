@@ -43,6 +43,7 @@ vim.pack.add({
     "https://github.com/nvim-telescope/telescope.nvim",
     "https://github.com/smoka7/hop.nvim",
     "https://github.com/stevearc/oil.nvim",
+    "https://github.com/szw/vim-maximizer",
     "https://github.com/xiyaowong/transparent.nvim",
 })
 
@@ -184,6 +185,7 @@ keymap("n", "<leader>fh", telescope_builtin.help_tags)
 keymap("n", "<leader>fm", function() telescope_builtin.man_pages({ sections = { "ALL" } }) end)
 keymap("n", "<leader>fr", telescope_builtin.oldfiles)
 keymap("n", "<leader>t", ":TermToggle<CR>")
+keymap("n", "<C-w>o", "<cmd>MaximizerToggle!<CR>", opts)
 keymap("t", "<Esc><Esc>", [[<C-\><C-n>]], opts)
 keymap("t", "<C-h>", [[<C-\><C-n><C-w>h]], opts)
 keymap("t", "<C-j>", [[<C-\><C-n><C-w>j]], opts)
@@ -206,11 +208,11 @@ vim.lsp.enable("gopls")
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("pyright")
 
-vim.api.nvim_create_user_command("Format", [[lua vim.lsp.buf.format()]], {})
--- vim.api.nvim_create_autocmd("BufWritePre", {
---   pattern = "*",
---   command = [[lua vim.lsp.buf.format()]],
--- })
+-- vim.api.nvim_create_user_command("Format", [[lua vim.lsp.buf.format()]], {})
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  command = [[lua vim.lsp.buf.format()]],
+})
 
 vim.diagnostic.config({
     virtual_text = false,
@@ -253,4 +255,5 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 cmd("set noshowmode")
 cmd("set noshowcmd")
 cmd("set noruler")
+cmd("set shortmess+=I")
 cmd("colorscheme modus")
