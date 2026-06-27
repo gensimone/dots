@@ -131,7 +131,7 @@ require("multiple-cursors").setup({})
 require("neogit").setup({})
 require("tmux").setup({})
 require("telescope").setup {
-    defaults = require("telescope.themes").get_dropdown {
+    defaults = require("telescope.themes").get_ivy {
         initial_mode = "insert",
         mappings = {
             i = { ["<Esc>"] = require("telescope.actions").close }
