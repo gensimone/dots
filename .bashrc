@@ -10,7 +10,7 @@ append_path () {
             PATH="$1:${PATH:+$PATH:}"
     esac
 }
-append_path $HOME/.local/bin
+append_path "$HOME/.local/bin"
 export VISUAL=less
 export EDITOR=vi
 
@@ -41,7 +41,12 @@ alias python='python3'
 alias vi='nvim'
 alias vim='nvim'
 
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi
+
 # Source extra aliases.
-if [ -f ~/.bash_aliases ]; then
-	. ~/.bash_aliases
+if [ -f "$HOME/.bash_aliases" ]; then
+	. "$HOME/.bash_aliases"
 fi
