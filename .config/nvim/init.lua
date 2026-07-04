@@ -6,14 +6,14 @@ local cmd = vim.cmd
 local diagnostic = vim.diagnostic.config
 opt.clipboard = "unnamedplus"
 opt.guicursor = "n-v-c-i:block-blinkwait1000-blinkon500-blinkoff500";
-opt.cursorline = true
+opt.cursorline = false
 opt.expandtab = true
 opt.hlsearch = false
 opt.ignorecase = true
 opt.incsearch = true
 opt.number = true
 opt.relativenumber = true
-opt.laststatus = 2
+opt.laststatus = 0
 opt.scrolloff = 8
 opt.shiftwidth = 4
 opt.signcolumn = "no"
@@ -23,7 +23,8 @@ opt.tabstop = 4
 opt.termguicolors = true
 opt.undofile = true
 opt.updatetime = 300
-opt.wrap = false
+opt.wrap = true
+opt.fillchars = {eob = " "}
 
 diagnostic({ underline = false })
 
@@ -37,39 +38,12 @@ vim.pack.add({
     "https://github.com/hrsh7th/cmp-nvim-lsp",
     "https://github.com/hrsh7th/cmp-path",
     "https://github.com/hrsh7th/nvim-cmp",
-    "https://github.com/miikanissi/modus-themes.nvim",
     "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/nvim-lua/plenary.nvim",
     "https://github.com/nvim-telescope/telescope.nvim",
     "https://github.com/smoka7/hop.nvim",
     "https://github.com/stevearc/oil.nvim",
     "https://github.com/szw/vim-maximizer",
-    "https://github.com/xiyaowong/transparent.nvim",
-})
-
-require("modus-themes").setup({
-	style = "auto",
-
-	variants = {
-		modus_operandi = "default",
-		modus_vivendi = "default",
-	},
-
-	transparent = true,
-	dim_inactive = false,
-	hide_inactive_statusline = true,
-	line_nr_column_background = true,
-	sign_column_background = true,
-	styles = {
-		comments = { italic = true },
-		keywords = { italic = true },
-		functions = {},
-		variables = {},
-	},
-
-	on_colors = function(colors) end,
-
-	on_highlights = function(highlights, colors) end,
 })
 
 local cmp = require("cmp")
@@ -83,19 +57,6 @@ require("cmp").setup({
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
     }),
     sources = cmp.config.sources({{ name = "nvim_lsp" }, { name = "path" }})
-})
-
-require("transparent").setup({
-  groups = {
-    'Normal', 'NormalNC', 'Comment', 'Constant', 'Special', 'Identifier',
-    'Statement', 'PreProc', 'Type', 'Underlined', 'Todo', 'String', 'Function',
-    'Conditional', 'Repeat', 'Operator', 'Structure', 'LineNr', 'NonText',
-    'SignColumn', 'CursorLine', 'CursorLineNr', 'StatusLine', 'StatusLineNC',
-    'EndOfBuffer',
-  },
-  extra_groups = {},
-  exclude_groups = {},
-  on_clear = function() end,
 })
 
 require("oil").setup({
@@ -256,4 +217,4 @@ cmd("set noshowmode")
 cmd("set noshowcmd")
 cmd("set noruler")
 cmd("set shortmess+=I")
-cmd("colorscheme modus")
+cmd("colorscheme vim")
