@@ -13,7 +13,7 @@ opt.ignorecase = true
 opt.incsearch = true
 opt.number = true
 opt.relativenumber = true
-opt.laststatus = 0
+opt.laststatus = 2
 opt.scrolloff = 8
 opt.shiftwidth = 4
 opt.signcolumn = "no"
@@ -44,7 +44,22 @@ vim.pack.add({
     "https://github.com/smoka7/hop.nvim",
     "https://github.com/stevearc/oil.nvim",
     "https://github.com/szw/vim-maximizer",
+    "https://github.com/miikanissi/modus-themes.nvim.git",
 })
+
+vim.pack.add({
+  {
+    src = 'https://github.com/JavaHello/spring-boot.nvim',
+    version = '218c0c26c14d99feca778e4d13f5ec3e8b1b60f0',
+  },
+  'https://github.com/MunifTanjim/nui.nvim',
+  'https://github.com/mfussenegger/nvim-dap',
+
+  'https://github.com/nvim-java/nvim-java',
+})
+
+require('java').setup()
+vim.lsp.enable('jdtls')
 
 local cmp = require("cmp")
 require("cmp").setup({
@@ -57,6 +72,46 @@ require("cmp").setup({
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
     }),
     sources = cmp.config.sources({{ name = "nvim_lsp" }, { name = "path" }})
+})
+
+-- Default options
+require("modus-themes").setup({
+	-- Theme comes in two styles `modus_operandi` and `modus_vivendi`
+	-- `auto` will automatically set style based on background set with vim.o.background
+	style = "auto",
+
+	variants = "default", -- DEPRECATED: Use `variants` instead
+	-- Theme comes in four variants `default`, `tinted`, `deuteranopia`, and `tritanopia`
+	variants = {
+		modus_operandi = "default", -- Set variant for `modus_operandi` style
+		modus_vivendi = "default", -- Set variant for `modus_vivendi` style
+	},
+	transparent = true, -- Transparent background (as supported by the terminal)
+	dim_inactive = false, -- "non-current" windows are dimmed
+	hide_inactive_statusline = false, -- Hide statuslines on inactive windows. Works with the standard **StatusLine**, **LuaLine** and **mini.statusline**
+	line_nr_column_background = true, -- Distinct background colors in line number column. `false` will disable background color and fallback to Normal background
+	sign_column_background = true, -- Distinct background colors in sign column. `false` will disable background color and fallback to Normal background
+	styles = {
+		-- Style to be applied to different syntax groups
+		-- Value is any valid attr-list value for `:help nvim_set_hl`
+		comments = { italic = true },
+		keywords = { italic = true },
+		functions = {},
+		variables = {},
+	},
+
+	--- You can override specific color groups to use other groups or a hex color
+	--- Function will be called with a ColorScheme table
+	--- Refer to `extras/lua/modus_operandi.lua` or `extras/lua/modus_vivendi.lua` for the ColorScheme table
+	---@param colors ColorScheme
+	on_colors = function(colors) end,
+
+	--- You can override specific highlights to use other groups or a hex color
+	--- Function will be called with a Highlights and ColorScheme table
+	--- Refer to `extras/lua/modus_operandi.lua` or `extras/lua/modus_vivendi.lua` for the Highlights and ColorScheme table
+	---@param highlights Highlights
+	---@param colors ColorScheme
+	on_highlights = function(highlights, colors) end,
 })
 
 require("oil").setup({
@@ -217,4 +272,4 @@ cmd("set noshowmode")
 cmd("set noshowcmd")
 cmd("set noruler")
 cmd("set shortmess+=I")
-cmd("colorscheme vim")
+cmd("colorscheme modus")
