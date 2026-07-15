@@ -41,10 +41,10 @@ vim.pack.add({
     "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/nvim-lua/plenary.nvim",
     "https://github.com/nvim-telescope/telescope.nvim",
+    "https://github.com/nvim-tree/nvim-tree.lua",
     "https://github.com/smoka7/hop.nvim",
     "https://github.com/stevearc/oil.nvim",
     "https://github.com/szw/vim-maximizer",
-    "https://github.com/miikanissi/modus-themes.nvim.git",
 })
 
 vim.pack.add({
@@ -61,6 +61,21 @@ vim.pack.add({
 require('java').setup()
 vim.lsp.enable('jdtls')
 
+require("nvim-tree").setup({
+    sort = {
+        sorter = "case_sensitive",
+    },
+    view = {
+        width = 30,
+    },
+    renderer = {
+        group_empty = true,
+    },
+    filters = {
+        dotfiles = true,
+    },
+})
+
 local cmp = require("cmp")
 require("cmp").setup({
     window = {},
@@ -72,46 +87,6 @@ require("cmp").setup({
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
     }),
     sources = cmp.config.sources({{ name = "nvim_lsp" }, { name = "path" }})
-})
-
--- Default options
-require("modus-themes").setup({
-	-- Theme comes in two styles `modus_operandi` and `modus_vivendi`
-	-- `auto` will automatically set style based on background set with vim.o.background
-	style = "auto",
-
-	variants = "default", -- DEPRECATED: Use `variants` instead
-	-- Theme comes in four variants `default`, `tinted`, `deuteranopia`, and `tritanopia`
-	variants = {
-		modus_operandi = "default", -- Set variant for `modus_operandi` style
-		modus_vivendi = "default", -- Set variant for `modus_vivendi` style
-	},
-	transparent = true, -- Transparent background (as supported by the terminal)
-	dim_inactive = false, -- "non-current" windows are dimmed
-	hide_inactive_statusline = false, -- Hide statuslines on inactive windows. Works with the standard **StatusLine**, **LuaLine** and **mini.statusline**
-	line_nr_column_background = true, -- Distinct background colors in line number column. `false` will disable background color and fallback to Normal background
-	sign_column_background = true, -- Distinct background colors in sign column. `false` will disable background color and fallback to Normal background
-	styles = {
-		-- Style to be applied to different syntax groups
-		-- Value is any valid attr-list value for `:help nvim_set_hl`
-		comments = { italic = true },
-		keywords = { italic = true },
-		functions = {},
-		variables = {},
-	},
-
-	--- You can override specific color groups to use other groups or a hex color
-	--- Function will be called with a ColorScheme table
-	--- Refer to `extras/lua/modus_operandi.lua` or `extras/lua/modus_vivendi.lua` for the ColorScheme table
-	---@param colors ColorScheme
-	on_colors = function(colors) end,
-
-	--- You can override specific highlights to use other groups or a hex color
-	--- Function will be called with a Highlights and ColorScheme table
-	--- Refer to `extras/lua/modus_operandi.lua` or `extras/lua/modus_vivendi.lua` for the Highlights and ColorScheme table
-	---@param highlights Highlights
-	---@param colors ColorScheme
-	on_highlights = function(highlights, colors) end,
 })
 
 require("oil").setup({
@@ -184,6 +159,7 @@ local opts = { noremap = true, silent = true }
 local telescope_builtin = require("telescope.builtin")
 
 keymap("n", "<leader>bd", ":bd<CR>")
+keymap("n", "<leader>a", ":NvimTreeToggle<CR>")
 keymap("n", "<leader>n", ":bn<CR>")
 keymap("n", "<leader>p", ":bp<CR>")
 keymap("n", "<leader>e", ":Oil<CR>")
@@ -272,4 +248,4 @@ cmd("set noshowmode")
 cmd("set noshowcmd")
 cmd("set noruler")
 cmd("set shortmess+=I")
-cmd("colorscheme modus")
+cmd("colorscheme lunaperche")
