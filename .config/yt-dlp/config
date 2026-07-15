@@ -1,4 +1,6 @@
 -o "~/music/%(uploader)s/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s"
 --embed-metadata
 --embed-thumbnail
+--convert-thumbnail jpg
+--ppa "EmbedThumbnail+ffmpeg_o:-c:v mjpeg -vf crop=\"'if(gt(ih,iw),iw,ih)':'if(gt(iw,ih),ih,iw)'\""
 -t mp3
