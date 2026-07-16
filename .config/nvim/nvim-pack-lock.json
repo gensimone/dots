@@ -77,6 +77,10 @@
       "rev": "32ceaf2793582955ef9576809730878c4d2d9426",
       "src": "https://github.com/aserowy/tmux.nvim"
     },
+    "transparent.nvim": {
+      "rev": "e00ca1cf09caef575edf8da7e5a8b9193893b4c7",
+      "src": "https://github.com/xiyaowong/transparent.nvim"
+    },
     "vim-maximizer": {
       "rev": "2e54952fe91e140a2e69f35f22131219fcd9c5f1",
       "src": "https://github.com/szw/vim-maximizer"

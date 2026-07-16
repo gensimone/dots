@@ -45,6 +45,7 @@ vim.pack.add({
     "https://github.com/smoka7/hop.nvim",
     "https://github.com/stevearc/oil.nvim",
     "https://github.com/szw/vim-maximizer",
+    "https://github.com/xiyaowong/transparent.nvim",
 })
 
 vim.pack.add({
@@ -248,4 +249,4 @@ cmd("set noshowmode")
 cmd("set noshowcmd")
 cmd("set noruler")
 cmd("set shortmess+=I")
-cmd("colorscheme lunaperche")
+cmd("colorscheme default")
