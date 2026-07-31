@@ -1,3 +1,4 @@
+-- Options.
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
@@ -6,8 +7,7 @@ local cmd = vim.cmd
 local diagnostic = vim.diagnostic.config
 opt.clipboard = "unnamedplus"
 opt.guicursor = "n-v-c-i:block-blinkwait1000-blinkon500-blinkoff500";
-opt.cursorline = false
-opt.expandtab = true
+opt.cursorline = false opt.expandtab = true
 opt.hlsearch = false
 opt.ignorecase = true
 opt.incsearch = true
@@ -23,11 +23,15 @@ opt.tabstop = 4
 opt.termguicolors = true
 opt.undofile = true
 opt.updatetime = 300
-opt.wrap = true
+opt.wrap = false
 opt.fillchars = {eob = " "}
-
+cmd("set noshowmode")
+cmd("set noshowcmd")
+cmd("set noruler")
+cmd("set shortmess+=I")
 diagnostic({ underline = false })
 
+-- Plugins.
 vim.pack.add({
     "https://github.com/NeogitOrg/neogit",
     "https://github.com/aserowy/tmux.nvim",
@@ -44,23 +48,25 @@ vim.pack.add({
     "https://github.com/nvim-tree/nvim-tree.lua",
     "https://github.com/smoka7/hop.nvim",
     "https://github.com/stevearc/oil.nvim",
-    "https://github.com/szw/vim-maximizer",
     "https://github.com/xiyaowong/transparent.nvim",
+    "https://github.com/Shatur/neovim-ayu.git",
+    "https://github.com/akinsho/toggleterm.nvim.git"
 })
 
-vim.pack.add({
-  {
-    src = 'https://github.com/JavaHello/spring-boot.nvim',
-    version = '218c0c26c14d99feca778e4d13f5ec3e8b1b60f0',
-  },
-  'https://github.com/MunifTanjim/nui.nvim',
-  'https://github.com/mfussenegger/nvim-dap',
-
-  'https://github.com/nvim-java/nvim-java',
-})
-
-require('java').setup()
-vim.lsp.enable('jdtls')
+-- Support for Java and Spring Boot.
+-- vim.pack.add({
+--   {
+--     src = 'https://github.com/JavaHello/spring-boot.nvim',
+--     version = '218c0c26c14d99feca778e4d13f5ec3e8b1b60f0',
+--   },
+--   'https://github.com/MunifTanjim/nui.nvim',
+--   'https://github.com/mfussenegger/nvim-dap',
+--
+--   'https://github.com/nvim-java/nvim-java',
+-- })
+--
+-- require('java').setup()
+-- vim.lsp.enable('jdtls')
 
 require("nvim-tree").setup({
     sort = {
@@ -77,6 +83,36 @@ require("nvim-tree").setup({
     },
 })
 
+require("toggleterm").setup{
+  -- size can be a number or function which is passed the current terminal
+  size = function(term)
+    if term.direction == "horizontal" then
+      return 15
+    elseif term.direction == "vertical" then
+      return vim.o.columns * 0.4
+    end
+  end,
+
+  open_mapping = [[<c-t>]], -- or { [[<c-\>]], [[<c-¥>]] } if you also use a Japanese keyboard.
+  hide_numbers = true, -- hide the number column in toggleterm buffers
+  shade_filetypes = {},
+  autochdir = false, -- when neovim changes it current directory the terminal will change it's own when next it's opened
+
+  shade_terminals = true, -- NOTE: this option takes priority over highlights specified so if you specify Normal highlights you should set this to false
+  start_in_insert = true,
+  insert_mappings = true, -- whether or not the open mapping applies in insert mode
+  terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
+  persist_size = true,
+  persist_mode = true, -- if set to true (default) the previous terminal mode will be remembered
+  direction = 'float', -- 'vertical' | 'horizontal' | 'tab' | 'float'
+  close_on_exit = true, -- close the terminal window when the process exits
+  clear_env = false, -- use only environmental variables from `env`, passed to jobstart()
+
+   -- Change the default shell. Can be a string or a function returning a string
+  shell = vim.o.shell,
+  auto_scroll = true, -- automatically scroll to the bottom on terminal output
+ii}
+
 local cmp = require("cmp")
 require("cmp").setup({
     window = {},
@@ -89,6 +125,8 @@ require("cmp").setup({
     }),
     sources = cmp.config.sources({{ name = "nvim_lsp" }, { name = "path" }})
 })
+
+vim.g.transparent_enabled = true
 
 require("oil").setup({
     watch_for_changes = true,
@@ -155,10 +193,10 @@ require("telescope").setup {
     }
 }
 
+-- Keymaps
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 local telescope_builtin = require("telescope.builtin")
-
 keymap("n", "<leader>bd", ":bd<CR>")
 keymap("n", "<leader>a", ":NvimTreeToggle<CR>")
 keymap("n", "<leader>n", ":bn<CR>")
@@ -211,42 +249,38 @@ vim.diagnostic.config({
     virtual_text = false,
 })
 
-vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
-    pattern = { "*" },
-    callback = function()
-        if vim.opt.buftype:get() == "terminal" then
-            vim.cmd(":startinsert")
-        end
-    end
-})
+-- Custom toggle terminal.
+-- vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
+--     pattern = { "*" },
+--     callback = function()
+--         if vim.opt.buftype:get() == "terminal" then
+--             vim.cmd(":startinsert")
+--         end
+--     end
+-- })
+-- local term_buf = nil
+-- local term_win = nil
+-- function OpenOrReuseTerminal()
+--     if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
+--         for _, win in ipairs(vim.api.nvim_list_wins()) do
+--             if vim.api.nvim_win_get_buf(win) == term_buf then
+--                 vim.api.nvim_set_current_win(win)
+--                 return
+--             end
+--         end
+--         vim.cmd("split")
+--         vim.api.nvim_set_current_buf(term_buf)
+--     else
+--         vim.cmd("split | term")
+--         term_buf = vim.api.nvim_get_current_buf()
+--     end
+-- end
+-- vim.api.nvim_create_user_command("TermToggle", OpenOrReuseTerminal, {})
 
-local term_buf = nil
-local term_win = nil
-function OpenOrReuseTerminal()
-    if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
-        for _, win in ipairs(vim.api.nvim_list_wins()) do
-            if vim.api.nvim_win_get_buf(win) == term_buf then
-                vim.api.nvim_set_current_win(win)
-                return
-            end
-        end
-        vim.cmd("split")
-        vim.api.nvim_set_current_buf(term_buf)
-    else
-        vim.cmd("split | term")
-        term_buf = vim.api.nvim_get_current_buf()
-    end
-end
-
-vim.api.nvim_create_user_command("TermToggle", OpenOrReuseTerminal, {})
-
+-- Removes trailing whitespaces on save.
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
     command = [[%s/\s\+$//e]],
 })
 
-cmd("set noshowmode")
-cmd("set noshowcmd")
-cmd("set noruler")
-cmd("set shortmess+=I")
-cmd("colorscheme default")
+cmd("colorscheme ayu-dark")
