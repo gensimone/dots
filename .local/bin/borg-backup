@@ -1,0 +1,12 @@
+#!/bin/sh
+
+borg create \
+    --progress \
+    --stats \
+    borg:/./raid/backup::{now} \
+	$HOME/codes \
+	$HOME/documents \
+	$HOME/music \
+	$HOME/pictures \
+	$HOME/private \
+    $HOME/world \
