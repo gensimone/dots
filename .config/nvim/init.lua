@@ -49,8 +49,8 @@ vim.pack.add({
     "https://github.com/smoka7/hop.nvim",
     "https://github.com/stevearc/oil.nvim",
     "https://github.com/xiyaowong/transparent.nvim",
-    "https://github.com/Shatur/neovim-ayu.git",
-    "https://github.com/akinsho/toggleterm.nvim.git"
+    "https://github.com/blazkowolf/gruber-darker.nvim",
+    "https://github.com/akinsho/toggleterm.nvim.git",
 })
 
 -- Support for Java and Spring Boot.
@@ -83,7 +83,7 @@ require("nvim-tree").setup({
     },
 })
 
-require("toggleterm").setup{
+require("toggleterm").setup({
   -- size can be a number or function which is passed the current terminal
   size = function(term)
     if term.direction == "horizontal" then
@@ -96,22 +96,21 @@ require("toggleterm").setup{
   open_mapping = [[<c-t>]], -- or { [[<c-\>]], [[<c-¥>]] } if you also use a Japanese keyboard.
   hide_numbers = true, -- hide the number column in toggleterm buffers
   shade_filetypes = {},
-  autochdir = false, -- when neovim changes it current directory the terminal will change it's own when next it's opened
-
+  autochdir = true, -- when neovim changes it current directory the terminal will change it's own when next it's opened
   shade_terminals = true, -- NOTE: this option takes priority over highlights specified so if you specify Normal highlights you should set this to false
   start_in_insert = true,
   insert_mappings = true, -- whether or not the open mapping applies in insert mode
   terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
   persist_size = true,
   persist_mode = true, -- if set to true (default) the previous terminal mode will be remembered
-  direction = 'float', -- 'vertical' | 'horizontal' | 'tab' | 'float'
+  direction = 'tab', -- 'vertical' | 'horizontal' | 'tab' | 'float'
   close_on_exit = true, -- close the terminal window when the process exits
   clear_env = false, -- use only environmental variables from `env`, passed to jobstart()
 
    -- Change the default shell. Can be a string or a function returning a string
   shell = vim.o.shell,
   auto_scroll = true, -- automatically scroll to the bottom on terminal output
-ii}
+})
 
 local cmp = require("cmp")
 require("cmp").setup({
@@ -156,7 +155,111 @@ require("oil").setup({
     },
 })
 
-vim.g.compile_mode = {}
+---@module "compile-mode"
+---@type CompileModeOpts
+vim.g.compile_mode = {
+    -- The string to show in the compile prompt as a default.
+    -- For an empty prompt, you can use:
+    -- default_command = "",
+    -- To use different defaults based on filetype, you can use a table:
+    -- default_command = {
+    --   python = "python %",
+    --   lua = "lua %",
+    --   javascript = "bun %",
+    --   typescript = "bun %",
+    --   c = "cc -o %:r % && ./%:r",
+    --   cpp = "cc -std=c++23 -o %:r % && ./%:r",
+    --   java = "javac % && java %:r",
+    --   go = "go run %",
+    -- },
+    -- A function which returns the default command string is also supported:
+    -- default_command = function()
+    --   local filetype = vim.bo.filetype
+    --   if filetype == "python" then
+    --     return "python %"
+    --   else
+    --     return "make -k "
+    --   end
+    -- end,
+    -- :h compile_mode.default_command
+    default_command = "make -k ",
+    -- Use `baleia` for parsing ANSI escape codes in the output.
+    -- :h compile_mode.baleia_setup
+    baleia_setup = false,
+    -- Expand commands, like `:!` (e.g. `:Compile echo %`)
+    -- :h compile_mode.bang_expansion
+    bang_expansion = false,
+    -- Configure additional entering/leaving directory regexes.
+    -- :h compile-mode.directory_change_matchers
+    directory_change_matchers = {},
+    -- Configure additional error regexes.
+    -- :h compile-mode-errors
+    error_regexp_table = {},
+    -- List of filename regexes to ignore errors from.
+    -- :h compile-mode.error_ignore_file_list
+    error_ignore_file_list = {},
+    -- The minimum error level to jump to.
+    -- :h compile-mode.error_threshold
+    error_threshold = require("compile-mode").level.WARNING,
+    -- Automatically jump to the first error.
+    -- :h compile-mode.auto_jump_to_first_error
+    auto_jump_to_first_error = false,
+    -- How long to highlight an error's location when jumping to it.
+    -- :h compile-mode.error_locus_highlight
+    error_locus_highlight = 500,
+    -- Use Neovim diagnostics instead of opening the compilation buffer.
+    -- :h compile-mode.use_diagnostics
+    use_diagnostics = false,
+    -- Default to calling `:Compile` for `:Recompile`
+    -- when there's no previous command.
+    -- :h compile-mode.recompile_no_fail
+    recompile_no_fail = false,
+    -- Ask to save unsaved buffers before compiling.
+    -- :h compile-mode.ask_about_save
+    ask_about_save = true,
+    -- Ask to interrupt already running commands.
+    -- :h compile-mode.ask_to_interrupt
+    ask_to_interrupt = true,
+    -- The name for the compilation buffer.
+    -- :h compile-mode.buffer_name
+    buffer_name = "*compilation*",
+    -- The format for the time information
+    -- at the top of the compilation buffer
+    -- :h compile-mode.time_format
+    time_format = "%a %b %e %H:%M:%S",
+    -- List of regexes to hide from the output.
+    -- :h compile-mode.hidden_output
+    hidden_output = {},
+    -- A table of environment variables to pass to commands.
+    -- :h compile-mode.environment
+    environment = nil,
+    -- Clear all environment variables for each command.
+    -- :h compile-mode.clear_environment
+    clear_environment = false,
+    -- Fix compilation for plugins like `nvim-cmp`.
+    -- :h compile-mode.input_word_completion
+    input_word_completion = true,
+    -- Hide the compliation buffer.
+    -- :h compile-mode.hidden_buffer
+    hidden_buffer = false,
+    -- Automatically focus the compilation buffer.
+    -- :h compile-mode.focus_compilation_buffer
+    focus_compilation_buffer = true,
+    -- Automatically move the cursor to the end of the compilation buffer.
+    -- :h compile-mode.auto_scroll
+    auto_scroll = true,
+    -- Jump back past the end/beginning of the errors
+    -- with `:NextError`/`:PrevError`
+    -- :h compile-mode.use_circular_error_navigation
+    use_circular_error_navigation = false,
+    -- Print debug information.
+    -- :h compile-mode.debug
+    debug = false,
+    -- Use a pseudo terminal for command execution.
+    -- :h compile-mode.use_pseudo_terminal
+    use_pseudo_terminal = false,
+}
+
 require("hop").setup({})
 require("multiple-cursors").setup({})
 require("neogit").setup({})
@@ -249,38 +352,10 @@ vim.diagnostic.config({
     virtual_text = false,
 })
 
--- Custom toggle terminal.
--- vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
---     pattern = { "*" },
---     callback = function()
---         if vim.opt.buftype:get() == "terminal" then
---             vim.cmd(":startinsert")
---         end
---     end
--- })
--- local term_buf = nil
--- local term_win = nil
--- function OpenOrReuseTerminal()
---     if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
---         for _, win in ipairs(vim.api.nvim_list_wins()) do
---             if vim.api.nvim_win_get_buf(win) == term_buf then
---                 vim.api.nvim_set_current_win(win)
---                 return
---             end
---         end
---         vim.cmd("split")
---         vim.api.nvim_set_current_buf(term_buf)
---     else
---         vim.cmd("split | term")
---         term_buf = vim.api.nvim_get_current_buf()
---     end
--- end
--- vim.api.nvim_create_user_command("TermToggle", OpenOrReuseTerminal, {})
-
 -- Removes trailing whitespaces on save.
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
     command = [[%s/\s\+$//e]],
 })
 
-cmd("colorscheme ayu-dark")
+cmd("colorscheme gruber-darker")

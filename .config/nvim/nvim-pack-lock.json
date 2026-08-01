@@ -20,6 +20,10 @@
       "rev": "026b866dfb162313c3f1573f73daece6af0da3e3",
       "src": "https://github.com/ej-shafran/compile-mode.nvim"
     },
+    "gruber-darker.nvim": {
+      "rev": "9b68f84bfd6c1278fef2143802ca40c60f2471c0",
+      "src": "https://github.com/blazkowolf/gruber-darker.nvim"
+    },
     "hop.nvim": {
       "rev": "707049feaca9ae65abb3696eff9aefc7879e66aa",
       "src": "https://github.com/smoka7/hop.nvim"
@@ -72,6 +76,10 @@
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
+    "solarized.nvim": {
+      "rev": "a8085e29883ddcfb39bd46197eb32ef00df05368",
+      "src": "https://github.com/maxmx03/solarized.nvim"
+    },
     "spring-boot.nvim": {
       "rev": "218c0c26c14d99feca778e4d13f5ec3e8b1b60f0",
       "src": "https://github.com/JavaHello/spring-boot.nvim",
@@ -96,6 +104,10 @@
     "vim-maximizer": {
       "rev": "2e54952fe91e140a2e69f35f22131219fcd9c5f1",
       "src": "https://github.com/szw/vim-maximizer"
+    },
+    "vim-moonfly-colors": {
+      "rev": "261664f92ed51cf0c077555b2d4b2530307eac17",
+      "src": "https://github.com/bluz71/vim-moonfly-colors"
     }
   }
 }
