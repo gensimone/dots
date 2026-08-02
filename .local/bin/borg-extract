@@ -1,0 +1,39 @@
+# #!/bin/sh
+
+abort() {
+    echo "Aborted." >&2
+    exit 1
+}
+
+stty_orig=$(stty -g)
+stty -echo
+
+printf "Borg Passphrase:"
+export BORG_PASSPHRASE
+read BORG_PASSPHRASE
+
+printf '\n'
+
+if [ -z "$BORG_PASSPHRASE" ]; then
+    stty "$stty_orig"
+    abort
+fi
+
+printf "SSH Password:"
+export SSHPASS
+read SSHPASS
+
+printf '\n'
+stty "$stty_orig"
+
+[ -z "$SSHPASS" ] && abort
+
+export BORG_RSH="sshpass -e ssh"
+
+borg_list=$(borg list borg:/./raid/backup) || abort
+
+archive=$(printf '%s\n' "$borg_list" | fzf | cut -d ' ' -f 1)
+
+[ -z "$archive" ] && exit 0
+
+borg extract --progress --list borg:/./raid/backup::$archive
