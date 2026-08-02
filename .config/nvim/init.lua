@@ -49,7 +49,6 @@ vim.pack.add({
     "https://github.com/smoka7/hop.nvim",
     "https://github.com/stevearc/oil.nvim",
     "https://github.com/xiyaowong/transparent.nvim",
-    "https://github.com/blazkowolf/gruber-darker.nvim",
     "https://github.com/akinsho/toggleterm.nvim.git",
 })
 
@@ -357,5 +356,3 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
     command = [[%s/\s\+$//e]],
 })
-
-cmd("colorscheme gruber-darker")
