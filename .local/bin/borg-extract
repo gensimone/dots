@@ -36,4 +36,4 @@ archive=$(printf '%s\n' "$borg_list" | fzf | cut -d ' ' -f 1)
 
 [ -z "$archive" ] && exit 0
 
-borg extract --progress --list borg:/./raid/backup::$archive
+borg extract --progress borg:/./raid/backup::$archive
