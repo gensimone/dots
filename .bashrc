@@ -118,6 +118,7 @@ alias vi='nvim'
 alias vim='nvim'
 alias poweroff='systemctl poweroff'
 alias reboot='systemctl reboot'
+alias remove-orphans='pacman -Qdtq >/dev/null && sudo pacman -Rns $(pacman -Qdtq) || echo "Nothing to do.."'
 
 # Source extra aliases.
 if [ -f "$HOME/.bash_aliases" ]; then
