@@ -1,8 +1,3 @@
 set editing-mode vi
 set keymap vi-command
 v: set-mark
-
-# Settings this will conflict with foot settings.
-# set show-mode-in-prompt on
-# set vi-cmd-mode-string "\1\e[2 q\2"
-# set vi-ins-mode-string "\1\e[6 q\2"
