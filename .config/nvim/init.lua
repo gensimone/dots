@@ -15,7 +15,6 @@ local cmd = vim.cmd
 local diagnostic = vim.diagnostic.config
 
 opt.clipboard = "unnamedplus"
-opt.guicursor = "n-v-c-i:block-blinkwait1000-blinkon500-blinkoff500"
 opt.cursorline = false
 opt.expandtab = true
 opt.hlsearch = false
@@ -154,7 +153,7 @@ require("oil").setup({
         ["<CR>"] = "actions.select",
         ["<C-s>"] = { "actions.select", opts = { vertical = true } },
         ["<C-h>"] = false,
-        ["<C-t>"] = { "actions.select", opts = { tab = true } },
+        -- ["<C-t>"] = { "actions.select", opts = { tab = true } },
         ["<C-p>"] = "actions.preview",
         ["q"] = { "actions.close", mode = "n" },
         ["<C-l>"] = false,
