@@ -1,12 +1,20 @@
 #!/bin/sh
 
+###############################################################################
+#                        BORG BACKUP - CREATE ARCHIVE                         #
+#                        Automated Directory Backup                           #
+###############################################################################
+
 borg create \
     --progress \
     --stats \
+    --compression zstd \
+    --exclude '*/.cache' \
+    --exclude '*/node_modules' \
     borg:/./raid/backup::{now} \
-	$HOME/codes \
-	$HOME/documents \
-	$HOME/music \
-	$HOME/pictures \
-	$HOME/private \
-    $HOME/world \
+    "$HOME/codes" \
+    "$HOME/documents" \
+    "$HOME/music" \
+    "$HOME/pictures" \
+    "$HOME/private" \
+    "$HOME/world"

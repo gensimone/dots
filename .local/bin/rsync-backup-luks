@@ -47,13 +47,22 @@ MOUNT_POINT="$HOME/external"
 BACKUP_DIR="$MOUNT_POINT/backup"
 
 # Ensure cleanup occurs on exit or script failure
+CLEANED=0
 cleanup() {
-    echo "Cleaning up..." >&2
-    if mountpoint -q "$MOUNT_POINT" 2>/dev/null; then
-        sudo umount "$MOUNT_POINT" 2>/dev/null || true
+    if [ $CLEANED -eq 1 ]; then
+        return
+    else
+        CLEANED=1
     fi
+
+    echo "Cleaning up..." >&2
+
+    if mountpoint -q "$MOUNT_POINT" 2>/dev/null; then
+        sudo umount "$MOUNT_POINT"
+    fi
+
     if test -e /dev/mapper/encrypted; then
-        sudo cryptsetup luksClose encrypted 2>/dev/null || true
+        sudo cryptsetup luksClose encrypted
     fi
 }
 
@@ -66,4 +75,4 @@ sudo mount --mkdir /dev/mapper/encrypted "$MOUNT_POINT"
 # 4. Backup Execution
 #------------------------------------------------------------------------------
 mkdir -pv "$BACKUP_DIR"
-backup "$BACKUP_DIR"
+rsync-backup "$BACKUP_DIR"

@@ -1,4 +1,0 @@
-#!/bin/sh
-
-borg list \
-    borg:/./raid/backup

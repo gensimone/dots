@@ -1,39 +1,89 @@
-# #!/bin/sh
+#!/bin/sh
 
+###############################################################################
+#                        BORG BACKUP - EXTRACT ARCHIVE                        #
+#                       Interactive Archive Selection                         #
+###############################################################################
+
+# Set strict shell options: exit on error (-e), treat unset vars as error (-u)
+set -eu
+
+# Original terminal settings
+stty_orig=""
+
+# Cleanup function to ensure terminal settings are restored even if killed
+cleanup() {
+    if [ -n "$stty_orig" ]; then
+        stty "$stty_orig" 2>/dev/null || true
+    fi
+}
+
+# Abort function for error handling
 abort() {
     echo "Aborted." >&2
+    cleanup
     exit 1
 }
 
+# Set up signals to catch interrupts (Ctrl+C, termination, exit) and restore terminal
+trap cleanup EXIT INT TERM
+
+# Save current terminal settings before modifying
 stty_orig=$(stty -g)
+
+# Disable terminal echoing so passwords are not shown on screen
 stty -echo
 
-printf "Borg Passphrase:"
-export BORG_PASSPHRASE
-read BORG_PASSPHRASE
-
+#------------------------------------------------------------------------------
+# 1. Prompt for Borg Passphrase
+#------------------------------------------------------------------------------
+printf "Borg Passphrase: "
+read -r BORG_PASSPHRASE
 printf '\n'
 
 if [ -z "$BORG_PASSPHRASE" ]; then
-    stty "$stty_orig"
+    echo "Error: Borg passphrase cannot be empty." >&2
     abort
 fi
+export BORG_PASSPHRASE
 
-printf "SSH Password:"
-export SSHPASS
-read SSHPASS
-
+#------------------------------------------------------------------------------
+# 2. Prompt for SSH Password
+#------------------------------------------------------------------------------
+printf "SSH Password: "
+read -r SSHPASS
 printf '\n'
+
+# Immediately restore standard terminal settings once passwords are read
 stty "$stty_orig"
+stty_orig="" # Clear so trap doesn't re-run stty unnecessarily
 
-[ -z "$SSHPASS" ] && abort
+if [ -z "$SSHPASS" ]; then
+    echo "Error: SSH password cannot be empty." >&2
+    abort
+fi
+export SSHPASS
 
+# Configure Borg to use sshpass for automated SSH authentication
 export BORG_RSH="sshpass -e ssh"
 
+#------------------------------------------------------------------------------
+# 3. Retrieve and Select Borg Archive
+#------------------------------------------------------------------------------
+echo "Fetching archive list..."
 borg_list=$(borg list borg:/./raid/backup) || abort
 
-archive=$(printf '%s\n' "$borg_list" | fzf | cut -d ' ' -f 1)
+# Use fzf to interactively select an archive, then extract the archive name (first column)
+archive=$(printf '%s\n' "$borg_list" | fzf | awk '{print $1}')
 
-[ -z "$archive" ] && exit 0
+# If no archive was selected (e.g., user pressed Esc in fzf), exit gracefully
+if [ -z "$archive" ]; then
+    echo "No archive selected. Exiting."
+    exit 0
+fi
 
-borg extract --progress borg:/./raid/backup::$archive
+#------------------------------------------------------------------------------
+# 4. Extract Selected Archive
+#------------------------------------------------------------------------------
+echo "Extracting archive: $archive..."
+borg extract --progress "borg:/./raid/backup::$archive"

@@ -23,7 +23,6 @@ rsync \
     --archive \
     --partial \
     --progress \
-    --verbose \
     --delete \
     -hhh \
     "$HOME/codes" \
