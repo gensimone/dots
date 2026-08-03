@@ -1,0 +1,69 @@
+#!/bin/sh
+
+###############################################################################
+#                        LUKS ENCRYPTED MOUNT & BACKUP                        #
+#                     Automated Open, Mount, and Cleanup                      #
+###############################################################################
+
+# Set strict shell options: exit on error (-e), treat unset vars as error (-u)
+set -eu
+
+#------------------------------------------------------------------------------
+# 1. Argument & Device Validation
+#------------------------------------------------------------------------------
+if [ "$#" -le 0 ]; then
+    echo "Error: You need to specify a block device." >&2
+    exit 1
+fi
+
+DEVICE="$1"
+
+if [ ! -b "$DEVICE" ]; then
+    echo "Error: Not a block device: $DEVICE" >&2
+    exit 1
+fi
+
+#------------------------------------------------------------------------------
+# 2. LUKS Device Opening
+#------------------------------------------------------------------------------
+if test -e /dev/mapper/encrypted; then
+    printf "/dev/mapper/encrypted already exists. Continue anyway? [y/N]: "
+    read -r answer
+    case "$answer" in
+        [Yy]*) ;;
+        *)
+            echo "Aborted." >&2
+            exit 1
+            ;;
+    esac
+else
+    sudo cryptsetup luksOpen "$DEVICE" encrypted
+fi
+
+#------------------------------------------------------------------------------
+# 3. Mount Target Setup & Cleanup Trap
+#------------------------------------------------------------------------------
+MOUNT_POINT="$HOME/external"
+BACKUP_DIR="$MOUNT_POINT/backup"
+
+# Ensure cleanup occurs on exit or script failure
+cleanup() {
+    echo "Cleaning up..." >&2
+    if mountpoint -q "$MOUNT_POINT" 2>/dev/null; then
+        sudo umount "$MOUNT_POINT" 2>/dev/null || true
+    fi
+    if test -e /dev/mapper/encrypted; then
+        sudo cryptsetup luksClose encrypted 2>/dev/null || true
+    fi
+}
+
+trap cleanup EXIT INT TERM
+
+# Mount the decrypted block device
+sudo mount --mkdir /dev/mapper/encrypted "$MOUNT_POINT"
+
+#------------------------------------------------------------------------------
+# 4. Backup Execution
+#------------------------------------------------------------------------------
+mkdir -pv "$BACKUP_DIR"
+backup "$BACKUP_DIR"

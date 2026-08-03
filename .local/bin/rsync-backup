@@ -1,0 +1,35 @@
+#!/bin/sh
+
+###############################################################################
+#                         RSYNC BACKUP DIRECTORIES                            #
+#                        Automated Directory Mirror                           #
+###############################################################################
+
+#------------------------------------------------------------------------------
+# 1. Argument Validation
+#------------------------------------------------------------------------------
+
+if [ "$#" -le 0 ]; then
+    echo "Error: You need to specify a target destination directory." >&2
+    exit 1
+fi
+
+DEST_DIR="$1"
+
+#------------------------------------------------------------------------------
+# 2. Run Rsync
+#------------------------------------------------------------------------------
+rsync \
+    --archive \
+    --partial \
+    --progress \
+    --verbose \
+    --delete \
+    -hhh \
+    "$HOME/codes" \
+    "$HOME/documents" \
+    "$HOME/music" \
+    "$HOME/pictures" \
+    "$HOME/private" \
+    "$HOME/world" \
+    "$DEST_DIR"
