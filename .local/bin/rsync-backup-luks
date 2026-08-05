@@ -8,6 +8,14 @@
 # Set strict shell options: exit on error (-e), treat unset vars as error (-u)
 set -eu
 
+# Check for Non-POSIX dependencies
+for dep in sudo cryptsetup rsync-backup mount umount mountpoint; do
+    if ! command -v "$dep" >/dev/null; then
+        echo "Missing dependency: $dep" >&2
+        exit 1
+    fi
+done
+
 #------------------------------------------------------------------------------
 # 1. Argument & Device Validation
 #------------------------------------------------------------------------------
