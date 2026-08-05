@@ -77,7 +77,8 @@ cleanup() {
 trap cleanup EXIT INT TERM
 
 # Mount the decrypted block device
-sudo mount --mkdir /dev/mapper/encrypted "$MOUNT_POINT"
+mkdir -p "$MOUNT_POINT"
+sudo mount /dev/mapper/encrypted "$MOUNT_POINT"
 
 #------------------------------------------------------------------------------
 # 4. Backup Execution
