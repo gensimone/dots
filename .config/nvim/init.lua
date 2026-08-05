@@ -47,6 +47,7 @@ diagnostic({ underline = false })
 -------------------------------------------------------------------------------
 vim.pack.add({
     "https://github.com/NeogitOrg/neogit",
+    "https://github.com/akinsho/toggleterm.nvim.git",
     "https://github.com/aserowy/tmux.nvim",
     "https://github.com/brenton-leighton/multiple-cursors.nvim",
     "https://github.com/ej-shafran/compile-mode.nvim",
@@ -58,11 +59,9 @@ vim.pack.add({
     "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/nvim-lua/plenary.nvim",
     "https://github.com/nvim-telescope/telescope.nvim",
-    "https://github.com/nvim-tree/nvim-tree.lua",
     "https://github.com/smoka7/hop.nvim",
     "https://github.com/stevearc/oil.nvim",
     "https://github.com/xiyaowong/transparent.nvim",
-    "https://github.com/akinsho/toggleterm.nvim.git",
 })
 
 -- Support for Java and Spring Boot (Commented out)
@@ -79,22 +78,6 @@ vim.pack.add({
 -------------------------------------------------------------------------------
 -- Plugin Configurations
 -------------------------------------------------------------------------------
-
--- nvim-tree
-require("nvim-tree").setup({
-    sort = {
-        sorter = "case_sensitive",
-    },
-    view = {
-        width = 30,
-    },
-    renderer = {
-        group_empty = true,
-    },
-    filters = {
-        dotfiles = true,
-    },
-})
 
 -- toggleterm
 require("toggleterm").setup({
@@ -115,7 +98,7 @@ require("toggleterm").setup({
     terminal_mappings = true,
     persist_size = true,
     persist_mode = true,
-    direction = 'tab',
+    direction = 'float',
     close_on_exit = true,
     clear_env = false,
     shell = vim.o.shell,
@@ -199,7 +182,7 @@ vim.g.compile_mode = {
 
 -- telescope.nvim
 require("telescope").setup({
-    defaults = require("telescope.themes").get_ivy({
+    defaults = require("telescope.themes").get_dropdown({
         initial_mode = "insert",
         mappings = {
             i = { ["<Esc>"] = require("telescope.actions").close }
@@ -260,9 +243,6 @@ local telescope_builtin = require("telescope.builtin")
 
 -- General Actions & Buffers
 keymap("n", "<leader>bd", ":bd<CR>", opts)
-keymap("n", "<leader>a", ":NvimTreeToggle<CR>", opts)
-keymap("n", "<leader>n", ":bn<CR>", opts)
-keymap("n", "<leader>p", ":bp<CR>", opts)
 keymap("n", "<leader>e", ":Oil<CR>", opts)
 keymap("n", "<leader>g", ":Neogit<CR>", opts)
 keymap("n", "<leader>y", '"+y', opts)
@@ -306,10 +286,10 @@ keymap("c", "<C-B>", "<Left>", opts)
 -- Autocommands
 -------------------------------------------------------------------------------
 -- Auto-format on save
-vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*",
-    command = [[lua vim.lsp.buf.format()]],
-})
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--     pattern = "*",
+--     command = [[lua vim.lsp.buf.format()]],
+-- })
 
 -- Removes trailing whitespaces on save
 vim.api.nvim_create_autocmd("BufWritePre", {
