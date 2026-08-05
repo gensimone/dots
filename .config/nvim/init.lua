@@ -15,7 +15,7 @@ local cmd = vim.cmd
 local diagnostic = vim.diagnostic.config
 
 opt.clipboard = "unnamedplus"
-opt.cursorline = false
+opt.cursorline = true
 opt.expandtab = true
 opt.hlsearch = false
 opt.ignorecase = true
@@ -33,14 +33,12 @@ opt.termguicolors = true
 opt.undofile = true
 opt.updatetime = 300
 opt.wrap = false
-opt.fillchars = { eob = " " }
 
 cmd("set noshowmode")
 cmd("set noshowcmd")
 cmd("set noruler")
-cmd("set shortmess+=I")
 
-diagnostic({ underline = false })
+diagnostic({ underline = true })
 
 -------------------------------------------------------------------------------
 -- Plugins Management
@@ -182,7 +180,7 @@ vim.g.compile_mode = {
 
 -- telescope.nvim
 require("telescope").setup({
-    defaults = require("telescope.themes").get_dropdown({
+    defaults = require("telescope.themes").get_ivy({
         initial_mode = "insert",
         mappings = {
             i = { ["<Esc>"] = require("telescope.actions").close }
