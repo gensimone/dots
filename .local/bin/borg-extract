@@ -8,6 +8,13 @@
 # Set strict shell options: exit on error (-e), treat unset vars as error (-u)
 set -eu
 
+for dep in sshpass ssh borg fzf; do
+    if ! command -v "$dep" >/dev/null; then
+        echo "Missing dependency: $dep" >&2
+        exit 1
+    fi
+done
+
 # Original terminal settings
 stty_orig=""
 
