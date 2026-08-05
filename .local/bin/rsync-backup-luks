@@ -83,5 +83,5 @@ sudo mount /dev/mapper/encrypted "$MOUNT_POINT"
 #------------------------------------------------------------------------------
 # 4. Backup Execution
 #------------------------------------------------------------------------------
-mkdir -pv "$BACKUP_DIR"
+mkdir -p "$BACKUP_DIR"
 rsync-backup "$BACKUP_DIR"
