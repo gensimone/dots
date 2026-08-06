@@ -38,13 +38,14 @@ cmd("set noshowmode")
 cmd("set noshowcmd")
 cmd("set noruler")
 
-diagnostic({ underline = true })
+diagnostic({ underline = false })
 
 -------------------------------------------------------------------------------
 -- Plugins Management
 -------------------------------------------------------------------------------
 vim.pack.add({
     "https://github.com/NeogitOrg/neogit",
+    "https://github.com/oskarnurm/koda.nvim",
     "https://github.com/akinsho/toggleterm.nvim.git",
     "https://github.com/aserowy/tmux.nvim",
     "https://github.com/brenton-leighton/multiple-cursors.nvim",
@@ -101,23 +102,6 @@ require("toggleterm").setup({
     clear_env = false,
     shell = vim.o.shell,
     auto_scroll = true,
-})
-
--- nvim-cmp
-local cmp = require("cmp")
-cmp.setup({
-    window = {},
-    mapping = cmp.mapping.preset.insert({
-        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-e>"] = cmp.mapping.abort(),
-        ["<CR>"] = cmp.mapping.confirm({ select = true }),
-    }),
-    sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "path" },
-    }),
 })
 
 -- oil.nvim
@@ -187,7 +171,7 @@ require("telescope").setup({
         },
         layout_config = {
             height = 0.35,
-            preview_cutoff = 999999,
+            preview_cutoff = 99999,
         }
     }),
     pickers = {
@@ -246,6 +230,7 @@ keymap("n", "<leader>g", ":Neogit<CR>", opts)
 keymap("n", "<leader>y", '"+y', opts)
 keymap("n", "<leader>c", ":Compile<CR>", opts)
 keymap("n", "<leader>t", ":TermToggle<CR>", opts)
+keymap("n", "<leader>q", function() require("quicker").toggle() end, opts)
 keymap("n", "<leader>r", ":lua vim.lsp.buf.rename()<CR>", opts)
 
 -- Multiple Cursors & Hop
@@ -284,13 +269,18 @@ keymap("c", "<C-B>", "<Left>", opts)
 -- Autocommands
 -------------------------------------------------------------------------------
 -- Auto-format on save
--- vim.api.nvim_create_autocmd("BufWritePre", {
---     pattern = "*",
---     command = [[lua vim.lsp.buf.format()]],
--- })
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*",
+    command = [[lua vim.lsp.buf.format()]],
+})
 
 -- Removes trailing whitespaces on save
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
     command = [[%s/\s\+$//e]],
 })
+
+-------------------------------------------------------------------------------
+-- Colorscheme
+-------------------------------------------------------------------------------
+cmd("colorscheme koda")

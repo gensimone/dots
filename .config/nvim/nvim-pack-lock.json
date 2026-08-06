@@ -1,13 +1,5 @@
 {
   "plugins": {
-    "alpha-nvim": {
-      "rev": "6c6a89d5b068b5251c8bdf0dd57bb921bcfeeb09",
-      "src": "https://github.com/goolord/alpha-nvim.git"
-    },
-    "barbar.nvim": {
-      "rev": "337ecfadb8bf005050990bf2f624dc4fc828dabd",
-      "src": "https://github.com/romgrk/barbar.nvim.git"
-    },
     "cmp-buffer": {
       "rev": "b74fab3656eea9de20a9b8116afa3cfc4ec09657",
       "src": "https://github.com/hrsh7th/cmp-buffer"
@@ -28,17 +20,13 @@
       "rev": "026b866dfb162313c3f1573f73daece6af0da3e3",
       "src": "https://github.com/ej-shafran/compile-mode.nvim"
     },
-    "fzf-lua": {
-      "rev": "c46b51aac910a2115545029f74b0a04df7ed1872",
-      "src": "https://github.com/ibhagwan/fzf-lua"
-    },
     "hop.nvim": {
       "rev": "707049feaca9ae65abb3696eff9aefc7879e66aa",
       "src": "https://github.com/smoka7/hop.nvim"
     },
-    "milli.nvim": {
-      "rev": "6e94122fcc783bcee7d30b05cedc53beddb01104",
-      "src": "https://github.com/Amansingh-afk/milli.nvim.git"
+    "koda.nvim": {
+      "rev": "a7da3ced59eadafbda6eb4d7f7e2a6a3d9ecf858",
+      "src": "https://github.com/oskarnurm/koda.nvim"
     },
     "multiple-cursors.nvim": {
       "rev": "eae76d4c5f7ede2d45746dc2affb5e7a139e4aa8",
@@ -53,16 +41,8 @@
       "src": "https://github.com/hrsh7th/nvim-cmp"
     },
     "nvim-lspconfig": {
-      "rev": "1c0d8f70dbc8827263eedc3cf7021ceba0f68689",
+      "rev": "43ed3797b266e1ee8d222e491379ad471c9d3146",
       "src": "https://github.com/neovim/nvim-lspconfig"
-    },
-    "nvim-tree.lua": {
-      "rev": "4213bd6eabac38b16dd6615002b6243b23cf3bf6",
-      "src": "https://github.com/nvim-tree/nvim-tree.lua"
-    },
-    "nvim-web-devicons": {
-      "rev": "2ae6958df7ced50baac5035cec0c15799eedfbf7",
-      "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "oil.nvim": {
       "rev": "b73018b75affd13fa38e2fc94ef753b465f770d7",
