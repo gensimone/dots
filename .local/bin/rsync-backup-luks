@@ -1,14 +1,7 @@
 #!/bin/sh
 
-###############################################################################
-#                        LUKS ENCRYPTED MOUNT & BACKUP                        #
-#                     Automated Open, Mount, and Cleanup                      #
-###############################################################################
-
-# Set strict shell options: exit on error (-e), treat unset vars as error (-u)
 set -eu
 
-# Check for Non-POSIX dependencies
 for dep in sudo cryptsetup rsync-backup mount umount mountpoint; do
     if ! command -v "$dep" >/dev/null; then
         echo "Missing dependency: $dep" >&2
@@ -16,24 +9,19 @@ for dep in sudo cryptsetup rsync-backup mount umount mountpoint; do
     fi
 done
 
-#------------------------------------------------------------------------------
-# 1. Argument & Device Validation
-#------------------------------------------------------------------------------
 if [ "$#" -le 0 ]; then
-    echo "Error: You need to specify a block device." >&2
+    echo "Usage: $0 <block device>" >&2
     exit 1
 fi
 
-DEVICE="$1"
+device="$1"
 
-if [ ! -b "$DEVICE" ]; then
-    echo "Error: Not a block device: $DEVICE" >&2
+if [ ! -b "$device" ]; then
+    echo "Error: Not a block device: $device" >&2
     exit 1
 fi
 
-#------------------------------------------------------------------------------
-# 2. LUKS Device Opening
-#------------------------------------------------------------------------------
+# LUKS Device Opening
 if test -e /dev/mapper/encrypted; then
     printf "/dev/mapper/encrypted already exists. Continue anyway? [y/N]: "
     read -r answer
@@ -45,28 +33,24 @@ if test -e /dev/mapper/encrypted; then
             ;;
     esac
 else
-    sudo cryptsetup luksOpen "$DEVICE" encrypted
+    sudo cryptsetup luksOpen "$device" encrypted
 fi
 
-#------------------------------------------------------------------------------
-# 3. Mount Target Setup & Cleanup Trap
-#------------------------------------------------------------------------------
-MOUNT_POINT="$HOME/external"
-BACKUP_DIR="$MOUNT_POINT/backup"
+mount_point="$HOME/external"
+backup_dir="$mount_point/backup"
 
-# Ensure cleanup occurs on exit or script failure
-CLEANED=0
+cleaned=0
 cleanup() {
-    if [ $CLEANED -eq 1 ]; then
+    if [ $cleaned -eq 1 ]; then
         return
     else
-        CLEANED=1
+        cleaned=1
     fi
 
     echo "Cleaning up..." >&2
 
-    if mountpoint -q "$MOUNT_POINT" 2>/dev/null; then
-        sudo umount "$MOUNT_POINT"
+    if mountpoint -q "$mount_point" 2>/dev/null; then
+        sudo umount "$mount_point"
     fi
 
     if test -e /dev/mapper/encrypted; then
@@ -76,12 +60,8 @@ cleanup() {
 
 trap cleanup EXIT INT TERM
 
-# Mount the decrypted block device
-mkdir -p "$MOUNT_POINT"
-sudo mount /dev/mapper/encrypted "$MOUNT_POINT"
+mkdir -p "$mount_point"
+sudo mount /dev/mapper/encrypted "$mount_point"
 
-#------------------------------------------------------------------------------
-# 4. Backup Execution
-#------------------------------------------------------------------------------
-mkdir -p "$BACKUP_DIR"
-rsync-backup "$BACKUP_DIR"
+mkdir -p "$backup_dir"
+rsync-backup "$backup_dir"

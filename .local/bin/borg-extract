@@ -2,7 +2,6 @@
 
 set -eu
 
-# Check for dependencies
 for dep in ssh-keygen ssh-add ssh borg fzf; do
     if ! command -v "$dep" >/dev/null; then
         echo "Missing dependency: $dep" >&2
@@ -10,7 +9,6 @@ for dep in ssh-keygen ssh-add ssh borg fzf; do
     fi
 done
 
-# Check for usage
 if [ "$#" -lt 2 ]; then
     echo "Usage: $0 <host> <repository>" >&2
     exit 1
@@ -18,7 +16,6 @@ fi
 
 host="$1"
 
-# Check provided host
 ssh_config="$HOME/.ssh/config"
 if ! [ -f "$ssh_config" ]; then
     echo "Missing $ssh_config" >&2
@@ -99,7 +96,6 @@ if [ -z "$BORG_PASSPHRASE" ]; then
 fi
 export BORG_PASSPHRASE
 
-# Retrieve and Select Borg Archive
 echo "Fetching archive list..."
 borg_list=$(borg list ssh://"$host"/./"$repository") || abort
 
@@ -110,6 +106,5 @@ if [ -z "$archive" ]; then
     abort
 fi
 
-# Extract Selected Archive
 echo "Extracting archive: $archive..."
 borg extract --progress --list ssh://"$host"/./"$repository"::"$archive"

@@ -147,6 +147,10 @@ alias vim='nvim'
 alias poweroff='systemctl poweroff'
 alias reboot='systemctl reboot'
 
+# Backups
+alias remote-bk='borg-create bx11 borg-repository'
+alias local-bk='borg-create lcserv raid/backup'
+
 # Arch Linux package management: remove orphaned packages safely
 alias remove-orphans='pacman -Qdtq >/dev/null && sudo pacman -Rns $(pacman -Qdtq) || echo "Nothing to do.."'
 
