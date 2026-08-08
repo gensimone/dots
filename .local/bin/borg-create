@@ -1,9 +1,12 @@
 #!/bin/sh
 
-###############################################################################
-#                        BORG BACKUP - CREATE ARCHIVE                         #
-#                        Automated Directory Backup                           #
-###############################################################################
+if [ "$#" -lt 2 ]; then
+    echo "Usage: $0 <host> <repository>" >&2
+    exit 1
+fi
+
+HOST="$1"
+REPOSITORY="$2"
 
 borg create \
     --progress \
@@ -11,7 +14,7 @@ borg create \
     --compression zstd \
     --exclude '*/.cache' \
     --exclude '*/node_modules' \
-    borg:/./raid/backup::{now} \
+    ssh://"$HOST"/./"$REPOSITORY"::{now} \
     "$HOME/codes" \
     "$HOME/documents" \
     "$HOME/music" \

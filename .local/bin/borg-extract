@@ -1,52 +1,97 @@
 #!/bin/sh
 
-###############################################################################
-#                        BORG BACKUP - EXTRACT ARCHIVE                        #
-#                       Interactive Archive Selection                         #
-###############################################################################
-
-# Set strict shell options: exit on error (-e), treat unset vars as error (-u)
 set -eu
 
-for dep in sshpass ssh borg fzf; do
+# Check for dependencies
+for dep in ssh-keygen ssh-add ssh borg fzf; do
     if ! command -v "$dep" >/dev/null; then
         echo "Missing dependency: $dep" >&2
         exit 1
     fi
 done
 
-# Original terminal settings
-stty_orig=""
+# Check for usage
+if [ "$#" -lt 2 ]; then
+    echo "Usage: $0 <host> <repository>" >&2
+    exit 1
+fi
 
-# Cleanup function to ensure terminal settings are restored even if killed
-cleanup() {
-    if [ -n "$stty_orig" ]; then
-        stty "$stty_orig" 2>/dev/null || true
+host="$1"
+
+# Check provided host
+ssh_config="$HOME/.ssh/config"
+if ! [ -f "$ssh_config" ]; then
+    echo "Missing $ssh_config" >&2
+    exit 1
+fi
+if ! grep "$host" "$ssh_config" >/dev/null; then
+    echo "Host '$host' not found" >&2
+
+    echo "Available hosts:"
+    grep "Host " "$ssh_config" | sed 's/^/- /'
+    exit 1
+fi
+
+# TODO: Check for repository
+repository="$2"
+
+# Check for ssh key
+# NOTE: the ssh key is used to manage the life cycle of the key itself through ssh-agent
+ssh_key="$HOME/.ssh/${host}_ed25519"
+if ! [ -f "$ssh_key" ]; then
+    echo "SSH key '$ssh_key' not found" >&2
+    exit 1
+fi
+
+# Get key fingerprint to check key presence in ssh-agent
+key_fp=$(ssh-keygen -lf "$ssh_key" | awk '{print $2}')
+is_key_present() {
+    key_fp="$1"
+
+    if ssh-add -l 2>/dev/null | grep -qF "$key_fp"; then
+        return 0
+    else
+        return 1
     fi
 }
 
-# Abort function for error handling
+# We want to remove the key only if `ssh-add <key>`has been excecuted
+ssh_added=0
+if ! is_key_present "$key_fp"; then
+    ssh-add "$ssh_key"
+    ssh_added=1
+fi
+
+stty_orig=""
+cleanup() {
+    if [ -n "$stty_orig" ]; then
+        stty "$stty_orig" || true
+    fi
+
+    if [ $ssh_added -eq 1 ] && is_key_present "$key_fp"; then
+        ssh-add -d "$ssh_key"
+    fi
+}
+
 abort() {
-    echo "Aborted." >&2
     cleanup
+    echo "Aborted" >&2
     exit 1
 }
 
-# Set up signals to catch interrupts (Ctrl+C, termination, exit) and restore terminal
-trap cleanup EXIT INT TERM
+trap abort INT TERM
+trap cleanup EXIT
 
-# Save current terminal settings before modifying
-stty_orig=$(stty -g)
+# Get the Borg repository passphrase
+stty_orig=$(stty -g) # Save current terminal settings before modifying
+stty -echo           # Disable terminal echoing so passwords are not shown on screen
 
-# Disable terminal echoing so passwords are not shown on screen
-stty -echo
-
-#------------------------------------------------------------------------------
-# 1. Prompt for Borg Passphrase
-#------------------------------------------------------------------------------
-printf "Borg Passphrase: "
+printf "Enter passphrase for key ssh://$host/./$repository: "
 read -r BORG_PASSPHRASE
 printf '\n'
+
+stty "$stty_orig"
+stty_orig=""
 
 if [ -z "$BORG_PASSPHRASE" ]; then
     echo "Error: Borg passphrase cannot be empty." >&2
@@ -54,43 +99,17 @@ if [ -z "$BORG_PASSPHRASE" ]; then
 fi
 export BORG_PASSPHRASE
 
-#------------------------------------------------------------------------------
-# 2. Prompt for SSH Password
-#------------------------------------------------------------------------------
-printf "SSH Password: "
-read -r SSHPASS
-printf '\n'
+# Retrieve and Select Borg Archive
+echo "Fetching archive list..."
+borg_list=$(borg list ssh://"$host"/./"$repository") || abort
 
-# Immediately restore standard terminal settings once passwords are read
-stty "$stty_orig"
-stty_orig="" # Clear so trap doesn't re-run stty unnecessarily
+archive=$(printf '%s\n' "$borg_list" | fzf | awk '{print $1}') || abort
 
-if [ -z "$SSHPASS" ]; then
-    echo "Error: SSH password cannot be empty." >&2
+if [ -z "$archive" ]; then
+    echo "No archive selected."
     abort
 fi
-export SSHPASS
 
-# Configure Borg to use sshpass for automated SSH authentication
-export BORG_RSH="sshpass -e ssh"
-
-#------------------------------------------------------------------------------
-# 3. Retrieve and Select Borg Archive
-#------------------------------------------------------------------------------
-echo "Fetching archive list..."
-borg_list=$(borg list borg:/./raid/backup) || abort
-
-# Use fzf to interactively select an archive, then extract the archive name (first column)
-archive=$(printf '%s\n' "$borg_list" | fzf | awk '{print $1}')
-
-# If no archive was selected (e.g., user pressed Esc in fzf), exit gracefully
-if [ -z "$archive" ]; then
-    echo "No archive selected. Exiting."
-    exit 0
-fi
-
-#------------------------------------------------------------------------------
-# 4. Extract Selected Archive
-#------------------------------------------------------------------------------
+# Extract Selected Archive
 echo "Extracting archive: $archive..."
-borg extract --progress "borg:/./raid/backup::$archive"
+borg extract --progress --list ssh://"$host"/./"$repository"::"$archive"
