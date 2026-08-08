@@ -1,14 +1,6 @@
-# ==============================================================================
-# INTERACTIVE SHELL CHECK
-# ==============================================================================
-
 # Exit early if the shell is not running interactively (e.g., in scripts or SSH commands)
 [[ $- != *i* ]] && return
 
-
-# ==============================================================================
-# ENVIRONMENT VARIABLES & PATH
-# ==============================================================================
 
 # Helper function to prepend a directory to PATH if it isn't already included
 append_path () {
@@ -29,10 +21,6 @@ export VISUAL=less
 export EDITOR=vi
 
 
-# ==============================================================================
-# HISTORY CONFIGURATION
-# ==============================================================================
-
 # Prevent duplicate consecutive entries and lines starting with space from being saved
 HISTCONTROL=ignoreboth
 
@@ -46,23 +34,11 @@ HISTSIZE=1000
 HISTFILESIZE=2000
 
 
-# ==============================================================================
-# SHELL OPTIONS & TERMINAL BEHAVIOR
-# ==============================================================================
-
 # Update terminal window dimensions (LINES and COLUMNS) after every command execution
 shopt -s checkwinsize
 
 # Restore cursor blinking state on every prompt refresh
-PROMPT_COMMAND+=('echo -e -n "\\x1b[0 q"')
-
-# Enable Vi keybindings for command-line editing
-set -o vi
-
-
-# ==============================================================================
-# PROMPT & TITLE SETUP
-# ==============================================================================
+# PROMPT_COMMAND+=('echo -e -n "\\x1b[0 q"')
 
 # Enable color support for known interactive terminal types
 case "$TERM" in
@@ -96,10 +72,6 @@ xterm*|rxvt*)
 esac
 
 
-# ==============================================================================
-# COLOR & DISPLAY OUTPUT
-# ==============================================================================
-
 # Enable colored output for file listings and grep commands if dircolors is available
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -114,11 +86,6 @@ fi
 # Highlight GCC compiler errors, warnings, and notes with color output
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-
-# ==============================================================================
-# AUTO-COMPLETION
-# ==============================================================================
-
 # Enable advanced command-line auto-completion if non-POSIX mode and scripts exist
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -128,33 +95,22 @@ if ! shopt -oq posix; then
   fi
 fi
 
-
-# ==============================================================================
-# ALIASES
-# ==============================================================================
-
-# Interactive file management (prompt before overwriting or removing files)
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
 alias ln='ln -i'
-
-# Editor shortcuts (redirect Vi and Vim commands to Neovim)
-alias vi='nvim'
-alias vim='nvim'
-
-# System control shortcuts
+alias vi='vim'
 alias poweroff='systemctl poweroff'
 alias reboot='systemctl reboot'
-
-# Backups
-alias remote-bk='borg-create bx11 borg-repository'
-alias local-bk='borg-create lcserv raid/backup'
-
-# Arch Linux package management: remove orphaned packages safely
 alias remove-orphans='pacman -Qdtq >/dev/null && sudo pacman -Rns $(pacman -Qdtq) || echo "Nothing to do.."'
+alias remote-bk='borg-create bx11 borg-repository'
+alias remote-ex='borg-extract bx11 borg-repository'
+alias local-bk='borg-create lcserv raid/backup'
+alias local-ex='borg-extract lcserv raid/backup'
 
-# Source additional external aliases if present
+set -o vi
+
 if [ -f "$HOME/.bash_aliases" ]; then
     . "$HOME/.bash_aliases"
 fi
+
