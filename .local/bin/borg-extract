@@ -107,4 +107,4 @@ if [ -z "$archive" ]; then
 fi
 
 echo "Extracting archive: $archive..."
-borg extract --progress --list ssh://"$host"/./"$repository"::"$archive"
+borg extract --progress ssh://"$host"/./"$repository"::"$archive"
