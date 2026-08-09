@@ -18,7 +18,7 @@ append_path "$HOME/.local/bin"
 
 # Default system text editors (VISUAL for full-screen editors, EDITOR for quick edits)
 export VISUAL=less
-export EDITOR=vi
+export EDITOR=vim
 
 
 # Prevent duplicate consecutive entries and lines starting with space from being saved
