@@ -1,24 +1,10 @@
-###############################################################################
-#                        CLANG-FORMAT CONFIGURATION                           #
-#                     Code Style & Formatting Settings                        #
-###############################################################################
-
-# -----------------------------------------------------------------------------
-# Base Style
-# -----------------------------------------------------------------------------
 BasedOnStyle: LLVM
 
-# -----------------------------------------------------------------------------
-# Indentation & Line Wrapping
-# -----------------------------------------------------------------------------
-IndentWidth: 4
+IndentWidth: 8
 TabWidth: 4
 UseTab: Never
 ColumnLimit: 0
 
-# -----------------------------------------------------------------------------
-# Brace Wrapping Settings
-# -----------------------------------------------------------------------------
 BreakBeforeBraces: Custom
 BraceWrapping:
   AfterFunction: true
@@ -34,22 +20,13 @@ BraceWrapping:
   SplitEmptyRecord: false
   SplitEmptyNamespace: false
 
-# -----------------------------------------------------------------------------
-# Single-Line Blocks
-# -----------------------------------------------------------------------------
 AllowShortFunctionsOnASingleLine: Empty
 AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
 
-# -----------------------------------------------------------------------------
-# Pointers & References
-# -----------------------------------------------------------------------------
 PointerAlignment: Left
 DerivePointerAlignment: false
 
-# -----------------------------------------------------------------------------
-# Alignment & Spacing Rules
-# -----------------------------------------------------------------------------
 AlignConsecutiveAssignments: false
 AlignConsecutiveDeclarations: false
 AlignTrailingComments: true
