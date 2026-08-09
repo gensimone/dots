@@ -1,21 +1,8 @@
-# ==============================================================================
-# USER IDENTIFICATION
-# ==============================================================================
-
 [user]
-    # Default author/committer name for commits
     name = Simone Gentili
-
-    # Default email address associated with your Git commits
     email = gensimone.git@gmail.com
 
-
-# ==============================================================================
-# ALIASES
-# ==============================================================================
-
 [alias]
-    # Shortcuts for common Git commands
     a = add
     c = commit
     d = diff
@@ -23,39 +10,15 @@
     lg = log
     s = status
     r = restore
-
-    # Count the total number of commits across all branches
     count = rev-list --all --count
-
-    # Undo the last commit while keeping changes in the working directory
     undo = reset HEAD~
-
-    # Remove staged changes for files (keep changes in working directory)
     unstage = reset HEAD --
 
-
-# ==============================================================================
-# INITIALIZATION & DEFAULTS
-# ==============================================================================
-
 [init]
-    # Set 'main' as the default branch name for newly initialized repositories
     defaultBranch = main
 
-
-# ==============================================================================
-# CORE CONFIGURATION
-# ==============================================================================
-
 [core]
-    # Set Neovim as the default text editor for commit messages and rebased files
-    editor = nvim
-
-
-# ==============================================================================
-# ADVICE & WARNINGS
-# ==============================================================================
+    editor = vim
 
 [advice]
-    # Suppress warnings when attempting to add ignored files
     addIgnoredFile = false
