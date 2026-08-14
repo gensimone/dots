@@ -40,27 +40,9 @@ shopt -s checkwinsize
 # Restore cursor blinking state on every prompt refresh
 # PROMPT_COMMAND+=('echo -e -n "\\x1b[0 q"')
 
-# Enable color support for known interactive terminal types
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
-
-# Check for color capability using tput if forced color prompt is enabled
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-        color_prompt=yes
-    else
-        color_prompt=
-    fi
-fi
-
-# Set custom primary prompt string (PS1) with user, host, and working directory
-if [ "$color_prompt" = yes ]; then
-    PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-    PS1='\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
+# Colored prompt
+PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+# PS1='\u@\h:\w\$ '
 
 # Dynamically set terminal window title to user@host:dir for xterm/rxvt windows
 case "$TERM" in
