@@ -19,6 +19,3 @@
 
 [core]
     editor = nvim
-
-[advice]
-    addIgnoredFile = false
