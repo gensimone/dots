@@ -20,7 +20,7 @@ set hidden
 set path+=**
 
 " Turn off the banner at the top of the screen on startup.
-let g:netrw_banner=0
+" let g:netrw_banner=0
 
 " Show the tree listing.
 let g:netrw_liststyle=3
