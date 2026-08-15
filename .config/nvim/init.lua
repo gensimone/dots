@@ -4,7 +4,6 @@ local g = vim.g
 local opt = vim.opt
 local cmd = vim.cmd
 
-g.clipboard = "xclip"
 g.mapleader = " "
 g.maplocalleader = "\\"
 opt.cursorline = true
