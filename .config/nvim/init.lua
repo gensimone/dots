@@ -19,7 +19,7 @@ opt.signcolumn = "no"
 opt.smartcase = true
 opt.smartindent = true
 opt.undofile = false
-cmd("colorscheme lunaperche")
+cmd("colorscheme vim")
 cmd("set noshowcmd")
 cmd("set noruler")
 cmd("set noshowmode")
@@ -30,13 +30,25 @@ vim.pack.add({
     "https://github.com/akinsho/toggleterm.nvim.git",
     "https://github.com/aserowy/tmux.nvim",
     "https://github.com/neovim/nvim-lspconfig",
+    "https://github.com/nvim-lua/plenary.nvim",
+    "https://github.com/nvim-telescope/telescope-fzf-native.nvim",
+    "https://github.com/nvim-telescope/telescope.nvim",
     "https://github.com/smoka7/hop.nvim",
     "https://github.com/stevearc/oil.nvim",
 })
 
+require('telescope').setup({
+    defaults = require("telescope.themes").get_ivy({
+        initial_mode = "insert",
+        mappings = {
+            i = { ["<Esc>"] = require("telescope.actions").close }
+        }
+    })
+})
+
 require("toggleterm").setup({
     open_mapping = [[<c-t>]],
-    direction = "tab"
+    direction = "float"
 })
 
 require("oil").setup({
@@ -46,8 +58,8 @@ require("oil").setup({
     delete_to_trash = true,
     skip_confirm_for_simple_edits = true,
     keymaps = {
-        ["<c-h>"] = false,
-        ["<c-l>"] = false,
+        ["<C-h>"] = false,
+        ["<C-l>"] = false,
         ["q"] = { "actions.close", mode = "n" }
     },
 })
@@ -66,11 +78,12 @@ vim.lsp.enable("clangd")
 vim.lsp.enable("gopls")
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("pyright")
+vim.lsp.semantic_tokens.enable(false)
 
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
+local builtin = require('telescope.builtin')
 
-keymap("n", "<leader>bd", ":bd<CR>", opts)
 keymap("n", "<leader>e", ":Oil<CR>", opts)
 keymap("n", "<leader>c", ":make<CR>", opts)
 keymap("n", "<leader>g", ":Neogit<CR>", opts)
@@ -92,6 +105,9 @@ keymap("t", "<A-j>", [[<C-\><C-n><C-w>-]], opts)
 keymap("t", "<A-k>", [[<C-\><C-n><C-w>+]], opts)
 keymap("t", "<C-f>", [[<C-\><C-n><C-f>]], opts)
 keymap("t", "<C-b>", [[<C-\><C-n><C-b>]], opts)
+keymap('n', '<leader>f', builtin.find_files, opts)
+keymap('n', '<leader>b', builtin.buffers, opts)
+keymap('n', '<leader>m', builtin.man_pages, opts)
 
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
