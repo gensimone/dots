@@ -28,22 +28,24 @@ vim.pack.add({
     "https://github.com/NeogitOrg/neogit",
     "https://github.com/akinsho/toggleterm.nvim.git",
     "https://github.com/aserowy/tmux.nvim",
+    "https://github.com/hrsh7th/cmp-buffer",
+    "https://github.com/hrsh7th/cmp-cmdline",
+    "https://github.com/hrsh7th/cmp-nvim-lsp",
+    "https://github.com/hrsh7th/cmp-path",
+    "https://github.com/hrsh7th/nvim-cmp",
     "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/nvim-lua/plenary.nvim",
     "https://github.com/nvim-telescope/telescope-fzf-native.nvim",
     "https://github.com/nvim-telescope/telescope.nvim",
+    "https://github.com/smithbm2316/centerpad.nvim.git",
     "https://github.com/smoka7/hop.nvim",
     "https://github.com/stevearc/oil.nvim",
-    "https://github.com/hrsh7th/cmp-nvim-lsp",
-    "https://github.com/hrsh7th/cmp-buffer",
-    "https://github.com/hrsh7th/cmp-path",
-    "https://github.com/hrsh7th/cmp-cmdline",
-    "https://github.com/hrsh7th/nvim-cmp",
     "https://github.com/xiyaowong/transparent.nvim",
 })
 
 local cmp = require("cmp")
 require("cmp").setup({
+    completion = { autocomplete = false },
     window = {},
     mapping = cmp.mapping.preset.insert({
         ["<C-b>"] = cmp.mapping.scroll_docs(-4),
@@ -52,11 +54,15 @@ require("cmp").setup({
         ["<C-e>"] = cmp.mapping.abort(),
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
     }),
-    sources = cmp.config.sources({ { name = "nvim_lsp" }, { name = "path" } })
+    sources = cmp.config.sources({
+        { name = "nvim_lsp" },
+        { name = "path" },
+        { name = "buffer" }
+    })
 })
 
 require('telescope').setup({
-    defaults = require("telescope.themes").get_ivy({
+    defaults = require("telescope.themes").get_dropdown({
         initial_mode = "insert",
         mappings = {
             i = { ["<Esc>"] = require("telescope.actions").close }
@@ -109,7 +115,13 @@ vim.g.transparent_enabled = true
 
 vim.diagnostic.config({
     virtual_text = false,
-    underline = true
+    underline = true,
+    float = {
+        border = "rounded",
+        source = "if_many",
+        header = "",
+        prefix = "",
+    },
 })
 
 vim.lsp.enable("bashls")
