@@ -1,15 +1,35 @@
 {
   "plugins": {
+    "cmp-buffer": {
+      "rev": "b74fab3656eea9de20a9b8116afa3cfc4ec09657",
+      "src": "https://github.com/hrsh7th/cmp-buffer"
+    },
+    "cmp-cmdline": {
+      "rev": "d126061b624e0af6c3a556428712dd4d4194ec6d",
+      "src": "https://github.com/hrsh7th/cmp-cmdline"
+    },
+    "cmp-nvim-lsp": {
+      "rev": "cbc7b02bb99fae35cb42f514762b89b5126651ef",
+      "src": "https://github.com/hrsh7th/cmp-nvim-lsp"
+    },
+    "cmp-path": {
+      "rev": "c642487086dbd9a93160e1679a1327be111cbc25",
+      "src": "https://github.com/hrsh7th/cmp-path"
+    },
     "hop.nvim": {
-      "rev": "707049feaca9ae65abb3696eff9aefc7879e66aa",
+      "rev": "6e83486f351066e38c3ae9daad2a4f01dfb262ad",
       "src": "https://github.com/smoka7/hop.nvim"
     },
     "neogit": {
       "rev": "37e0f22a2345bad1bffe01b31970885882f46275",
       "src": "https://github.com/NeogitOrg/neogit"
     },
+    "nvim-cmp": {
+      "rev": "2ffe79f1f021def8dd1fcd81deb16f1bb0d989f3",
+      "src": "https://github.com/hrsh7th/nvim-cmp"
+    },
     "nvim-lspconfig": {
-      "rev": "4267d26e60323a45e18f8e7a63a964cc8f53ca4e",
+      "rev": "6fc041976833841cc9d991f45193533fe2a2e09b",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "oil.nvim": {
@@ -38,7 +58,7 @@
     },
     "transparent.nvim": {
       "rev": "e00ca1cf09caef575edf8da7e5a8b9193893b4c7",
-      "src": "https://github.com/xiyaowong/transparent.nvim.git"
+      "src": "https://github.com/xiyaowong/transparent.nvim"
     }
   }
 }

@@ -19,7 +19,6 @@ opt.signcolumn = "no"
 opt.smartcase = true
 opt.smartindent = true
 opt.undofile = false
-cmd("colorscheme vim")
 cmd("set noshowcmd")
 cmd("set noruler")
 cmd("set noshowmode")
@@ -35,6 +34,25 @@ vim.pack.add({
     "https://github.com/nvim-telescope/telescope.nvim",
     "https://github.com/smoka7/hop.nvim",
     "https://github.com/stevearc/oil.nvim",
+    "https://github.com/hrsh7th/cmp-nvim-lsp",
+    "https://github.com/hrsh7th/cmp-buffer",
+    "https://github.com/hrsh7th/cmp-path",
+    "https://github.com/hrsh7th/cmp-cmdline",
+    "https://github.com/hrsh7th/nvim-cmp",
+    "https://github.com/xiyaowong/transparent.nvim",
+})
+
+local cmp = require("cmp")
+require("cmp").setup({
+    window = {},
+    mapping = cmp.mapping.preset.insert({
+        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-e>"] = cmp.mapping.abort(),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+    }),
+    sources = cmp.config.sources({ { name = "nvim_lsp" }, { name = "path" } })
 })
 
 require('telescope').setup({
@@ -43,7 +61,27 @@ require('telescope').setup({
         mappings = {
             i = { ["<Esc>"] = require("telescope.actions").close }
         }
-    })
+    }),
+
+    pickers = {
+        live_grep = {
+            additional_args = {
+                "--hidden",
+                "--glob",
+                "!**/.git/*"
+            }
+        },
+        find_files = {
+            find_command = {
+                "fd",
+                "--type", "f",
+                "--type", "d",
+                "--hidden",
+                "--follow",
+                "--exclude", ".git"
+            }
+        }
+    }
 })
 
 require("toggleterm").setup({
@@ -64,9 +102,10 @@ require("oil").setup({
     },
 })
 
-
 require("hop").setup({})
 require("tmux").setup({})
+
+vim.g.transparent_enabled = true
 
 vim.diagnostic.config({
     virtual_text = false,
@@ -105,9 +144,10 @@ keymap("t", "<A-j>", [[<C-\><C-n><C-w>-]], opts)
 keymap("t", "<A-k>", [[<C-\><C-n><C-w>+]], opts)
 keymap("t", "<C-f>", [[<C-\><C-n><C-f>]], opts)
 keymap("t", "<C-b>", [[<C-\><C-n><C-b>]], opts)
-keymap('n', '<leader>f', builtin.find_files, opts)
-keymap('n', '<leader>b', builtin.buffers, opts)
-keymap('n', '<leader>m', builtin.man_pages, opts)
+keymap("n", "<leader>f", builtin.find_files, opts)
+keymap("n", "<leader>F", function() builtin.find_files({ cwd = vim.fn.expand("%:p:h") }) end, opts)
+keymap("n", "<leader>b", builtin.buffers, opts)
+keymap("n", "<leader>m", function() builtin.man_pages({ sections = { "ALL" } }) end, opts)
 
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
