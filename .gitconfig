@@ -4,13 +4,14 @@
 
 [alias]
     a = add
+    b = branch
     c = commit
+    count = rev-list --all --count
     d = diff
     l = log
     lg = log
-    s = status
     r = restore
-    count = rev-list --all --count
+    s = status
     undo = reset HEAD~
     unstage = reset HEAD --
 
