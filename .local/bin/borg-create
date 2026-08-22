@@ -14,7 +14,7 @@ borg create \
     --compression zstd \
     --exclude '*/.cache' \
     --exclude '*/node_modules' \
-    ssh://"$HOST"/./"$REPOSITORY"::{now} \
+    ssh://"$HOST"/./"$REPOSITORY"::{hostname-now} \
     "$HOME/codes" \
     "$HOME/documents" \
     "$HOME/music" \
