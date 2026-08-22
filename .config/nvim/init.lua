@@ -8,6 +8,7 @@ g.mapleader = " "
 g.maplocalleader = "\\"
 opt.cursorline = true
 opt.expandtab = true
+opt.wrap = false
 opt.hlsearch = false
 opt.ignorecase = true
 opt.incsearch = true
