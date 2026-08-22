@@ -41,7 +41,7 @@ shopt -s checkwinsize
 # PROMPT_COMMAND+=('echo -e -n "\\x1b[0 q"')
 
 # Colored prompt
-PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+PS1='[\[\033[01;34m\]\w\[\033[00m\]]\$ '
 # PS1='\u@\h:\w\$ '
 
 # Dynamically set terminal window title to user@host:dir for xterm/rxvt windows
@@ -97,3 +97,4 @@ if [ -f "$HOME/.bash_aliases" ]; then
     . "$HOME/.bash_aliases"
 fi
 
+source <(fzf --bash)
