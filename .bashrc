@@ -86,10 +86,14 @@ alias vim='nvim'
 alias poweroff='systemctl poweroff'
 alias reboot='systemctl reboot'
 alias remove-orphans='pacman -Qdtq >/dev/null && sudo pacman -Rns $(pacman -Qdtq) || echo "Nothing to do.."'
+
+# Borg Backups
 alias remote-bk='borg-create bx11 borg-repository'
 alias remote-ex='borg-extract bx11 borg-repository'
 alias local-bk='borg-create lcserv raid/backup'
 alias local-ex='borg-extract lcserv raid/backup'
+alias remote-ls='borg list bx11:/./borg-repository'
+alias local-ls='borg list lcserv:/./raid/backup'
 
 set -o vi
 
