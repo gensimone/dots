@@ -20,4 +20,3 @@ borg create \
     "$HOME/music" \
     "$HOME/pictures" \
     "$HOME/private" \
-    "$HOME/world"
