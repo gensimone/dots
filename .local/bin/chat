@@ -1,0 +1,18 @@
+#!/bin/sh
+
+PORT=11434
+HOSTNAME=acepc-debian
+OLLAMA_HOST=$HOSTNAME:$PORT
+
+models=`OLLAMA_HOST=$OLLAMA_HOST ollama list | tail -n +2 | awk '{print $1}'`
+
+if [ -z "$models" ]; then
+    echo "No models available."
+    exit 0
+fi
+
+model=`echo "$models" | fzf`
+
+[ -z "$model" ] && exit 0
+
+OLLAMA_HOST=$OLLAMA_HOST ollama run "$model"
