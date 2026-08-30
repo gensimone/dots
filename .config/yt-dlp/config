@@ -1,14 +1,6 @@
-# ==============================================================================
-# OUTPUT & PATH FORMATTING
-# ==============================================================================
-
 # Save files under ~/music structured by Uploader / Playlist / Index - Title
 -o "~/music/%(uploader)s/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s"
 
-
-# ==============================================================================
-# AUDIO EXTRACTION & CONVERSION
-# ==============================================================================
 
 # Extract audio track from video
 -x
@@ -16,10 +8,6 @@
 # Convert extracted audio to MP3 format (replacing invalid -t flag)
 --audio-format mp3
 
-
-# ==============================================================================
-# METADATA & THUMBNAIL EMBEDDING
-# ==============================================================================
 
 # Embed metadata (artist, title, album, track number) into the output file
 --embed-metadata
