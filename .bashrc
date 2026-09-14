@@ -81,11 +81,9 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
 alias ln='ln -i'
-alias vi='nvim'
-alias vim='nvim'
 alias poweroff='systemctl poweroff'
 alias reboot='systemctl reboot'
-alias remove-orphans='pacman -Qdtq >/dev/null && sudo pacman -Rns $(pacman -Qdtq) || echo "Nothing to do.."'
+alias update='sudo apt update && sudo apt upgrade'
 
 # Borg Backups
 alias remote-bk='borg-create bx11 borg-repository'
